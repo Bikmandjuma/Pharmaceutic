@@ -2,7 +2,7 @@
 session_start();
 include_once('Connect/connection.php');
 include_once 'phpcode/codes.php';
-$name_required=$email_required=$phone_required=$password_required=$re_password=null;
+$name_required=$email_required=$phone_required=$password_required=$re_password_required=null;
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if (isset($_POST['submit_register'])) {
         $name=test_input($_POST['name']);
@@ -161,7 +161,7 @@ function test_input($data){
                                 
                                 <div class="input-group mb-3">
                                     <span class="input-group-addon" id="name"><i class="icofont icofont-user"></i></span>
-                                    <input type="text" class="form-control" placeholder="Enter your names" title="Enter your email" data-toggle="tooltip" name="names">
+                                    <input type="text" class="form-control" placeholder="Enter your names" title="Enter your email" data-toggle="tooltip" name="name">
                                     <?php echo $name_required;?>
                                 </div>
 
@@ -180,20 +180,21 @@ function test_input($data){
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="password"><i class="icofont icofont-key"></i></span>
                                         <input type="password" class="form-control" placeholder="Enter your password" title="Enter your email" data-toggle="tooltip" name="password" id="pswdid1">
-                                        <?php echo $re_password_required;?>
                                         <span class="input-group-addon">
                                             <i class="fa fa-eye-slash" id="ShowPswd1" onclick="ShowPswdFn1()"></i>
                                             <i class="fa fa-eye" id="ShowPswdSlash1" onclick="ShowPswdFn11()" style="display:none;"></i>
                                         </span>
+                                        <?php echo $password_required;?>
                                     </div>
 
                                      <div class="input-group mb-3">
                                         <span class="input-group-addon" id="password"><i class="icofont icofont-key"></i></span>
-                                        <input type="password" class="form-control" placeholder="Re-Enter your password" title="Enter your email" data-toggle="tooltip" name="re_enter_password" id="pswdid2">
+                                        <input type="password" class="form-control" placeholder="Re-Enter your password" title="Enter your email" data-toggle="tooltip" name="re_password" id="pswdid2">
                                         <span class="input-group-addon">
                                             <i class="fa fa-eye-slash" id="ShowPswd2" onclick="ShowPswdFn2()"></i>
                                             <i class="fa fa-eye" id="ShowPswdSlash2" onclick="ShowPswdFn22()" style="display:none;"></i>
                                         </span>
+                                        <?php echo $re_password_required;?>
                                     </div>
 
                                     <div class="row m-t-30">
