@@ -59,7 +59,6 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
 
       <style>
         div#online-indicator_header {
-        /*       display: inline-block;*/
             position: absolute;
             z-index:20;
             width: 12px;
