@@ -7,12 +7,29 @@
       </script>
     <?php
   }
+
+include_once '..\Connect\connection.php';
+
+$admin_id=$_SESSION['id'];
+
+$sql_user_info="SELECT * FROM admin where id=".$admin_id."";
+$query_user_info=mysqli_query($con,$sql_user_info);
+while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
+  $fname=$row_user_info['firstname'];
+  $lname=$row_user_info['lastname'];
+  $user_img=$row_user_info['image'];
+  $phone=$row_user_info['phone'];
+  $email=$row_user_info['email'];
+  $gender=$row_user_info['gender'];
+  $dob=$row_user_info['dob'];
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin</title>
+    <title>Admin-info</title>
       <!-- Meta -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -37,45 +54,88 @@
       <link rel="stylesheet" type="text/css" href="../style/assets/css/jquery.mCustomScrollbar.css">
       <!-- Notification.css -->
       <link rel="stylesheet" type="text/css" href="../style/assets/pages/notification/notification.css">
-    <style>
-    div#online-indicator_header {
-/*       display: inline-block;*/
-        position: absolute;
-        z-index:20;
-        width: 12px;
-        height: 12px;
-        margin-right:10px;
-        margin-left: 4fv8px;
-        background-color:skyblue;
-        border-radius: 50%;
-        position: absolute;
-        margin-top: -25px;
-      }
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
-      div#online-indicator_header:hover{
-        cursor:alias;
-      }
-      span.blink_header {
-        display: block;
-        width: 12px;
-        height: 12px;
-        background-color:white;
-        opacity: 0.7;
-        border-radius: 50%;
-        animation: blink 1s linear infinite;
-      }
+      <style>
+        div#online-indicator_header {
+            position: absolute;
+            z-index:20;
+            width: 12px;
+            height: 12px;
+            margin-right:10px;
+            margin-left: 4fv8px;
+            background-color:skyblue;
+            border-radius: 50%;
+            position: absolute;
+            margin-top: -25px;
+          }
 
-      /*Animations*/
-      @keyframes blink {
-        100% { transform: scale(2, 2); 
+          div#online-indicator_header:hover{
+            cursor:alias;
+          }
+          span.blink_header {
+            display: block;
+            width: 12px;
+            height: 12px;
+            background-color:white;
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: blink 1s linear infinite;
+          }
+
+          /*Animations*/
+          @keyframes blink {
+            100% { transform: scale(2, 2); 
+                    opacity: 0;
+                  }
+          }
+        
+                                        
+        #my_data{
+            display: flex;
+        }
+
+        img:hover{
+            cursor: pointer;
+        }
+
+        #div_btn button{
+            display:absolute;margin-top:25px;border-radius:10px;align-items: center;justify-content: center;justify-items: center;
+        }
+
+        div#online-indicator_attendant {
+            position: absolute;
+            z-index:20;
+            width: 17px;
+            height: 17px;
+            margin-left:210px;
+            background-color:skyblue;
+            border-radius: 50%;
+            margin-top: -20px;
+        }
+
+        div#online-indicator_attendant:hover{
+            cursor:alias;
+        }
+                                          
+        span.blink_attendant {
+            display: block;
+            width: 17px;
+            height: 17px;
+            background-color:blue;
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: blink 1s linear infinite;
+        }
+
+        /*Animations*/
+        @keyframes blink {
+            100% { transform: scale(2, 2); 
                 opacity: 0;
-              }
-      }
-
-    .order-card:hover{
-        cursor: pointer;
-    }   
-    </style>
+                }
+        }
+     </style>
   </head>
 
   <body>
@@ -131,11 +191,7 @@
                                    </div>
                                </div>
                            </li>
-<!--                            <li>
-                               <a href="#!" onclick="javascript:toggleFullScreen()">
-                                   <i class="ti-fullscreen"></i>
-                               </a>
-                           </li> -->
+
                        </ul>
                        <ul class="nav-right">
                            <li class="header-notification">
@@ -178,11 +234,11 @@
                            
                            <li class="user-profile header-notification">
                                <a href="#">
-                                   <img src="../style/assets/images/user.png" class="img-radius" alt="User-Profile-Image" style="width:45px;height:45px;">
+                                   <img src="../style/assets/images/<?php echo $user_img;?>" class="img-radius" alt="User-Profile-Image" style="width:45px;height:45px;">
                                     <div id='online-indicator_header' title='Online'>
                                         <span class='blink_header'></span>
                                     </div>
-                                   <span><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'];?></span>
+                                   <span><?php echo $fname." ".$lname;?></span>
                                    <i class="ti-angle-down"></i>
                                </a>
                                <ul class="show-notification profile-notification">
@@ -190,7 +246,7 @@
                                         <a href="#" data-toggle="modal" data-target="#ModalLogout">
                                             <i class="fa fa-lock"></i> Logout
                                         </a>
-                                        <form id="logout-form" action="{{route('Logout')}}" method="POST" class="d-none">@csrf</form>
+                                        <!-- <form id="logout-form" action="{{route('Logou" method="POST" class="d-none">@csrf</form> -->
                                    </li>
                                </ul>
                            </li>
@@ -208,14 +264,14 @@
 
                             <!--Dashboard and manage pages-->
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="active">
-                                    <a href="#">
+                                <li>
+                                    <a href="#" onclick="window.location.href='home.php'">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                <li class="pcoded-hasmenu">
+                                <li class="pcoded-hasmenu {{ request()->is('#') ? 'active' : '' }}">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
                                         <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Manage pages</span>
@@ -258,7 +314,7 @@
                             <!--Adding Properties like cars -->
                             <ul class="pcoded-item pcoded-left-item">
                                 
-                                <li class="pcoded-hasmenu {{ request()->is('admin/add_properties') ? 'active' : '' }}">
+                                <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="fas fa-car"></i></span>
                                         <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Manage cars</span>
@@ -266,7 +322,7 @@
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="#" onclick="window.location.href='{{route("Add_Properties")}}'">
+                                            <a href="#" onclick="window.location.href='cars.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cars</span>
                                                 <span class="pcoded-mcaret"></span>
@@ -296,14 +352,14 @@
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="#" onclick="window.location.href='ViewBookings.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">View bookings</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="#" onclick="window.location.href='ViewComments.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">View comments</span>
                                                 <span class="pcoded-mcaret"></span>
@@ -317,7 +373,7 @@
 
                             <!--manu of settings-->
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu">
+                                <li class="pcoded-hasmenu active">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="fa fa-cogs"></i><b>M</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Settings</span>
@@ -332,14 +388,14 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="#profile" onclick="window.location.href='{{route("Profile")}}'">
+                                            <a href="#profile" onclick="window.location.href='profile.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Profiles</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="#apssword" onclick="window.location.href='{{route("Password")}}'">
+                                            <a href="#apssword" onclick="window.location.href='password.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-23">Password</span>
                                                 <span class="pcoded-mcaret"></span>
@@ -358,107 +414,19 @@
                                     
                                     <div class="page-body">
                                         <div class="row">
-
                                             <!-- order-card start -->
-                                            <div class="col-md-6 col-xl-3">
-                                                <div class="card bg-c-blue order-card">
-                                                    <div class="card-block" onclick="window.location.href='#card1'">
-                                                        <h6 class="m-b-20">Cars in store</h6>
-                                                        <h2 class="text-right"><i class="fa fa-car f-left"></i><span>0</span></h2>
-                                                        <p class="m-b-0">All cars<span class="f-right">0</span></p>
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-2 col-xl-2"></div>
+                                            <div class="col-md-8 col-xl-8">
+                                                contents
                                             </div>
-                                            
-                                            <div class="col-md-6 col-xl-3">
-                                                <div class="card bg-c-green order-card" onclick="window.location.href='#card2'">
-                                                    <div class="card-block">
-                                                        <h6 class="m-b-20">All bookings</h6>
-                                                        <h2 class="text-right"><i class="ti-list f-left"></i><span>0</span></h2>
-
-                                                        <p class="m-b-0">This Month<span class="f-right">0</span></p>
-                                                    </div>
-                                                    <!-- <span class="btn btn-info m-b-5">test</span> -->
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-xl-3">
-                                                <div class="card bg-c-yellow order-card" onclick="window.location.href='#card3'">
-                                                    <div class="card-block">
-                                                        <h6 class="m-b-20">Today's booking</h6>
-                                                        <h2 class="text-right"><i class="ti-reload f-left"></i><span>0</span></h2>
-                                                        <p class="m-b-0">This day<span class="f-right">0</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-xl-3">
-                                                <div class="card bg-c-pink order-card" onclick="window.location.href='#card4'">
-                                                    <div class="card-block">
-                                                        <h6 class="m-b-20">Comments</h6>
-                                                        <h2 class="text-right"><i class="fa fa-comment f-left"></i><span>0</span></h2>
-                                                        <p class="m-b-0">all comments<span class="f-right">0</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- order-card end -->
-                                            <!-- statustic and process start -->
-                                            <div class="col-lg-8 col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-
-                                                        <h5>Statistics</h5>
-                                                        <div class="card-header-right">
-                                                            <ul class="list-unstyled card-option">
-                                                                <li><i class="fa fa-chevron-left"></i></li>
-                                                                <li><i class="fa fa-window-maximize full-card"></i></li>
-                                                                <li><i class="fa fa-minus minimize-card"></i></li>
-                                                                <li><i class="fa fa-refresh reload-card"></i></li>
-                                                                <li><i class="fa fa-times close-card"></i></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <canvas id="Statistics-chart" height="200"></canvas>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Customer Feedback</h5>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <span class="d-block text-c-blue f-24 f-w-600 text-center">0</span>
-                                                        <canvas id="feedback-chart" height="100"></canvas>
-                                                        <div class="row justify-content-center m-t-15">
-                                                            <div class="col-auto b-r-default m-t-5 m-b-5">
-                                                                <h4>0%</h4>
-                                                                <p class="text-success m-b-0"><i class="ti-hand-point-up m-r-5"></i>Positive</p>
-                                                            </div>
-                                                            <div class="col-auto m-t-5 m-b-5">
-                                                                <h4>0%</h4>
-                                                                <p class="text-danger m-b-0"><i class="ti-hand-point-down m-r-5"></i>Negative</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- statustic and process end -->
-                                            
+                                            <div class="col-md-2 col-xl-2"></div>
                                         </div>
                                     </div>
-
-                                    <!-- <div id="styleSelector"></div> -->
-                                	
-                                	<?php include_once ('AdminModalLogout.php');?>
 
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                           
 
                 </div>
             </div>

@@ -322,7 +322,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="#" onclick="window.location.href='{{route("Add_Properties")}}'">
+                                            <a href="#" onclick="window.location.href='cars.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cars</span>
                                                 <span class="pcoded-mcaret"></span>
@@ -352,14 +352,14 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="#" onclick="window.location.href='ViewBookings.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">View bookings</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="#" onclick="window.location.href='ViewComments.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">View comments</span>
                                                 <span class="pcoded-mcaret"></span>
@@ -373,7 +373,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
 
                             <!--manu of settings-->
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu">
+                                <li class="pcoded-hasmenu active">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="fa fa-cogs"></i><b>M</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Settings</span>
@@ -388,14 +388,14 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="#profile" onclick="window.location.href='{{route("Profile")}}'">
+                                            <a href="#profile" onclick="window.location.href='profile.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Profiles</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="#apssword" onclick="window.location.href='{{route("Password")}}'">
+                                            <a href="#apssword" onclick="window.location.href='password.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-23">Password</span>
                                                 <span class="pcoded-mcaret"></span>

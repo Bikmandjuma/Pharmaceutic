@@ -167,6 +167,7 @@ function test_input($data){
       </div>
     </div>
   
+    <?php echo $allfieldRequired.$incorectcredential;?>
 
     <div class="#">
       <div class="site-blocks-cover overlay" style="background-image: url('style/images/pills.jpg');">
@@ -175,7 +176,7 @@ function test_input($data){
             <div class="col-lg-12 mx-auto align-self-center">
               
                     <div class="login-card card-block auth-body mr-auto ml-auto" style="margin-top:-100px;">
-                      <?php echo $allfieldRequired.$incorectcredential;?>
+                      
                         <form class="md-float-material" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
                             
                             <div class="auth-box">
@@ -183,7 +184,6 @@ function test_input($data){
                                     <div class="col-md-12 text-center">
                                         <h3 class="text-primary">Sign In</h3>
                                     </div>
-
                                 </div>
                                 <hr/>
                                    
