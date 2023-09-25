@@ -1,3 +1,29 @@
+<?php
+session_start();
+include_once('Connect/connection.php');
+include_once 'phpcode/codes.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    if (isset($_POST['submit_register'])) {
+        $name=test_input($_POST['name']);
+        $email=test_input($_POST['email']);
+        $phone=test_input($_POST['phone']);
+        $password=test_input($_POST['password']);
+
+        
+    }
+
+}
+
+function test_input($data){
+  $data=trim($data);
+  $data=stripcslashes($data);
+  $data=htmlspecialchars($data);
+  
+  return $data;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
