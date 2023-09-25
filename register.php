@@ -162,21 +162,25 @@ function test_input($data){
                                 <div class="input-group mb-3">
                                     <span class="input-group-addon" id="name"><i class="icofont icofont-user"></i></span>
                                     <input type="text" class="form-control" placeholder="Enter your names" title="Enter your email" data-toggle="tooltip" name="names">
+                                    <?php echo $name_required;?>
                                 </div>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="email"><i class="icofont icofont-envelope"></i></span>
                                         <input type="text" class="form-control" placeholder="Enter your email" title="Enter your email" data-toggle="tooltip" name="email">
+                                      <?php echo $email_required;?>
                                     </div>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="phone"><i class="icofont icofont-phone"></i></span>
                                         <input type="text" class="form-control" placeholder="Enter your phone" title="Enter your email" data-toggle="tooltip" name="phone">
+                                        <?php echo $phone_required;?>
                                     </div>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="password"><i class="icofont icofont-key"></i></span>
                                         <input type="password" class="form-control" placeholder="Enter your password" title="Enter your email" data-toggle="tooltip" name="password" id="pswdid1">
+                                        <?php echo $re_password_required;?>
                                         <span class="input-group-addon">
                                             <i class="fa fa-eye-slash" id="ShowPswd1" onclick="ShowPswdFn1()"></i>
                                             <i class="fa fa-eye" id="ShowPswdSlash1" onclick="ShowPswdFn11()" style="display:none;"></i>
