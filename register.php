@@ -12,25 +12,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $re_password=test_input($_POST['re_password']);
 
         if (empty($name)) {
-            $name_required='<p style="background-color:red;color:white;padding:10px;border-radius:5px;">Name field is required !</p>';
+            $name_required='<p style="color:red;border-radius:5px;">Name field is required !</p>';
         }elseif (empty($email)) {
-            $email_required='<p style="background-color:red;color:white;padding:10px;border-radius:5px;">Email field is required !</p>';
+            $email_required='<p style="color:red;border-radius:5px;">Email field is required !</p>';
         }elseif (empty($phone)) {
-            $phone_required='<p style="background-color:red;color:white;padding:10px;border-radius:5px;">phone field is required !</p>';
+            $phone_required='<p style="color:red;border-radius:5px;">phone field is required !</p>';
         }elseif (empty($password)) {
-            $password_required='<p style="background-color:red;color:white;padding:10px;border-radius:5px;">Password field is required !</p>';
+            $password_required='<p style="color:red;border-radius:5px;">Password field is required !</p>';
         }elseif (empty($re_password)) {
-            $re_password_required='<p style="background-color:red;color:white;padding:10px;border-radius:5px;">Re_enter password field is required !</p>';
+            $re_password_required='<p style="color:red;border-radius:5px;">Re_enter password field is required !</p>';
         }else{
 
+             $sql="INSERT INTO customers ('','$name','$email','$phone','$password')";
+              $query=mysqli_query($con,$sql);
+
+              if ($query == true) {
+                
+              }
         }
 
-        $sql="INSERT INTO customers ('','$name','$email','$phone','$password')";
-        $query=mysqli_query($con,$sql);
-
-        if ($query == true) {
-          
-        }
+       
     }
 
 }
@@ -140,7 +141,6 @@ function test_input($data){
         </div>
       </div>
     </div>
-  
 
     <div class="#">
       <div class="site-blocks-cover overlay" style="background-image: url('style/images/pills.jpg');">
