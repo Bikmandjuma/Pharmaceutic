@@ -24,59 +24,6 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
   $dob=$row_user_info['dob'];
 }
 
-require '..\phpcode\codes.php';
-$admin=new pharmaceutic;
-
-$image_uploaded=$image_size=$image_type=$image_not_uploaded=$Error_to_uploaded=$File_not_image=null;
-if (isset($_POST['SubmitProfilePicture'])) {
-    $target_dir = "../style/assets/images/";
-    $file_name=date('YmdHi').basename($_FILES["fileToUpload"]["name"]);
-    $target_file = $target_dir .$file_name;
-    
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    // Check if image file is a actual image or fake image
-
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-
-    if ($uploadOk = 1) {
-        
-        if($check !== false) {
-              // Check file size
-              if ($_FILES["fileToUpload"]["size"] > 5000000) {
-                  $image_size='<script type="text/javascript">toastr.error("Sorry, your file is too large ,add 5MB at least.")</script>';
-                  $uploadOk = 0;
-              }
-
-              // Allow certain file formats
-              if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-              && $imageFileType != "gif" ) {
-                 $image_type='<script type="text/javascript">toastr.error("Sorry, only JPG, JPEG, PNG & GIF files are allowed.")</script>';
-                  $uploadOk = 0;
-              }
-
-              if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                  $u_sql="UPDATE admin set image='$file_name' where id='$admin_id' ";
-                  $u_query=mysqli_query($con,$u_sql);
-                  ?>    
-                    <script>
-                        setTimeout(function(){
-                            window.location.href="profile.php";
-                        });
-                    </script>
-                  <?php
-                  $image_uploaded='<script type="text/javascript">toastr.success("Image added well !")</script>';
-              } else {
-                 $image_not_uploaded='<script type="text/javascript">toastr.error("Sorry, there was an error uploading your file !")</script>';
-              }
-        }
-
-      }elseif ($uploadOk = 0) {
-          $Error_to_uploaded='<script type="text/javascript">toastr.error("Sorry, your file was not uploaded")</script>';
-      }
-      
-
-  }
-
 ?>
 
 
@@ -495,89 +442,13 @@ if (isset($_POST['SubmitProfilePicture'])) {
                             <div class="main-body">
                                 <div class="page-wrapper">
                                     
+                                    <!--start of page-body -->
                                     <div class="page-body">
-                                        <?php echo $image_uploaded.$image_size.$image_type.$image_not_uploaded.$Error_to_uploaded.$File_not_image;?>
-                                            <br>
-
-                                            <?php
-                                              $user_img_sql="SELECT * FROM admin where image='user.png' and id=".$_SESSION['id']."";
-                                              $user_img_query=mysqli_query($con,$user_img_sql);
-                                              $img_number=mysqli_num_rows($user_img_query);
-                                             
-                                            ?>
-                                                
-                                                <div class="row">
-                                                  <div class="col-md-4"></div>
-                                                  <div class="col-md-4">
-
-                                                  <div class="card_profile">
-
-                                                   <!--  <div class="card_title">
-                                                      <h3>Profile picture</h3>
-                                                    </div> -->
-                                                    
-                                                    <div class="card card-primary card-outline" style="width: 80%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-                                                      <div class="card-header text-center" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);"><h4 style="font-family:initial;">Profile picture</h4></div>
-                                                      <img src="../style/assets/images/<?php echo $user_img;?>">
-                                                      <div class="containers">
-                                                        <h4><b><?php echo $_SESSION['firstname']." ".$_SESSION['lastname']; ?></b></h4> 
-                                                        <?php
-                                                          if ($img_number == 1) {
-                                                            ?>
-                                                              <button class="btn btn-info" data-toggle="modal" data-target="#ProfileModal"><i class="fa fa-image"></i>&nbsp;Add</button>
-                                                            <?php
-                                                          }else{
-                                                            ?>
-                                                              <button class="btn btn-info" data-toggle="modal" data-target="#ProfileModal"><i class="fa fa-edit"></i>&nbsp;Edit</button>
-                                                            <?php
-                                                          }
-                                                        ?>
-                                                        
-                                                      </div>
-                                                    </div>
-
-                                                  </div>
-
-
-                                                  </div>
-                                                  <div class="col-md-4"></div>
-                                              </div>
-
-                                                <!--start of Profile modal -->
-                                                  <div class="modal" id="ProfileModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                                    <div class="modal-dialog modal-sm text-center">
-                                                      <div class="modal-content">
-                                                        <div class="modal-body">
-                                                          <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                          <h4><i class="fa fa-image"></i>&nbsp;Profile picture</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                          <div class="actionsBtns">
-                                                            <form enctype="multipart/form-data" method="POST">
-                                                              <!-- <div class="row">
-                                                                <div class="col-md-6"> -->
-                                                                  <img id="blah" style="width:130px;height:150px;" src="../style/assets/images/<?php echo $user_img;?>" /><br>
-                                                                <!-- </div>
-                                                                <div class="col-md-6">
-                                         -->                          
-                                                                  <br>
-                                                                  <input name="fileToUpload" type="file" accept="image/*" id="imgInp" class="form-control" required><br>
-                                                                  <button class="btn btn-primary" type="submit" name="SubmitProfilePicture"><i class="fa fa-save"></i> Save change</button>
-                                                               <!--  </div>
-                                                              </div> -->
-                                                              
-                                                            </form>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                <!--end of profile modal-->
+                                        
                                     </div>
+                                    <!--end of page body-->
 
                                     <?php include_once ('AdminModalLogout.php');?>
-
-
                                 </div>
                             </div>
                         </div>
@@ -588,21 +459,6 @@ if (isset($_POST['SubmitProfilePicture'])) {
             </div>
         </div>
     </div>
-
-    <script>
-        function main_linkfn(){
-            var textElement = document.getElementById("main_link");
-            textElement.style.display = textElement.style.display === "block" ? "none" : "block";
-        }
-
-        imgInp.onchange = evt => {
-            const [file] = imgInp.files
-            if (file) {
-                blah.src = URL.createObjectURL(file)
-            }
-        }
-
-    </script>
 
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
