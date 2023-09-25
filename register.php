@@ -139,7 +139,7 @@
 
                                      <div class="input-group mb-3">
                                         <span class="input-group-addon" id="password"><i class="icofont icofont-key"></i></span>
-                                        <input type="password" class="form-control" placeholder="Re-Enter your password" title="Enter your email" data-toggle="tooltip" name="password" id="pswdid2">
+                                        <input type="password" class="form-control" placeholder="Re-Enter your password" title="Enter your email" data-toggle="tooltip" name="re_enter_password" id="pswdid2">
                                         <span class="input-group-addon">
                                             <i class="fa fa-eye-slash" id="ShowPswd2" onclick="ShowPswdFn2()"></i>
                                             <i class="fa fa-eye" id="ShowPswdSlash2" onclick="ShowPswdFn22()" style="display:none;"></i>
@@ -148,7 +148,7 @@
 
                                     <div class="row m-t-30">
                                         <div class="col-md-12 text-center">
-                                            <button type="submit" style="width: 150px; border-radius:30px; background-color: steelblue;color: white;" class="btn bg-primary btn-md btn-block waves-effect text-center m-b-20 mx-auto"> Register <i class="fa fa-save"></i> </button>
+                                            <button type="submit" style="width: 150px; border-radius:30px; background-color: steelblue;color: white;" class="btn bg-primary btn-md btn-block waves-effect text-center m-b-20 mx-auto" name="submit_register"> Register <i class="fa fa-save"></i> </button>
                                         </div>
                                     </div>
                                 <hr/>
