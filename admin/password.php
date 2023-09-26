@@ -91,7 +91,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
       <meta name="description" content="Gradient Able Bootstrap admin template made using Bootstrap 4. The starter version of Gradient Able is completely free for personal project." />
       <meta name="keywords" content="free dashboard template, free admin, free bootstrap template, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
       <meta name="author" content="codedthemes">
-      <!-- <meta http-equiv="refresh" content="10"> -->
+      <!-- <meta http-equiv="refresh" content="5"> -->
       <!-- Favicon icon -->
       <link rel="icon" href="../style/assets/images/favicon.ico" type="image/x-icon">
       <!-- Google font-->
@@ -216,6 +216,23 @@ if (isset($_POST['SubmitProfilePicture'])) {
           padding: 2px 16px;
           text-align: center;
           font-family: serif;
+      }
+
+      #ShowPswd1:hover,#ShowPswd2:hover,#ShowPswd3:hover,#ShowPswdSlash1:hover,#ShowPswdSlash2:hover,#ShowPswdSlash3:hover{
+      	cursor: pointer;
+      	color: green;
+
+      }
+
+      #ShowPswd1,#ShowPswd2,#ShowPswd3,#ShowPswdSlash1,#ShowPswdSlash2,#ShowPswdSlash3{
+      	position:relative;
+      	margin-left: -20px;
+      	margin-top:10px;
+      	color: blue;
+      }
+
+      #pswdid1,#pswdid2,#pswdid3{
+      	border-radius: 10px;
       }
 
 /*      .alert{padding: 15px;margin-bottom: 20px;border-radius: 4px;color: #fff;text-transform: uppercase;font-size: 12px}.alert_info{background-color: #4285f4;border: 2px solid #4285f4}button.close{-webkit-appearance: none;padding: 0;cursor: pointer;background: 0 0;border: 0}.close{font-size: 20px;color: #fff;opacity: 0.9;}.alert_success{background-color: #09c97f;border: 2px solid #09c97f}.alert_warning{background-color: #f8b15d;border: 2px solid #f8b15d}.alert_error{background-color: #f95668;border: 2px solid #f95668}.fade_info{background-color: #d9e6fb;border: 1px solid #4285f4}.fade_info .close{color: #4285f4}.fade_info strong{color: #4285f4}.fade_success{background-color: #c9ffe5;border: 1px solid #09c97f}.fade_success .close{color: #09c97f}.fade_success strong{color: #09c97f}.fade_warning{background-color: #fff0cc;border: 1px solid #f8b15d}.fade_warning .close{color: #f8b15d}.fade_warning strong{color: #f8b15d}.fade_error{background-color: #ffdbdb;border: 1px solid #f95668}.fade_error .close{color: #f95668}.fade_error strong{color: #f95668}*/
@@ -506,7 +523,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
 					                      $Username_changed=$Username_length=$username_data=$Username_not_changed=null;
 					                      $admin_id=$_SESSION['id'];
 					                      
-					                      $all_fields_required=$current_password=$new_password=$confirm_new_password=$password_required=$current_password_incorrect=$password_mustbe_greaterthan_8=$new_password_do_not_match=$Password_changed_well=$user_new_pswd=null;
+					                      $all_fields_required=$current_password=$new_password=$confirm_new_password=$password_required=$current_password_incorrect=$password_mustbe_greaterthan_8=$new_password_do_not_match=$Password_changed_well=$user_new_pswd=$Password_not_changed=null;
 
 					                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					                          if (isset($_POST['submit_pswd'])) {
@@ -521,39 +538,62 @@ if (isset($_POST['SubmitProfilePicture'])) {
 					                              }
 
 					                              if (empty($current_password) || empty($new_password) || empty($new_password)) {
-					                                  $all_fields_required='
-					                                                  <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-					                                                              All fields are required !
-					                                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					                                                                <span aria-hidden="true" style="font-size:25px;">&times;</span>
-					                                                              </button>
-					                                                          </div>';
+						                              	?>
+											                <script>
+											                  setTimeout(function(){
+											                      var wrong_cred=document.getElementById('Wrong_credentials');
+											                      wrong_cred.style.display="block";
+											                      wrong_cred.style.display="none";
+											                  },4000);
+											                      
+											                </script>
+											            <?php
 
+										              $all_fields_required='<p id="Wrong_credentials" style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;">All fields are required !</p>';
+					                               
 					                              }else{
 					                                    if (md5($current_password) != $user_password) {
-					                                        $current_password_incorrect='
-					                                                          <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-					                                                              Incorrect current password !
-					                                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					                                                                <span aria-hidden="true" style="font-size:25px;">&times;</span>
-					                                                              </button>
-					                                                          </div>';
+					                                    	?>
+												                <script>
+												                  setTimeout(function(){
+												                      var wrong_cred=document.getElementById('Wrong_credentials');
+												                      wrong_cred.style.display="block";
+												                      wrong_cred.style.display="none";
+												                  },4000);
+												                      
+												                </script>
+												            <?php
+
+											              $current_password_incorrect='<p id="Wrong_credentials" style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;">Incorrect current password !</p>';
+
 					                                    }elseif (strlen($new_password) < 8) {
-					                                        $password_mustbe_greaterthan_8='
-					                                                     <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-					                                                              New password must be at least 8 characters !
-					                                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					                                                                <span aria-hidden="true" style="font-size:25px;">&times;</span>
-					                                                              </button>
-					                                                          </div>';
+					                                    	?>
+												                <script>
+												                  setTimeout(function(){
+												                      var wrong_cred=document.getElementById('Wrong_credentials');
+												                      wrong_cred.style.display="block";
+												                      wrong_cred.style.display="none";
+												                  },4000);
+												                      
+												                </script>
+												            <?php
+
+											              	$password_mustbe_greaterthan_8='<p id="Wrong_credentials" style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;">New password must be at least 8 characters !</p>';
+
+					                              
 					                                    }elseif (md5($new_password) != md5($confirm_new_password)) {
-					                                        $new_password_do_not_match='
-					                                                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-					                                                              New password do not match !
-					                                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					                                                                <span aria-hidden="true" style="font-size:25px;">&times;</span>
-					                                                              </button>
-					                                                          </div>';
+					                                    	?>
+												                <script>
+												                  setTimeout(function(){
+												                      var wrong_cred=document.getElementById('Wrong_credentials');
+												                      wrong_cred.style.display="block";
+												                      wrong_cred.style.display="none";
+												                  },4000);
+												                      
+												                </script>
+												            <?php
+
+											              	$new_password_do_not_match='<p id="Wrong_credentials" style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;">New password do not match !</p>';
 
 					                                    }else{ 
 					                                        $user_new_pswd=md5($new_password);
@@ -561,15 +601,36 @@ if (isset($_POST['SubmitProfilePicture'])) {
 					                                            $sql_password="UPDATE admin SET password='".$user_new_pswd."' where id='".$admin_id."'";
 					                                            $result_password=mysqli_query($con,$sql_password);
 					                                            if ($result_password == true) {
-					                                                $Password_changed_well='
-					                                                          <script>toastr.success("Password changed successfully !")
-					                                                          </script>';
+					                                            	?>
+														                <script>
+														                  setTimeout(function(){
+														                      var wrong_cred=document.getElementById('Wrong_credentials');
+														                      wrong_cred.style.display="block";
+														                      wrong_cred.style.display="none";
+														                  },4000);
+														                      
+														                </script>
+														            <?php
+
+													              	$Password_changed_well='<p id="Wrong_credentials" style="background-color:green;color:white;padding:10px;border-radius:5px;text-align:center;">Password changed successfully !</p>';
 					                                            }
 
 					                                        }else{
-					                                            echo "<script>toastr.error('password can not be changed !')
-					                                                  </script>";
+					                                        	?>
+														                <script>
+														                  setTimeout(function(){
+														                      var wrong_cred=document.getElementById('Wrong_credentials');
+														                      wrong_cred.style.display="block";
+														                      wrong_cred.style.display="none";
+														                  },4000);
+														                      
+														                </script>
+														            <?php
+
+													              	$Password_not_changed='<p id="Wrong_credentials" style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;">password can not be changed !</p>';
+					                                  
 					                                        }
+
 					                                    }
 
 
@@ -631,6 +692,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
 							                    <?php echo $current_password_incorrect;?>
 							                    <?php echo $new_password_do_not_match;?>
 							                    <?php echo $password_mustbe_greaterthan_8;?>
+							                    <?php echo $Password_not_changed;?>
 							                <div class="card card-primary card-outline" style="box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2);">
 							                  
 							                  <div class="card-header text-center" style="box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2);"><i class="fa fa-edit"></i>&nbsp;Modify password</div>
@@ -661,7 +723,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
 
 							                          </div>
 							                            <br>
-							                          <button class="btn btn-info" type="submit" name="submit_pswd"><i class="fa fa-save fa-fw"></i> &nbsp;Save change</button>
+							                          <button class="btn btn-info" type="submit" name="submit_pswd" style="border-radius:10px;"><i class="fa fa-save fa-fw"></i> &nbsp;Save change</button>
 							                        </form>
 
 							                  </div>
