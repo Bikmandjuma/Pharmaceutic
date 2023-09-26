@@ -289,7 +289,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
                                    <li>
                                        <div class="media">
                                             <a href="#customer1" class="d-flex">
-                                               <img class="align-self-center img-radius" src="../assets/images/avatar-2.jpg" alt="Generic placeholder image">
+                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
                                                <i class="badge bg-c-pink"></i>
                                                <div class="media-body">
                                                    <h5 class="notification-user">customer name</h5>
@@ -302,7 +302,8 @@ if (isset($_POST['SubmitProfilePicture'])) {
                                    <li>
                                        <div class="media">
                                             <a href="#customer2" class="d-flex">
-                                               <img class="align-self-center img-radius" src="../assets/images/avatar-3.jpg" alt="Generic placeholder image">
+                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
+                                               <i class="badge bg-c-pink"></i>
                                                <div class="media-body">
                                                    <h5 class="notification-user">customer name</h5>
                                                    <p class="notification-msg">booking description</p>
@@ -516,7 +517,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
                                                       <h3>Profile picture</h3>
                                                     </div> -->
                                                     
-                                                    <div class="card card-primary card-outline" style="width: 80%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                                                    <div class="card" style="width: 80%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
                                                       <div class="card-header text-center" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);"><h4 style="font-family:initial;">Profile picture</h4></div>
                                                       <img src="../style/assets/images/<?php echo $user_img;?>">
                                                       <div class="containers">

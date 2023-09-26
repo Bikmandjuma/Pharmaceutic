@@ -308,7 +308,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
                                    <li>
                                        <div class="media">
                                             <a href="#customer1" class="d-flex">
-                                               <img class="align-self-center img-radius" src="../assets/images/avatar-2.jpg" alt="Generic placeholder image">
+                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
                                                <i class="badge bg-c-pink"></i>
                                                <div class="media-body">
                                                    <h5 class="notification-user">customer name</h5>
@@ -321,7 +321,8 @@ if (isset($_POST['SubmitProfilePicture'])) {
                                    <li>
                                        <div class="media">
                                             <a href="#customer2" class="d-flex">
-                                               <img class="align-self-center img-radius" src="../assets/images/avatar-3.jpg" alt="Generic placeholder image">
+                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
+                                               <i class="badge bg-c-pink"></i>
                                                <div class="media-body">
                                                    <h5 class="notification-user">customer name</h5>
                                                    <p class="notification-msg">booking description</p>
@@ -693,7 +694,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
 							                    <?php echo $new_password_do_not_match;?>
 							                    <?php echo $password_mustbe_greaterthan_8;?>
 							                    <?php echo $Password_not_changed;?>
-							                <div class="card card-primary card-outline" style="box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+							                <div class="card" style="box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2);">
 							                  
 							                  <div class="card-header text-center" style="box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2);"><i class="fa fa-edit"></i>&nbsp;Modify password</div>
 							                  <div class="card-body text-center" style="overflow: auto;">
