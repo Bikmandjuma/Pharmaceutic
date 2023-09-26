@@ -24,6 +24,59 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
   $dob=$row_user_info['dob'];
 }
 
+require '..\phpcode\codes.php';
+$admin=new pharmaceutic;
+
+$image_uploaded=$image_size=$image_type=$image_not_uploaded=$Error_to_uploaded=$File_not_image=null;
+if (isset($_POST['SubmitProfilePicture'])) {
+    $target_dir = "../style/assets/images/";
+    $file_name=date('YmdHi').basename($_FILES["fileToUpload"]["name"]);
+    $target_file = $target_dir .$file_name;
+    
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    // Check if image file is a actual image or fake image
+
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+
+    if ($uploadOk = 1) {
+        
+        if($check !== false) {
+              // Check file size
+              if ($_FILES["fileToUpload"]["size"] > 5000000) {
+                  $image_size='<script type="text/javascript">toastr.error("Sorry, your file is too large ,add 5MB at least.")</script>';
+                  $uploadOk = 0;
+              }
+
+              // Allow certain file formats
+              if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+              && $imageFileType != "gif" ) {
+                 $image_type='<script type="text/javascript">toastr.error("Sorry, only JPG, JPEG, PNG & GIF files are allowed.")</script>';
+                  $uploadOk = 0;
+              }
+
+              if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                  $u_sql="UPDATE admin set image='$file_name' where id='$admin_id' ";
+                  $u_query=mysqli_query($con,$u_sql);
+                  ?>    
+                    <script>
+                        setTimeout(function(){
+                            window.location.href="profile.php";
+                        });
+                    </script>
+                  <?php
+                  $image_uploaded='<script type="text/javascript">toastr.success("Image added well !")</script>';
+              } else {
+                 $image_not_uploaded='<script type="text/javascript">toastr.error("Sorry, there was an error uploading your file !")</script>';
+              }
+        }
+
+      }elseif ($uploadOk = 0) {
+          $Error_to_uploaded='<script type="text/javascript">toastr.error("Sorry, your file was not uploaded")</script>';
+      }
+      
+
+  }
+
 ?>
 
 
@@ -164,6 +217,8 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
           text-align: center;
           font-family: serif;
       }
+
+/*      .alert{padding: 15px;margin-bottom: 20px;border-radius: 4px;color: #fff;text-transform: uppercase;font-size: 12px}.alert_info{background-color: #4285f4;border: 2px solid #4285f4}button.close{-webkit-appearance: none;padding: 0;cursor: pointer;background: 0 0;border: 0}.close{font-size: 20px;color: #fff;opacity: 0.9;}.alert_success{background-color: #09c97f;border: 2px solid #09c97f}.alert_warning{background-color: #f8b15d;border: 2px solid #f8b15d}.alert_error{background-color: #f95668;border: 2px solid #f95668}.fade_info{background-color: #d9e6fb;border: 1px solid #4285f4}.fade_info .close{color: #4285f4}.fade_info strong{color: #4285f4}.fade_success{background-color: #c9ffe5;border: 1px solid #09c97f}.fade_success .close{color: #09c97f}.fade_success strong{color: #09c97f}.fade_warning{background-color: #fff0cc;border: 1px solid #f8b15d}.fade_warning .close{color: #f8b15d}.fade_warning strong{color: #f8b15d}.fade_error{background-color: #ffdbdb;border: 1px solid #f95668}.fade_error .close{color: #f95668}.fade_error strong{color: #f95668}*/
      </style>
   </head>
 
@@ -442,9 +497,181 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                             <div class="main-body">
                                 <div class="page-wrapper">
                                     
-                                    <!--start of page-body -->
+                                    <!--start of page-body-->
                                     <div class="page-body">
-                                        
+                                     
+                                     <?php 
+					                  require '../Connect/connection.php';
+
+					                      $Username_changed=$Username_length=$username_data=$Username_not_changed=null;
+					                      $admin_id=$_SESSION['id'];
+					                      
+					                      $all_fields_required=$current_password=$new_password=$confirm_new_password=$password_required=$current_password_incorrect=$password_mustbe_greaterthan_8=$new_password_do_not_match=$Password_changed_well=$user_new_pswd=null;
+
+					                      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+					                          if (isset($_POST['submit_pswd'])) {
+					                              $current_password=test_input($_POST['current_password']);
+					                              $new_password=test_input($_POST['new_password']);
+					                              $confirm_new_password=test_input($_POST['confirm_new_password']);
+
+					                              $sql="SELECT password from admin where id='".$_SESSION['id']."'";
+					                              $result=mysqli_query($con,$sql);
+					                              while ($row=mysqli_fetch_assoc($result)) {
+					                                  $user_password=$row['password'];
+					                              }
+
+					                              if (empty($current_password) || empty($new_password) || empty($new_password)) {
+					                                  $all_fields_required='
+					                                                  <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+					                                                              All fields are required !
+					                                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					                                                                <span aria-hidden="true" style="font-size:25px;">&times;</span>
+					                                                              </button>
+					                                                          </div>';
+
+					                              }else{
+					                                    if (md5($current_password) != $user_password) {
+					                                        $current_password_incorrect='
+					                                                          <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+					                                                              Incorrect current password !
+					                                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					                                                                <span aria-hidden="true" style="font-size:25px;">&times;</span>
+					                                                              </button>
+					                                                          </div>';
+					                                    }elseif (strlen($new_password) < 8) {
+					                                        $password_mustbe_greaterthan_8='
+					                                                     <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+					                                                              New password must be at least 8 characters !
+					                                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					                                                                <span aria-hidden="true" style="font-size:25px;">&times;</span>
+					                                                              </button>
+					                                                          </div>';
+					                                    }elseif (md5($new_password) != md5($confirm_new_password)) {
+					                                        $new_password_do_not_match='
+					                                                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+					                                                              New password do not match !
+					                                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					                                                                <span aria-hidden="true" style="font-size:25px;">&times;</span>
+					                                                              </button>
+					                                                          </div>';
+
+					                                    }else{ 
+					                                        $user_new_pswd=md5($new_password);
+					                                        if ($new_password == $confirm_new_password) {
+					                                            $sql_password="UPDATE admin SET password='".$user_new_pswd."' where id='".$admin_id."'";
+					                                            $result_password=mysqli_query($con,$sql_password);
+					                                            if ($result_password == true) {
+					                                                $Password_changed_well='
+					                                                          <script>toastr.success("Password changed successfully !")
+					                                                          </script>';
+					                                            }
+
+					                                        }else{
+					                                            echo "<script>toastr.error('password can not be changed !')
+					                                                  </script>";
+					                                        }
+					                                    }
+
+
+					                              }
+					                        }     
+
+					                      }
+
+					                      function test_input($data){
+					                          $data=trim($data);
+					                          $data=stripslashes($data);
+					                          $data=htmlspecialchars($data);
+					                          return $data;
+					                      }
+
+					                      if (isset($_POST['SubmitUsernameChanges'])) {
+					                          $pattern = '/^[A-Za-z0-9!@#$%^&*()_+,.-=;]+$/';
+					                          $username=$_POST['username'];
+
+					                          if (strlen($username) < 8 ) {
+					                              $Username_length='<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+					                                    Enter atleast 8 characters !
+					                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					                                        <span aria-hidden="true" style="font-size:25px;">&times;</span>
+					                                    </button>
+					                                </div>';
+					                          }else{
+
+					                             if (preg_match($pattern, $username)) {
+					                            
+					                                  $query=mysqli_query($con,"UPDATE admin SET username='$username' where id='$admin_id' ");
+
+					                                  if ($query == true) {
+					                                    $Username_changed='<script>toastr.info("Username changed well !")</script>';
+					                                  }else{
+					                                    $Username_not_changed='<script>toastr.info("Username not changed !")</script>';
+					                                  }
+
+					                              }
+
+					                          }
+
+					                      }
+
+					                      //select username
+					                      $query_username=mysqli_query($con,"SELECT email from admin where id='$admin_id' ");
+					                      while ($row=mysqli_fetch_assoc($query_username)) {
+					                        $email_data=$row['email'];
+					                      }
+
+					                  ?>
+
+                                    <!--start of page-body -->
+                                    	<div class="row">
+							                <div class="col-md-4"></div>
+							                <div class="col-md-4">
+							                    <?php echo $Password_changed_well;?>
+							                    <?php echo $all_fields_required;?>
+							                    <?php echo $current_password_incorrect;?>
+							                    <?php echo $new_password_do_not_match;?>
+							                    <?php echo $password_mustbe_greaterthan_8;?>
+							                <div class="card card-primary card-outline" style="box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+							                  
+							                  <div class="card-header text-center" style="box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2);"><i class="fa fa-edit"></i>&nbsp;Modify password</div>
+							                  <div class="card-body text-center" style="overflow: auto;">
+							                    
+							                    <form class="form-group" method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+							                          <br><!-- 
+							                          <span class="btn-show-pass">
+							                            <i class="fa fa-eye"></i>
+							                          </span> -->
+							                          <div class="d-flex">
+							                            <input type="password" name="current_password" placeholder="Current Password" class="form-control" id="pswdid1">
+							                            <i class="fas fa-eye-slash" id="ShowPswd1" onclick="ShowPswdFn1()"></i>
+							                            <i class="fas fa-eye" id="ShowPswdSlash1" onclick="ShowPswdFn11()" style="display:none;"></i>
+							                          </div>
+							                          <br>
+							                          <div class="d-flex">
+							                            <input type="password" name="new_password" placeholder="New Password" class="form-control" id="pswdid2"><br>
+							                            <i class="fas fa-eye-slash" id="ShowPswd2" onclick="ShowPswdFn2()"></i>
+							                            <i class="fas fa-eye" id="ShowPswdSlash2" onclick="ShowPswdFn22()" style="display:none;"></i>
+
+							                          </div>
+							                          <br>
+							                          <div class="d-flex">
+							                            <input type="password" name="confirm_new_password" class="form-control" placeholder="confirm New Password" id="pswdid3">
+							                            <i class="fas fa-eye-slash" id="ShowPswd3" onclick="ShowPswdFn3()"></i>
+							                            <i class="fas fa-eye" id="ShowPswdSlash3" onclick="ShowPswdFn33()" style="display:none;"></i>
+
+							                          </div>
+							                            <br>
+							                          <button class="btn btn-info" type="submit" name="submit_pswd"><i class="fa fa-save fa-fw"></i> &nbsp;Save change</button>
+							                        </form>
+
+							                  </div>
+							                </div>
+							                
+							                <!--end of card-->
+							            </div>
+							            <div class="col-md-4"></div>
+							          </div>
+                                    
                                     </div>
                                     <!--end of page body-->
 
@@ -459,6 +686,97 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
             </div>
         </div>
     </div>
+
+
+  <script>
+    function EditUsernamefn(){
+      var defaultUsername=document.getElementById('defaultUsername');
+      var formUsername=document.getElementById('formUsername');
+      defaultUsername.style.display="none";
+      formUsername.style.display="block";
+
+    }
+
+    function ShowPswdFn1(){
+      var x=document.getElementById('pswdid1');
+
+      if (x.type === "password") {
+        x.type = "text";
+        document.getElementById('ShowPswdSlash1').style.display="block";
+        document.getElementById('ShowPswd1').style.display="none";
+      }else{
+        x.type="password";
+      }
+
+    }
+
+    function ShowPswdFn11(){
+      var x=document.getElementById('pswdid1');
+
+      if (x.type === "text") {
+        x.type = "password";
+        document.getElementById('ShowPswdSlash1').style.display="none";
+        document.getElementById('ShowPswd1').style.display="block";
+      }else{
+        x.type="password";
+      }
+
+    }
+
+
+    function ShowPswdFn2(){
+      var x=document.getElementById('pswdid2');
+
+      if (x.type === "password") {
+        x.type = "text";
+        document.getElementById('ShowPswdSlash2').style.display="block";
+        document.getElementById('ShowPswd2').style.display="none";
+      }else{
+        x.type="password";
+      }
+
+    }
+
+    function ShowPswdFn22(){
+      var x=document.getElementById('pswdid2');
+
+      if (x.type === "text") {
+        x.type = "password";
+        document.getElementById('ShowPswdSlash2').style.display="none";
+        document.getElementById('ShowPswd2').style.display="block";
+      }else{
+        x.type="text";
+      }
+
+    }
+
+    function ShowPswdFn3(){
+      var x=document.getElementById('pswdid3');
+
+      if (x.type === "password") {
+        x.type = "text";
+        document.getElementById('ShowPswdSlash3').style.display="block";
+        document.getElementById('ShowPswd3').style.display="none";
+      }else{
+        x.type="password";
+      }
+
+    }
+
+    function ShowPswdFn33(){
+      var x=document.getElementById('pswdid3');
+
+      if (x.type === "text") {
+        x.type = "password";
+        document.getElementById('ShowPswdSlash3').style.display="none";
+        document.getElementById('ShowPswd3').style.display="block";
+      }else{
+        x.type="text";
+      }
+
+    }
+  </script>   
+
 
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->

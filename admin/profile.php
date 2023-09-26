@@ -83,7 +83,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin-info</title>
+    <title>Admin-prof</title>
       <!-- Meta -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">

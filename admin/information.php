@@ -411,14 +411,15 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                         <div class="pcoded-inner-content">
                             <div class="main-body">
                                 <div class="page-wrapper">
-<div class="page-body">
+                                    <div class="page-body">
+                                    
                                             <div class="row">
                                                 <!-- order-card start -->
                                                 <div class="col-md-2 col-xl-2"></div>
 
                                                 <div class="col-md-8 col-xl-8">
                                     
-                                                    <div class="card">
+                                                    <div class="card elevation-4">
                                                       <div class="card-header text-center" style="box-shadow:0 4px 8px 0 rgb(0, 0, 0, 0.2);"><h4><i class="fa fa-address-card"></i>&nbsp;My information</h4></div>
                                                       <div class="card-body" style="overflow: auto;">
 
