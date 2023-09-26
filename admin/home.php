@@ -151,7 +151,7 @@
                                    <li>
                                        <div class="media">
                                             <a href="#customer1" class="d-flex">
-                                               <img class="align-self-center img-radius" src="../assets/images/avatar-2.jpg" alt="Generic placeholder image">
+                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
                                                <i class="badge bg-c-pink"></i>
                                                <div class="media-body">
                                                    <h5 class="notification-user">customer name</h5>
@@ -164,7 +164,8 @@
                                    <li>
                                        <div class="media">
                                             <a href="#customer2" class="d-flex">
-                                               <img class="align-self-center img-radius" src="../assets/images/avatar-3.jpg" alt="Generic placeholder image">
+                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
+                                               <i class="badge bg-c-pink"></i>
                                                <div class="media-body">
                                                    <h5 class="notification-user">customer name</h5>
                                                    <p class="notification-msg">booking description</p>
