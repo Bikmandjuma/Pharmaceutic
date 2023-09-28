@@ -11,7 +11,7 @@
 include_once '..\Connect\connection.php';
 
 $admin_id=$_SESSION['id'];
-
+$dataUpdatedWell=null;
 $sql_user_info="SELECT * FROM admin where id=".$admin_id."";
 $query_user_info=mysqli_query($con,$sql_user_info);
 while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
@@ -24,7 +24,60 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
   $dob=$row_user_info['dob'];
 }
 
-?>
+
+                                            $allfieldRequired=$dataUpdatedWell=null;
+                                              if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                                  
+                                                  if (isset($_POST['edit_info'])) {
+                                                        $firstname=test_input($_POST['fname']);
+                                                        $lastname=test_input($_POST['lname']);
+                                                        $sex=test_input($_POST['gender']);
+                                                        $email=test_input($_POST['email']);
+                                                        $tel=test_input($_POST['phone']);
+                                                        $birthdate=test_input($_POST['dob']);
+
+                                                    
+                                                    if (empty($firstname) || empty($lastname) || empty($email) || empty($phone) || empty($sex) || empty($birthdate)) {
+                                                        $allfieldRequired='<script type="text/javascript">toastr.error("All fields required !")</script>';
+                                                    }else{
+                                                        
+                                                        $sql="UPDATE admin SET firstname='$firstname',lastname='$lastname',gender='$sex',phone='$tel',dob='$birthdate',email='$email' ";
+
+                                                        $query=mysqli_query($con,$sql);
+
+                                                        if ($query == 1) {
+                                                            ?>
+                                                                <script>
+                                                                  setTimeout(function(){
+                                                                      var wrong_cred=document.getElementById('Data_Update');
+                                                                      wrong_cred.style.display="block";
+                                                                      wrong_cred.style.display="none";
+                                                                      window.location.href="information.php";
+                                                                  },3000);
+                                                                      
+                                                                </script>
+                                                            <?php
+
+                                                            $dataUpdatedWell='<p id="Data_Update" style="background-color:green;color:white;padding:10px;border-radius:5px;text-align:center;">Data updated successfully !</p>';
+                                                          
+                                                        }
+                                                        
+
+                                                    }
+
+                                                  }
+                                              }
+
+                                              function test_input($data){
+                                                  $data=trim($data);
+                                                  $data=stripslashes($data);
+                                                  $data=htmlspecialchars($data);
+                                                  return $data;
+                                              }
+
+                                              echo $allfieldRequired;
+                                    ?>
+                                        
 
 <!DOCTYPE html>
 <html lang="en">
@@ -265,74 +318,37 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
 
                             <!--Dashboard and manage pages-->
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
-                                    <a href="#" onclick="window.location.href='{{route("AdminDashboard")}}'">
+                                <li>
+                                    <a href="#" onclick="window.location.href='home.php'">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                <li class="pcoded-hasmenu {{ request()->is('#') ? 'active' : '' }}">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Manage pages</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="#">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Homepage</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="#">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">About us</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="#">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Services</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="#">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Contact us</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
+                                
                             </ul>
 
                             <!--Adding Properties like cars -->
                             <ul class="pcoded-item pcoded-left-item">
                                 
-                                <li class="pcoded-hasmenu {{ request()->is('admin/add_properties') ? 'active' : '' }}">
+                                <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="fas fa-car"></i></span>
-                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Manage cars</span>
+                                        <span class="pcoded-micon"><i class="fas fa-pills"></i></span>
+                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Products</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="#" onclick="window.location.href='cars.php'">
+                                        <li>
+                                            <a href="#" onclick="window.location.href='AddProducts.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cars</span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add products</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="#" onclick="window.location.href='ViewProducts.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Others</span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">View products</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -353,20 +369,13 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="#" onclick="window.location.href='ViewBookings.php'">
+                                            <a href="#" onclick="window.location.href='ViewCustomers.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">View bookings</span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">View customers</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
-                                        <li class=" ">
-                                            <a href="#" onclick="window.location.href='ViewComments.php'">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">View comments</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        
+                                     
                                     </ul>
                                 </li>
 
@@ -396,7 +405,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="#apssword" onclick="window.location.href='password.php'">
+                                            <a href="#password" onclick="window.location.href='password.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                                 <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-23">Password</span>
                                                 <span class="pcoded-mcaret"></span>
@@ -419,7 +428,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                                 <div class="col-md-2 col-xl-2"></div>
 
                                                 <div class="col-md-8 col-xl-8">
-                                    
+                                                    <?php echo $dataUpdatedWell;?>
                                                     <div class="card" style="box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2);">
                                                       <div class="card-header text-center" style="box-shadow:0 4px 8px 0 rgb(0, 0, 0, 0.2);"><h4><i class="fa fa-address-card"></i>&nbsp;My information</h4></div>
                                                       <div class="card-body" style="overflow: auto;">
@@ -567,55 +576,6 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                             </div>
                                         </div>
 
-                                        <?php
-                                            $allfieldRequired=$dataUpdatedWell=null;
-                                              if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                                  
-                                                  if (isset($_POST['edit_info'])) {
-                                                        $firstname=test_input($_POST['fname']);
-                                                        $lastname=test_input($_POST['lname']);
-                                                        $sex=test_input($_POST['gender']);
-                                                        $email=test_input($_POST['email']);
-                                                        $tel=test_input($_POST['phone']);
-                                                        $birthdate=test_input($_POST['dob']);
-
-                                                    
-                                                    if (empty($firstname) || empty($lastname) || empty($email) || empty($phone) || empty($sex) || empty($birthdate)) {
-                                                        $allfieldRequired='<script type="text/javascript">toastr.error("All fields required !")</script>';
-                                                    }else{
-                                                        
-                                                        $sql="UPDATE admin SET firstname='$firstname',lastname='$lastname',gender='$sex',phone='$tel',dob='$birthdate',email='$email' ";
-
-                                                        $query=mysqli_query($con,$sql);
-
-                                                        if ($query == 1) {
-                                                          ?>
-                                                            <script>
-                                                              setTimeout(function(){
-                                                                window.location.href="information.php";
-                                                              },2000);
-                                                            </script>
-                                                          <?php
-
-                                                          $dataUpdatedWell='<script type="text/javascript">toastr.success("Data updated successfully !")</script>';
-                                                          
-                                                        }
-
-                                                    }
-
-                                                  }
-                                              }
-
-                                              function test_input($data){
-                                                  $data=trim($data);
-                                                  $data=stripslashes($data);
-                                                  $data=htmlspecialchars($data);
-                                                  return $data;
-                                              }
-
-                                              echo $allfieldRequired.$dataUpdatedWell;;
-                                    ?>
-                                        
 
                                     <!-- <div id="styleSelector"></div> -->
                                 	

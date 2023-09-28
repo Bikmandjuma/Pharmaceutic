@@ -138,7 +138,6 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                 }
         }
 
-
      </style>
   </head>
 
@@ -276,44 +275,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                <li class="pcoded-hasmenu {{ request()->is('#') ? 'active' : '' }}">
-                                    <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Manage pages</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="#">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Homepage</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="#">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">About us</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="#">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Services</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="#">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Contact us</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
+                                
                             </ul>
 
                             <!--Adding Properties like cars -->
@@ -321,22 +283,22 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                 
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="fas fa-car"></i></span>
-                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Manage cars</span>
+                                        <span class="pcoded-micon"><i class="fas fa-pills"></i></span>
+                                        <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Products</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
-                                        <li class=" ">
-                                            <a href="#" onclick="window.location.href='cars.php'">
+                                        <li>
+                                            <a href="#" onclick="window.location.href='AddProducts.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cars</span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add products</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="#">
+                                            <a href="#" onclick="window.location.href='ViewProducts.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Others</span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">View products</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
@@ -357,20 +319,13 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="#" onclick="window.location.href='ViewBookings.php'">
+                                            <a href="#" onclick="window.location.href='ViewCustomers.php'">
                                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">View bookings</span>
+                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">View customers</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
                                         </li>
-                                        <li class=" ">
-                                            <a href="#" onclick="window.location.href='ViewComments.php'">
-                                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                                <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">View comments</span>
-                                                <span class="pcoded-mcaret"></span>
-                                            </a>
-                                        </li>
-                                        
+                                     
                                     </ul>
                                 </li>
 
