@@ -36,9 +36,51 @@ if (isset($_POST['SubmitProductDetails'])) {
     $img=$_POST['image'];
     $btl_pack=$_POST['btl_pack'];
 
-    if (true) {
+    $target_dir = "../style/assets/images/";
+    $file_name=date('YmdHi').basename($_FILES["image"]["name"]);
+    $target_file = $target_dir .$file_name;
+    
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    // Check if image file is a actual image or fake image
+
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+
+    if ($uploadOk = 1) {
         
-    }
+        if($check !== false) {
+              // Check file size
+              if ($_FILES["image"]["size"] > 5000000) {
+                  $image_size='<script type="text/javascript">toastr.error("Sorry, your file is too large ,add 5MB at least.")</script>';
+                  $uploadOk = 0;
+              }
+
+              // Allow certain file formats
+              if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+              && $imageFileType != "gif" ) {
+                 $image_type='<script type="text/javascript">toastr.error("Sorry, only JPG, JPEG, PNG & GIF files are allowed.")</script>';
+                  $uploadOk = 0;
+              }
+
+              if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                  $u_sql="INSERT into  set image='$file_name' where id='$admin_id' ";
+                  $u_query=mysqli_query($con,$u_sql);
+                  ?>    
+                    <script>
+                        setTimeout(function(){
+                            window.location.href="profile.php";
+                        });
+                    </script>
+                  <?php
+                  $image_uploaded='<script type="text/javascript">toastr.success("Image added well !")</script>';
+              } else {
+                 $image_not_uploaded='<script type="text/javascript">toastr.error("Sorry, there was an error uploading your file !")</script>';
+              }
+        }
+
+      }elseif ($uploadOk = 0) {
+          $Error_to_uploaded='<script type="text/javascript">toastr.error("Sorry, your file was not uploaded")</script>';
+      }
+      
 }
 
 ?>
