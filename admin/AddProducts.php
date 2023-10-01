@@ -388,14 +388,14 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                                                 <div class="col-md-6">
                                                                    
                                                                     <label>Name</label>
-                                                                    <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter name" autofocus> 
+                                                                    <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter name" autofocus title="Enter name of product ex:paracetamol"> 
                                                                     <label>Description</label>
-                                                                    <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter description"> 
+                                                                    <input type="text" class="form-control" name="description" style="border-radius:10px;" placeholder="enter description" title="Enter product's description"> 
                                                                     <label>Quantity or packs in store</label>
-                                                                    <input type="text" name="qty" style="border-radius:10px;" class="form-control" placeholder="enter quantity ex:25"> 
+                                                                    <input type="text" name="qty" style="border-radius:10px;" class="form-control" placeholder="enter quantity ex:25" title="Enter qty of product ex:25"> 
                                                                     
                                                                     <label class="float-left">Bottles/pack</label>
-                                                                    <input type="text" class="form-control" name="qty" style="border-radius:10px;" placeholder="enter product's quantity ex:12bottles/pack"> 
+                                                                    <input type="text" class="form-control" name="bottle-pack" style="border-radius:10px;" placeholder="enter product's quantity ex:12 bottles" title="Enter name of product ex:12"> 
 
                                                                     <label>mg/bottle</label>
                                                                     <input type="text" name="mg-bottle" placeholder="Enter mg of bottle ex:200mg" class="form-control" style="border-radius:10px;">
