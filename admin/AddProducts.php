@@ -24,6 +24,23 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
   $dob=$row_user_info['dob'];
 }
 
+//insert data of product in store
+if (isset($_POST['SubmitProductDetails'])) {
+    $name=$_POST['name'];
+    $desc=$_POST['descr'];
+    $qty=$_POST['qty'];
+    $mg=$_POST['mg_btl'];
+    $man_date=$_POST['manu_date'];
+    $exp_date=$_POST['exp_date'];
+    $ndc=$_POST['ndc'];
+    $img=$_POST['image'];
+    $btl_pack=$_POST['btl_pack'];
+
+    if (true) {
+        
+    }
+}
+
 ?>
 
 
@@ -383,22 +400,22 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                                         <div class="card-header text-center" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.2);"><h4>Product details</h4></div>
                                                         <div class="card-body">
 
-                                                            <form action="" method="POST">
+                                                            <form method="POST" enctype="multipart/form-data">
                                                                 <div class="row">
                                                                 <div class="col-md-6">
                                                                    
                                                                     <label>Name</label>
                                                                     <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter name" autofocus title="Enter name of product ex:paracetamol"> 
                                                                     <label>Description</label>
-                                                                    <input type="text" class="form-control" name="description" style="border-radius:10px;" placeholder="enter description" title="Enter product's description"> 
+                                                                    <input type="text" class="form-control" name="descr" style="border-radius:10px;" placeholder="enter description" title="Enter product's description"> 
                                                                     <label>Quantity or packs in store</label>
                                                                     <input type="text" name="qty" style="border-radius:10px;" class="form-control" placeholder="enter quantity ex:25" title="Enter qty of product ex:25"> 
                                                                     
                                                                     <label class="float-left">Bottles/pack</label>
-                                                                    <input type="text" class="form-control" name="bottle-pack" style="border-radius:10px;" placeholder="enter product's quantity ex:12 bottles" title="Enter name of product ex:12"> 
+                                                                    <input type="text" class="form-control" name="btl_pack" style="border-radius:10px;" placeholder="enter product's quantity ex:12 bottles" title="Enter name of product ex:12"> 
 
                                                                     <label>mg/bottle</label>
-                                                                    <input type="text" name="mg-bottle" placeholder="Enter mg of bottle ex:200mg" class="form-control" style="border-radius:10px;">
+                                                                    <input type="text" name="mg_btl" placeholder="Enter mg of bottle ex:200mg" class="form-control" style="border-radius:10px;">
 
                                                                 </div>
                                                                 <div class="col-md-6 text-center">
@@ -408,7 +425,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                                                     <label class="float-left">Manufactured date</label>
                                                                     <input type="date" name="manu_date" style="border-radius:10px;" class="form-control" >
                                                                     <label class="float-left">Expiration date</label>
-                                                                    <input type="date" name="expiration_date" style="border-radius:10px;" class="form-control" > 
+                                                                    <input type="date" name="exp_date" style="border-radius:10px;" class="form-control" > 
 
                                                                     <label class="float-left">NDC (national drug code)</label>
                                                                     <input type="text" name="ndc" placeholder="enter NDC ex:12345-1234-00" style="border-radius:10px;" class="form-control"> 
