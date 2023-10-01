@@ -1,46 +1,71 @@
 <?php
-session_start();
-include_once('Connect/connection.php');
-include_once 'phpcode/codes.php';
-$name_required=$email_required=$phone_required=$password_required=$re_password_required=null;
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if (isset($_POST['submit_register'])) {
-        $name=test_input($_POST['name']);
-        $email=test_input($_POST['email']);
-        $phone=test_input($_POST['phone']);
-        $password=test_input($_POST['password']);
-        $re_password=test_input($_POST['re_password']);
+    
+    session_start();
+    include_once('Connect/connection.php');
+    include_once 'phpcode/codes.php';
 
-        if (empty($name)) {
-            $name_required='<br><p style="color:red;border-radius:5px;">Name field is required !</p>';
-        }elseif (empty($email)) {
-            $email_required='<p style="color:red;border-radius:5px;">Email field is required !</p>';
-        }elseif (empty($phone)) {
-            $phone_required='<p style="color:red;border-radius:5px;">phone field is required !</p>';
-        }elseif (empty($password)) {
-            $password_required='<p style="color:red;border-radius:5px;">Password field is required !</p>';
-        }elseif (empty($re_password)) {
-            $re_password_required='<p style="color:red;border-radius:5px;">Re_enter password field is required !</p>';
-        }else{
-             $sql="INSERT INTO customers ('','$name','$email','$phone','$password')";
-              $query=mysqli_query($con,$sql);
-              if ($query == true) {
-                
-              }
+    $name_required=$name_validate=$email_required=$email_validate=$phone_required=$phone_validate=$phone_validate_counts=$re_password_str_len=$password_confirmation=$password_str_len=$password_required=$re_password_required=null;
+    $name=$email=$phone=$password=$re_password=null;
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        if (isset($_POST['submit_register'])) {
+            $name=test_input($_POST['name']);
+            $email=test_input($_POST['email']);
+            $phone=test_input($_POST['phone']);
+            $password=test_input($_POST['password']);
+            $re_password=test_input($_POST['re_password']);
+
+            $pattern_name = '/^[A-Za-z]+$/';
+            $phone_pattern = '/^[0-9]+$/';
+            $email_pattern = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i";
+
+            if (empty($name)) {
+                $name_required='<p id="error_field">Name field is required !</p>';
+            }elseif(!preg_match($pattern_name, $name)){
+                $name_validate='<p id="error_field">Name contains only characters !</p>';
+            }elseif (empty($email)) {
+                $email_required='<p id="error_field">Email field is required !</p>';
+            }elseif(!preg_match($email_pattern, $email)) {
+                $email_validate='<p id="error_field">Enter valid email !</p>';
+            }elseif(empty($phone)) {
+                $phone_required='<p id="error_field">phone field is required !</p>';
+            }elseif(!preg_match($phone_pattern, $phone)) {
+                $phone_validate='<p id="error_field">phone contains only numbers !</p>';
+            }elseif(strlen($phone) < 10) {
+                $phone_validate_counts='<p id="error_field">phone contains 10 numerics !</p>';
+            }elseif (empty($password)) {
+                $password_required='<p id="error_field">Password field is required !</p>';
+            }elseif (strlen($password) < 8) {
+                $password_str_len='<p id="error_field">Password must be at least 8 characters !</p>';
+            }elseif (empty($re_password)) {
+                $re_password_required='<p id="error_fields">Re_enter password field is required !</p>';
+            }elseif (strlen($re_password) < 8) {
+                $re_password_str_len='<p id="error_fields">Re_enter password must be at least 8 characters !</p>';
+            }elseif ($password === $re_password) {
+                $password_confirmation="<p id='error_fields'>Password do not much !</p>";
+            }else{
+               
+                // $sql="INSERT INTO customers ('','$name','$email','$phone','$password')";
+                // $query=mysqli_query($con,$sql);
+                // if ($query == true) {
+                      
+                // }
+
+            
+            }
+
+           
         }
 
-       
     }
 
-}
+    function test_input($data){
+    $data=trim($data);
+    $data=stripcslashes($data);
+    $data=htmlspecialchars($data);
 
-function test_input($data){
-  $data=trim($data);
-  $data=stripcslashes($data);
-  $data=htmlspecialchars($data);
-  
-  return $data;
-}
+    return $data;
+    }
 
 ?>
 <!DOCTYPE html>
@@ -73,7 +98,18 @@ function test_input($data){
   <link rel="stylesheet" type="text/css" href="style/assets/css/style.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    #error_field{
+      color:red;
+      margin-top:-15px;
+      text-align:center;
+    }
 
+    #error_fields{
+      color:red;
+      text-align:center;
+    }
+  </style>
 </head>
 
 <body>
@@ -149,50 +185,54 @@ function test_input($data){
                     <div class="login-card card-block auth-body mr-auto ml-auto" style="margin-top:-120px;">
                         <form class="md-float-material" action="#" method="POST">
                             
-                            <div class="auth-box">
-                                <div class="row m-b-20">
-                                    <div class="col-md-12 text-center">
-                                        <h3 class="text-primary">Sign Up</h3>
+                              <div class="auth-box">
+                                    <div class="row m-b-20">
+                                        <div class="col-md-12 text-center">
+                                            <h3 class="text-primary">Sign Up</h3>
+                                        </div>
                                     </div>
-                                </div>
-                                <hr/>
+                                    <hr/>
                                 
-                                <div class="input-group mb-3">
-                                    <span class="input-group-addon" id="name"><i class="icofont icofont-user"></i></span>
-                                    <input type="text" class="form-control" placeholder="Enter your names" title="Enter your email" data-toggle="tooltip" name="name">
-                                    <?php echo $name_required;?>
-                                </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="name"><i class="icofont icofont-user"></i></span>
+                                        <input type="text" class="form-control" placeholder="Enter your names" title="Enter your email" data-toggle="tooltip" name="name" value="<?php echo $name;?>">
+                                        
+                                    </div>
+                                    <?php echo $name_required.$name_validate;?>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="email"><i class="icofont icofont-envelope"></i></span>
-                                        <input type="text" class="form-control" placeholder="Enter your email" title="Enter your email" data-toggle="tooltip" name="email">
-                                      <?php echo $email_required;?>
+                                        <input type="text" class="form-control" placeholder="Enter your email" title="Enter your email" data-toggle="tooltip" name="email" value="<?php echo $email;?>">
+                                      
                                     </div>
+                                    <?php echo $email_required.$email_validate;?>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="phone"><i class="icofont icofont-phone"></i></span>
-                                        <input type="text" class="form-control" placeholder="Enter your phone" title="Enter your email" data-toggle="tooltip" name="phone">
-                                        <?php echo $phone_required;?>
+                                        <input type="text" class="form-control" placeholder="Enter your phone" title="Enter your email" data-toggle="tooltip" name="phone" value="<?php echo $phone;?>">
+                                       
                                     </div>
+                                    <?php echo $phone_required.$phone_validate.$phone_validate_counts;?>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="password"><i class="icofont icofont-key"></i></span>
-                                        <input type="password" class="form-control" placeholder="Enter your password" title="Enter your email" data-toggle="tooltip" name="password" id="pswdid1">
+                                        <input type="password" class="form-control" placeholder="Enter your password" title="Enter your email" data-toggle="tooltip" name="password" id="pswdid1" value="<?php echo $password;?>">
                                         <span class="input-group-addon">
                                             <i class="fa fa-eye-slash" id="ShowPswd1" onclick="ShowPswdFn1()"></i>
                                             <i class="fa fa-eye" id="ShowPswdSlash1" onclick="ShowPswdFn11()" style="display:none;"></i>
                                         </span>
-                                        <?php echo $password_required;?>
+                                       
                                     </div>
+                                    <?php echo $password_required.$password_str_len.$password_confirmation;?>
 
                                      <div class="input-group mb-3">
                                         <span class="input-group-addon" id="password"><i class="icofont icofont-key"></i></span>
-                                        <input type="password" class="form-control" placeholder="Re-Enter your password" title="Enter your email" data-toggle="tooltip" name="re_password" id="pswdid2">
+                                        <input type="password" class="form-control" placeholder="Re-Enter your password" title="Enter your email" data-toggle="tooltip" name="re_password" id="pswdid2" value="<?php echo $re_password;?>">
                                         <span class="input-group-addon">
                                             <i class="fa fa-eye-slash" id="ShowPswd2" onclick="ShowPswdFn2()"></i>
                                             <i class="fa fa-eye" id="ShowPswdSlash2" onclick="ShowPswdFn22()" style="display:none;"></i>
                                         </span>
-                                        <?php echo $re_password_required;?>
+                                        <?php echo $re_password_required.$re_password_str_len;?>
                                     </div>
 
                                     <div class="row m-t-30">
@@ -200,7 +240,7 @@ function test_input($data){
                                             <button type="submit" style="width: 150px; border-radius:30px; background-color: steelblue;color: white;" class="btn bg-primary btn-md btn-block waves-effect text-center m-b-20 mx-auto" name="submit_register"> Register <i class="fa fa-save"></i> </button>
                                         </div>
                                     </div>
-                                <hr/>
+                                <hr/s>
                                 <div class="row">
                                     <div class="col-md-12 text-center">
                                         Already have an account &nbsp;<a href="login.php" class="waves-effect text-primary m-b-20 mx-auto"> Login <i class="fa fa-lock-open"></i></a>

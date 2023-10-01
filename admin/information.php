@@ -47,15 +47,14 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
 
                                                         if ($query == 1) {
                                                             ?>
-                                                                <script>
+                                                              <script>
                                                                   setTimeout(function(){
                                                                       var wrong_cred=document.getElementById('Data_Update');
                                                                       wrong_cred.style.display="block";
                                                                       wrong_cred.style.display="none";
                                                                       window.location.href="information.php";
-                                                                  },3000);
-                                                                      
-                                                                </script>
+                                                                  },2000);        
+                                                              </script>
                                                             <?php
 
                                                             $dataUpdatedWell='<p id="Data_Update" style="background-color:green;color:white;padding:10px;border-radius:5px;text-align:center;">Data updated successfully !</p>';

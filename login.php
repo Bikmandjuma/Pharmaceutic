@@ -191,7 +191,7 @@ function test_input($data){
                                 </div>
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="password"><i class="icofont icofont-key"></i></span>
-                                        <input type="password" class="form-control" placeholder="Enter your password" title="Enter your email" data-toggle="tooltip" name="Password" id="pswdid1">
+                                        <input type="password" class="form-control" placeholder="Enter your password" title="Enter your password" data-toggle="tooltip" name="Password" id="pswdid1">
                                         <span class="input-group-addon">
                                             <i class="fa fa-eye-slash" id="ShowPswd1" onclick="ShowPswdFn1()"></i>
                                             <i class="fa fa-eye" id="ShowPswdSlash1" onclick="ShowPswdFn11()" style="display:none;"></i>

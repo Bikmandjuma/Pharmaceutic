@@ -374,9 +374,50 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                             <div class="main-body">
                                 <div class="page-wrapper">
                                     
-                                    <div class="page-body text-center">
-                                        
-                                        content goes here , Add products !
+                                    <div class="page-body">
+
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-8">
+                                                    <div class="card" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.2);">
+                                                        <div class="card-header text-center" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.2);"><h4>Product details</h4></div>
+                                                        <div class="card-body">
+
+                                                            <form action="" method="POST">
+                                                                <div class="row">
+                                                                <div class="col-md-6">
+                                                                   
+                                                                    <label>Name</label>
+                                                                    <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter name" autofocus> 
+                                                                    <label>Description</label>
+                                                                    <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter description"> 
+                                                                    <label>Manufactured date</label>
+                                                                    <input type="date" name="manu_date" style="border-radius:10px;" class="form-control" > 
+
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="float-left">Quantity</label>
+                                                                    <input type="text" class="form-control" name="qty" style="border-radius:10px;" placeholder="enter product's quantity">
+                                                                    <label class="float-left">Image</label>
+                                                                    <input type="file" class="form-control" name="image" style="border-radius:10px;"> 
+                                                                    <label>Expiration date</label>
+                                                                    <input type="date" name="expiration_date" style="border-radius:10px;" class="form-control" > 
+                                                                    
+                                                                </div>
+                                                                <div class="col-md-12 text-center">
+                                                                    <button class="btn btn-primary mt-4" type="submit" name="SubmitProductDetails" style="position: relative;border-radius:10px;">Submit</button>
+                                                                </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-2"></div>
+                                            </div>
+                                     
 
                                     </div>
 
