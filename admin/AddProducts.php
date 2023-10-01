@@ -391,21 +391,29 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                                                     <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter name" autofocus> 
                                                                     <label>Description</label>
                                                                     <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter description"> 
-                                                                    <label>Manufactured date</label>
-                                                                    <input type="date" name="manu_date" style="border-radius:10px;" class="form-control" > 
+                                                                    <label>Quantity or packs in store</label>
+                                                                    <input type="text" name="qty" style="border-radius:10px;" class="form-control" placeholder="enter quantity ex:25"> 
+                                                                    
+                                                                    <label class="float-left">Bottles/pack</label>
+                                                                    <input type="text" class="form-control" name="qty" style="border-radius:10px;" placeholder="enter product's quantity ex:12bottles/pack"> 
+
+                                                                    <label>mg/bottle</label>
+                                                                    <input type="text" name="mg-bottle" placeholder="Enter mg of bottle ex:200mg" class="form-control" style="border-radius:10px;">
 
                                                                 </div>
-                                                                <div class="col-md-6">
-                                                                    <label class="float-left">Quantity</label>
-                                                                    <input type="text" class="form-control" name="qty" style="border-radius:10px;" placeholder="enter product's quantity">
+                                                                <div class="col-md-6 text-center">
+                                                                    
                                                                     <label class="float-left">Image</label>
                                                                     <input type="file" class="form-control" name="image" style="border-radius:10px;"> 
-                                                                    <label>Expiration date</label>
+                                                                    <label class="float-left">Manufactured date</label>
+                                                                    <input type="date" name="manu_date" style="border-radius:10px;" class="form-control" >
+                                                                    <label class="float-left">Expiration date</label>
                                                                     <input type="date" name="expiration_date" style="border-radius:10px;" class="form-control" > 
-                                                                    
-                                                                </div>
-                                                                <div class="col-md-12 text-center">
-                                                                    <button class="btn btn-primary mt-4" type="submit" name="SubmitProductDetails" style="position: relative;border-radius:10px;">Submit</button>
+
+                                                                    <label class="float-left">NDC (national drug code)</label>
+                                                                    <input type="text" name="ndc" placeholder="enter NDC ex:12345-1234-00" style="border-radius:10px;" class="form-control"> 
+
+                                                                    <button class="btn btn-primary mt-2" type="submit" name="SubmitProductDetails" style="position: relative;border-radius:10px;">Submit</button>
                                                                 </div>
                                                                 </div>
 
