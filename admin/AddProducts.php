@@ -25,7 +25,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
 }
 
 //insert data of product in store
-$invalid_date=null;
+$invalid_date=$name=$descr=$mg_btl=$manu_date=$exp_date=$ndc=$btl_pack=$qty=null;
 if (isset($_POST['SubmitProductDetails'])) {
     $name=$_POST['name'];
     $descr=$_POST['descr'];
@@ -451,31 +451,30 @@ if (isset($_POST['SubmitProductDetails'])) {
                                                                 <div class="col-md-6">
                                                                    
                                                                     <label>Name</label>
-                                                                    <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter name" autofocus title="Enter name of product ex:paracetamol"> 
+                                                                    <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter name" autofocus title="Enter name of product ex:paracetamol" value="<?php echo $name;?>"> 
                                                                     <label>Description</label>
-                                                                    <input type="text" class="form-control" name="descr" style="border-radius:10px;" placeholder="enter description" title="Enter product's description"> 
+                                                                    <input type="text" class="form-control" name="descr" style="border-radius:10px;" placeholder="enter description" title="Enter product's description" value="<?php echo $descr;?>"> 
                                                                     <label>Quantity or packs in store</label>
-                                                                    <input type="text" name="qty" style="border-radius:10px;" class="form-control" placeholder="enter quantity ex:25" title="Enter qty of product ex:25"> 
+                                                                    <input type="text" name="qty" style="border-radius:10px;" class="form-control" placeholder="enter quantity ex:25" title="Enter qty of product ex:25" value="<?php echo $qty;?>"> 
                                                                     
                                                                     <label class="float-left">Bottles/pack</label>
-                                                                    <input type="text" class="form-control" name="btl_pack" style="border-radius:10px;" placeholder="enter product's quantity ex:12 bottles" title="Enter name of product ex:12"> 
+                                                                    <input type="text" class="form-control" name="btl_pack" style="border-radius:10px;" placeholder="enter product's quantity ex:12 bottles" title="Enter name of product ex:12" value="<?php echo $btl_pack;?>"> 
 
                                                                     <label>mg/bottle</label>
-                                                                    <input type="text" name="mg_btl" placeholder="Enter mg of bottle ex:200mg" class="form-control" style="border-radius:10px;">
+                                                                    <input type="text" name="mg_btl" placeholder="Enter mg of bottle ex:200mg" class="form-control" style="border-radius:10px;" value="<?php echo $mg_btl;?>">
 
                                                                 </div>
                                                                 <div class="col-md-6 text-center">
                                                                     
                                                                     <label class="float-left">Image</label>
-                                                                    <input type="file" class="form-control" name="image" style="border-radius:10px;"> 
+                                                                    <input type="file" class="form-control" name="image" style="border-radius:10px;" value="<?php echo $file_name;?>" required> 
                                                                     <label class="float-left">Manufactured date</label>
-                                                                    <input type="date" name="manu_date" style="border-radius:10px;" class="form-control" >
+                                                                    <input type="date" name="manu_date" style="border-radius:10px;" class="form-control" value="<?php echo $manu_date;?>">
                                                                     <label class="float-left">Expiration date</label>
-                                                                    <?php echo $invalid_date;?>
-                                                                    <input type="date" name="exp_date" style="border-radius:10px;" class="form-control" > 
+                                                                    <input type="date" name="exp_date" style="border-radius:10px;" class="form-control" value="<?php echo $exp_date;?>"> 
 
                                                                     <label class="float-left">NDC (national drug code)</label>
-                                                                    <input type="text" name="ndc" placeholder="enter NDC ex:12345-1234-00" style="border-radius:10px;" class="form-control"> 
+                                                                    <input type="text" name="ndc" placeholder="enter NDC ex:12345-1234-00" style="border-radius:10px;" class="form-control" value="<?php echo $ndc;?>"> 
 
                                                                     <button class="btn btn-primary mt-2" type="submit" name="SubmitProductDetails" style="position: relative;border-radius:10px;">Submit</button>
                                                                 </div>
