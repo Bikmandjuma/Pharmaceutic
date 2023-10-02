@@ -27,13 +27,12 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
 //insert data of product in store
 if (isset($_POST['SubmitProductDetails'])) {
     $name=$_POST['name'];
-    $desc=$_POST['descr'];
+    $descr=$_POST['descr'];
     $qty=$_POST['qty'];
-    $mg=$_POST['mg_btl'];
-    $man_date=$_POST['manu_date'];
+    $mg_btl=$_POST['mg_btl'];
+    $manu_date=$_POST['manu_date'];
     $exp_date=$_POST['exp_date'];
     $ndc=$_POST['ndc'];
-    $img=$_POST['image'];
     $btl_pack=$_POST['btl_pack'];
 
     $target_dir = "../style/assets/images/";
@@ -62,19 +61,18 @@ if (isset($_POST['SubmitProductDetails'])) {
               }
 
               if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                  $u_sql="INSERT into  set image='$file_name' where id='$admin_id' ";
+                  $u_sql="INSERT into products values ('','$name','$descr','$file_name','$qty','$mg_btl','$btl_pack','$manu_date','$exp_date','$ndc')";
                   $u_query=mysqli_query($con,$u_sql);
                   ?>    
                     <script>
                         setTimeout(function(){
-                            window.location.href="profile.php";
+                            window.location.href="AddProduct.php";
                         });
                     </script>
                   <?php
-                  $image_uploaded='<script type="text/javascript">toastr.success("Image added well !")</script>';
-              } else {
-                 $image_not_uploaded='<script type="text/javascript">toastr.error("Sorry, there was an error uploading your file !")</script>';
+                  $image_uploaded='<script type="text/javascript">toastr.success("data added well !")</script>';
               }
+
         }
 
       }elseif ($uploadOk = 0) {
