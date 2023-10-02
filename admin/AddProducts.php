@@ -25,6 +25,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
 }
 
 //insert data of product in store
+$invalid_date=null;
 if (isset($_POST['SubmitProductDetails'])) {
     $name=$_POST['name'];
     $descr=$_POST['descr'];
@@ -35,7 +36,7 @@ if (isset($_POST['SubmitProductDetails'])) {
     $ndc=$_POST['ndc'];
     $btl_pack=$_POST['btl_pack'];
 
-    $target_dir = "../style/assets/images/";
+    $target_dir = "../style/assets/images/drug/";
     $file_name=date('YmdHi').basename($_FILES["image"]["name"]);
     $target_file = $target_dir .$file_name;
     
@@ -61,16 +62,21 @@ if (isset($_POST['SubmitProductDetails'])) {
               }
 
               if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                  $u_sql="INSERT into products values ('','$name','$descr','$file_name','$qty','$mg_btl','$btl_pack','$manu_date','$exp_date','$ndc')";
-                  $u_query=mysqli_query($con,$u_sql);
-                  ?>    
-                    <script>
-                        setTimeout(function(){
-                            window.location.href="AddProduct.php";
-                        });
-                    </script>
-                  <?php
-                  $image_uploaded='<script type="text/javascript">toastr.success("data added well !")</script>';
+                    if (date('y-m-d') > $exp_date) {
+                        $invalid_date="invalid date !";
+                    }else{
+                      $u_sql="INSERT into products values ('','$name','$descr','$file_name','$qty','$mg_btl','$btl_pack','$manu_date','$exp_date','$ndc')";
+                      $u_query=mysqli_query($con,$u_sql);
+                      ?>    
+                        <script>
+                            setTimeout(function(){
+                                window.location.href="AddProducts.php";
+                            });
+                        </script>
+                      <?php
+                      $image_uploaded='<script type="text/javascript">toastr.success("data added well !")</script>';
+                    }
+              
               }
 
         }
@@ -465,6 +471,7 @@ if (isset($_POST['SubmitProductDetails'])) {
                                                                     <label class="float-left">Manufactured date</label>
                                                                     <input type="date" name="manu_date" style="border-radius:10px;" class="form-control" >
                                                                     <label class="float-left">Expiration date</label>
+                                                                    <?php echo $invalid_date;?>
                                                                     <input type="date" name="exp_date" style="border-radius:10px;" class="form-control" > 
 
                                                                     <label class="float-left">NDC (national drug code)</label>
