@@ -1,3 +1,162 @@
+<?php
+session_start();
+use PHPMailer\PHPMailer\PHPMailer;
+include_once 'Connect/connection.php';
+$Email_Sent=$Email_Not_Found=$MailerError=$email_required=null;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    if(isset($_POST['submit_forgot_pswd'])){
+          $email_input= test_input($_POST['email']);
+          $sql="SELECT email FROM customers UNION SELECT email FROM admin UNION SELECT email FROM admin";
+          $res=mysqli_query($con,$sql);
+          while ($rows=mysqli_fetch_array($res)) {
+              if (empty($email_input)) {
+                  
+                    ?>
+                    <script>
+                      
+                      setTimeout(function(){
+                          var required=document.getElementById('email_field_required');
+                          required.style.display="block";
+                          required.style.display="none";
+                      },4000);
+
+                    </script>
+                  <?php
+
+                  $email_required='<p style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;" id="email_field_required">Email field is required ! </p>';
+                  break;
+
+              }elseif($rows[0] === $email_input) {
+                    $email=$rows[0];
+                    
+                    require_once 'PHPMailer\PHPMailer.php';
+                    require_once 'PHPMailer\SMTP.php';
+                    require_once 'PHPMailer\Exception.php';
+
+                    // $r = mysqli_fetch_assoc($res);
+                    // $password = $r['password'];
+                    $link="<a href='ResetPassword.php'>Reset password</a>";
+
+                    //Encrypting email
+                    $email_string=$email;
+
+                    // Store the cipher method
+                    $ciphering = "AES-128-CTR";
+
+                    // Use OpenSSl Encryption method
+                    $iv_length = openssl_cipher_iv_length($ciphering);
+                    $options = 0;
+
+                    // Non-NULL Initialization Vector for encryption
+                    $encryption_iv = '1234567891011121';
+
+                    // Store the encryption key
+                    $encryption_key = "TMIS";
+
+                    // Use openssl_encrypt() function to encrypt the data
+                    $encrypted_email = openssl_encrypt($email_string, $ciphering,$encryption_key, $options, $encryption_iv);
+
+                    try {
+
+                        //Server settings
+                        // $mail->SMTPDebug = SMTP::DEBUG_SERVER; 
+                        $mail=new PHPMailer();                     //Enable verbose debug output
+                        $mail->isSMTP();                                            //Send using SMTP
+                        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                        $mail->Username   = 'bikmangeek@gmail.com';                     //SMTP username
+                        $mail->Password   = 'hpvrdqffxfmpsgku';                         //SMTP password
+                        $mail->SMTPSecure = 'tls' ; //tls;            //Enable implicit TLS encryption
+                        $mail->Port       = 587; //587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                        //Content
+                        $mail->isHTML(true); 
+                        $mail->setFrom($email,'Tmis');
+                        $mail->addAddress($email);               //Set email format to HTML
+                        $mail->Subject = "Password reset link";
+                        // $mail->Body    = "<span id='link_message'>Please use this link to reset password " .'<a href="http://localhost/project/TMIS/Training-managent-system-TMIS/ResetPassword.php?email='.$encrypted_email.'">Reset Password here : '.$encrypted_email.'</a></span>';
+                        $mail->Body ='
+                                    <html> 
+                                      <head> 
+                                          <title>Welcome to pharmaceutic</title> 
+                                      </head> 
+                                      <body> 
+                                          <h1>Pharmaceutic</h1> 
+                                          <p style="box-radius:5px;border:1px solid red;box-shadow:0px 4px 8px 0px rgba(0,0,0,0.2);text-align: center;background-color: white;font-family: sans-serif;font-weight: bold;padding: 5px;">Please use this link to reset password <a href="http://localhost/project/TMIS/Training-managent-system-TMIS/ResetPassword.php?email='.$encrypted_email.'">Reset Password here</a></p>
+                                      </body> 
+                                      </html>';
+                  
+
+                        $mail->send();
+
+                        ?>
+                          <script>
+                            
+                            setTimeout(function(){
+                                var required=document.getElementById('Email_Sent');
+                                required.style.display="block";
+                                required.style.display="none";
+                            },5000);
+
+                          </script>
+                        <?php
+
+                        $Email_Sent='<p style="background-color:green;color:white;padding:10px;border-radius:5px;text-align:center;" id="Email_Sent">Check your email ,we mailed you a reset link !</p>';
+
+
+                    } catch (Exception $e) {
+
+                        ?>
+                          <script>
+                            
+                            setTimeout(function(){
+                                var required=document.getElementById('MailerError');
+                                required.style.display="block";
+                                required.style.display="none";
+                            },5000);
+
+                          </script>
+                        <?php
+
+                        $MailerError='<p style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;" id="MailerError">Message could not be sent. Mailer Error: {$mail->ErrorInfo} !</p>';            
+                    }
+
+
+              }else{
+                  ?>
+                    <script>
+                      
+                      setTimeout(function(){
+                          var required=document.getElementById('email_not_found');
+                          required.style.display="block";
+                          required.style.display="none";
+                      },5000);
+
+                    </script>
+                  <?php
+
+                  $Email_Not_Found='<p style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;" id="email_not_found">Email not found in our database !</p>';  
+              }
+              //end of else
+          
+          }
+          //end of while loop
+    }
+    //end of if of submit
+
+}
+//end of if request
+
+function test_input($data){
+    $data=trim($data);
+    $data=stripslashes($data);
+    $data=htmlspecialchars($data);
+    return $data;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,6 +262,13 @@
             <div class="col-lg-12 mx-auto align-self-center">
               
                     <div class="login-card card-block auth-body mr-auto ml-auto" style="margin-top:-100px;">
+                      <?php echo $email_required.$MailerError;
+                          if ($Email_Sent == true) {
+                              echo $Email_Sent;
+                          }else{
+                            echo $Email_Not_Found;
+                          }
+                      ?>
                         <form class="md-float-material" action="#" method="POST">
                             
                             <div class="auth-box">
@@ -110,6 +276,7 @@
                                     <div class="col-md-12 text-center">
                                         <h3 class="text-primary">Forgot password</h3>
                                     </div>
+                                    
                                 </div>
                                 <hr/>
                                    
@@ -120,7 +287,7 @@
                                    
                                     <div class="row m-t-30">
                                         <div class="col-md-12 text-center">
-                                            <button type="submit" style="width: 220px; border-radius:30px;color: white;" class="btn bg-primary btn-md btn-block waves-effect text-center m-b-20 mx-auto">Send reset link <i class="fa fa-paper-plane"></i> </button>
+                                            <button type="submit" style="width: 220px; border-radius:30px;color: white;" class="btn bg-primary btn-md btn-block waves-effect text-center m-b-20 mx-auto" name="submit_forgot_pswd">Send reset link <i class="fa fa-paper-plane"></i> </button>
                                         </div>
                                     </div>
                                 <hr/>

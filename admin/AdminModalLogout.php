@@ -12,6 +12,15 @@
 
 
   ?>
+  <style>
+    #GetLostId:hover{
+      background-color: red;
+    }
+    #GetLostId{
+      border-radius:10px;
+      color:white;
+    }
+  </style>
   <!--start of Logout modal -->
   <div class="modal" id="ModalLogout" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm text-center">
@@ -25,7 +34,7 @@
           <div class="actionsBtns">
             <form method="POST">
               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-              <button type="submit" name="GetLost" class="btn btn-primary"  style="border-radius:10px;color:white;"><i class="fa fa-lock"></i> Yes</button> &nbsp;&nbsp;&nbsp;
+              <button type="submit" name="GetLost" class="btn btn-primary" id="GetLostId"><i class="fa fa-lock"></i> Yes</button> &nbsp;&nbsp;&nbsp;
               <button class="btn btn-danger" data-dismiss="modal" style="border-radius:10px;"><i class="fa fa-times"></i> Not now</button>
             </form>
           </div>

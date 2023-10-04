@@ -25,8 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $allfieldRequired='<p style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;" id="login_fields_required">username & password fields are required !</p>';
 
     }else{
-        // $query_user=mysqli_query($con,"SELECT u_id,firstname,lastname,gender,phone,email,dob,username,password,image FROM users where username='$user' and password='".md5($pass)."'");
-        //   $row=mysqli_fetch_array($query_user);
+        $query_cutomers=mysqli_query($con,"SELECT c_id,name,email,phone,password FROM customers where email='$user' and password='".md5($pass)."'");
+          $row_customers=mysqli_fetch_array($query_cutomers);
 
         $query_admin=mysqli_query($con,"SELECT id,firstname,lastname,gender,phone,email,dob,password,image FROM admin where email='$user' and password='".md5($pass)."'");
           $row_admin=mysqli_fetch_array($query_admin);
@@ -43,7 +43,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               $_SESSION['image']=$row_admin[8];
 
               header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/admin/home.php");
-          }else{
+          }elseif ($row_customers > 0) {
+              $_SESSION['c_id']=$row_customers[0];
+              $_SESSION['name']=$row_customers[1];
+              $_SESSION['email']=$row_customers[2];
+              $_SESSION['phone']=$row_customers[3];
+              $_SESSION['password']=$row_customers[4];
+
+              header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/customer/index.php");
+
+          }
+          else{
               ?>
                 <script>
                   setTimeout(function(){

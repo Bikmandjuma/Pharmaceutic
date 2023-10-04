@@ -8,21 +8,17 @@
     <?php
   }
 
-include_once '..\Connect\connection.php';
+    include_once '..\Connect\connection.php';
 
-$admin_id=$_SESSION['id'];
+    $admin_id=$_SESSION['id'];
 
-$sql_user_info="SELECT * FROM admin where id=".$admin_id."";
-$query_user_info=mysqli_query($con,$sql_user_info);
-while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
-  $fname=$row_user_info['firstname'];
-  $lname=$row_user_info['lastname'];
-  $user_img=$row_user_info['image'];
-  $phone=$row_user_info['phone'];
-  $email=$row_user_info['email'];
-  $gender=$row_user_info['gender'];
-  $dob=$row_user_info['dob'];
-}
+    $sql_user_info="SELECT * FROM admin where id=".$admin_id."";
+    $query_user_info=mysqli_query($con,$sql_user_info);
+    while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
+      $fname=$row_user_info['firstname'];
+      $lname=$row_user_info['lastname'];
+      $user_img=$row_user_info['image'];
+    }
 
 ?>
 
@@ -30,7 +26,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin-add-product</title>
+    <title>Admin-view-product</title>
       <!-- Meta -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -376,7 +372,205 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                     
                                     <div class="page-body text-center">
                                         
-                                        content goes here , View products !
+                                                                            
+                                        <div class="card">
+                                            <div class="card-header">
+
+                                                <h5>Manage products</h5>
+                                                <div class="card-header-right">
+                                                    <ul class="list-unstyled card-option">
+                                                        <li><i class="fa fa-chevron-left"></i></li>
+                                                        <li><i class="fa fa-window-maximize full-card"></i></li>
+                                                        <li><i class="fa fa-minus minimize-card"></i></li>
+                                                        <li><i class="fa fa-refresh reload-card"></i></li>
+                                                        <!-- <li><i class="fa fa-times close-card"></i></li> -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-block p-0  tabs-card">
+                                                <!-- Nav tabs -->
+
+                                                <ul class="nav nav-tabs md-tabs" role="tablist">
+                                                    
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" data-toggle="tab" href="#home3" role="tab"><i class="fas fa-pills"></i>All products in store&nbsp;<span class="badge badge-success">0</span> </a>
+                                                        <div class="slide"></div>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" data-toggle="tab" href="#profile3" role="tab"><i class="fa fa-list"></i>Products Booked&nbsp;<span class="badge badge-info">0</span> </a>
+                                                        <div class="slide"></div>
+                                                    </li>
+                                                                                                
+                                                    <!-- <li class="nav-item">
+                                                        <a class="nav-link" data-toggle="tab" href="#settings3" role="tab"><i class="fa fa-car"></i>Not booked yet&nbsp;<span class="badge badge-primary">0</span></a>
+                                                        <div class="slide"></div>
+                                                    </li> -->
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" data-toggle="tab" href="#messages3" role="tab"><i class="fas fa-arrow-right"></i>Pending Bookings&nbsp;<span class="badge badge-danger">0</span></a>
+                                                        <div class="slide"></div>
+                                                    </li>
+
+                                                </ul>
+                                                
+                                                <!-- Tab panes -->
+                                                <div class="tab-content card-block">
+                                                    <div class="tab-pane active" id="home3" role="tabpanel">
+
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <th>N<sup>o</sup></th>
+                                                                    <th>Image</th>
+                                                                    <th>Name</th>
+                                                                    <th>Description</th>
+                                                                    <th>Total_Qty</th>
+                                                                    <th>Qty_left</th>
+                                                                    <th colspan="2">Action</th>
+                                                                </tr>
+                                                            <?php
+
+                                                                $sql_product="SELECT * FROM products";
+                                                                $query_product=mysqli_query($con,$sql_product);
+                                                                $count=1;
+                                                                while ($row_product=mysqli_fetch_assoc($query_product)) {
+                                                                  $name=$row_product['name'];
+                                                                  $description=$row_product['description'];
+                                                                  $image=$row_product['image'];
+                                                                  $qty=$row_product['quantity'];
+                                                                  // $qty_left=$row_product['image'];
+                                                                  // $image=$row_product['image'];
+
+                                                                  echo "
+                                                                        <tr>
+                                                                            <td>".$count++."</td>
+                                                                            <td><img src='../style/assets/images/drug/$image' alt='prod img' class='img-fluid' style='width:30px;height:50px'></td>
+                                                                            <td>".$name."</td>
+                                                                            <td>".$description."</td>
+                                                                            <td>".$qty."</td>
+                                                                            <td>qty left</td>
+                                                                            <td><a href='#' title='view product data'><i class='fa fa-eye text-primary'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='#'  title='edit product data'><i class='fa fa-edit text-primary'></i></a></td>
+                                                                        </tr>
+                                                                  ";
+                                                                }
+                                                                
+                                                                    
+                                                            ?>
+                                                                
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                                                                
+                                                    <div class="tab-pane" id="profile3" role="tabpanel">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                
+                                                                <tr>
+                                                                    <th>Image</th>
+                                                                    <th>Product Code</th>
+                                                                    <th>Customer</th>
+                                                                    <th>Purchased On</th>
+                                                                    <th>Status</th>
+                                                                    <th>Transaction ID</th>
+                                                                </tr>
+                                                                
+                                                                <tr>
+                                                                    <td><img src="../assets/images/product/prod3.jpg" alt="prod img" class="img-fluid"></td>
+                                                                    <td>PNG002653</td>
+                                                                    <td>Eugine Turner</td>
+                                                                    <td>04-01-2017</td>
+                                                                    <td><span class="label label-success">Delivered</span></td>
+                                                                    <td>#7234417</td>
+                                                                </tr>
+                                                                    
+                                                                <tr>
+                                                                    <td><img src="../assets/images/product/prod4.jpg" alt="prod img" class="img-fluid"></td>
+                                                                    <td>PNG002156</td>
+                                                                    <td>Jacqueline Howell</td>
+                                                                    <td>03-01-2017</td>
+                                                                    <td><span class="label label-warning">Pending</span></td>
+                                                                    <td>#7234454</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <button class="btn btn-outline-primary btn-round btn-sm">Pagination</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="messages3" role="tabpanel">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <th>Image</th>
+                                                                    <th>Product Code</th>
+                                                                    <th>Customer</th>
+                                                                    <th>Purchased On</th>
+                                                                    <th>Status</th>
+                                                                    <th>Transaction ID</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><img src="../assets/images/product/prod1.jpg" alt="prod img" class="img-fluid"></td>
+                                                                    <td>PNG002413</td>
+                                                                    <td>Jane Elliott</td>
+                                                                    <td>06-01-2017</td>
+                                                                    <td><span class="label label-primary">Shipping</span></td>
+                                                                    <td>#7234421</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><img src="../assets/images/product/prod4.jpg" alt="prod img" class="img-fluid"></td>
+                                                                    <td>PNG002156</td>
+                                                                    <td>Jacqueline Howell</td>
+                                                                    <td>03-01-2017</td>
+                                                                    <td><span class="label label-warning">Pending</span></td>
+                                                                    <td>#7234454</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <button class="btn btn-outline-primary btn-round btn-sm">Pagination</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="tab-pane" id="settings3" role="tabpanel">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <th>Image</th>
+                                                                    <th>Product Code</th>
+                                                                    <th>Customer</th>
+                                                                    <th>Purchased On</th>
+                                                                    <th>Status</th>
+                                                                    <th>Transaction ID</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><img src="../assets/images/product/prod1.jpg" alt="prod img" class="img-fluid"></td>
+                                                                    <td>PNG002413</td>
+                                                                    <td>Jane Elliott</td>
+                                                                    <td>06-01-2017</td>
+                                                                    <td><span class="label label-primary">Shipping</span></td>
+                                                                    <td>#7234421</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><img src="../assets/images/product/prod2.jpg" alt="prod img" class="img-fluid"></td>
+                                                                    <td>PNG002344</td>
+                                                                    <td>John Deo</td>
+                                                                    <td>05-01-2017</td>
+                                                                    <td><span class="label label-danger">Faild</span></td>
+                                                                    <td>#7234486</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <button class="btn btn-outline-primary btn-round btn-sm">Pagination</button>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                                                <!-- tabs card end -->
+
 
                                     </div>
 
