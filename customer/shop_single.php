@@ -68,19 +68,8 @@
             <p><?php echo $product_description.' <br>'.$product_bottle_pack.'bottles/pack';?></p>
             
 
-            <p><strong class="text-primary h4"><?php echo $product_price;?>Frw</strong></p>
-            <span id="output">10</span>
-            <script>
-                var plusbtn=document.getElementById('plusbtn');
-                var minusbtn=document.getElementById('minusbtn');
-                var output=document.getElementById('output');
-                var values=getElementById('values').value;
+            <p><strong class="text-primary h4"><span id="Price">23000</span>Frw</strong></p>
 
-                function plusbtnfn(){
-                  output.innerHTML=values+=1;
-                } 
-
-            </script>
             <div class="mb-5">
               <div class="input-group mb-3" style="max-width: 220px;">
                 <div class="input-group-prepend">
@@ -89,7 +78,7 @@
                 <input type="text" class="form-control text-center" value="1" placeholder=""
                   aria-label="Example text with button addon" aria-describedby="button-addon1" id="values">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-primary js-btn-plus" type="button" id="plusbtn" onclick="plusbtnfn()">&plus;</button>
+                  <button class="btn btn-outline-primary js-btn-plus" type="button" id="plusbtn">&plus;</button>
                 </div>
               </div>
 
@@ -97,6 +86,47 @@
               <span id="MoneyDisplay">0</span>
               <script src="script.js"></script> -->
             </div>
+                          <script>
+              // Get references to the HTML elements
+              var numberDisplay = document.getElementById('Price');
+              var increaseButton = document.getElementById('plusbtn');
+              var decreaseButton = document.getElementById('minusbtn');
+              var inputField = document.getElementById('values');
+
+              // Initialize the counter variable and multiplication result
+              var counter = parseInt(numberDisplay.textContent, 10); // Initialize with the initial value
+              var result = counter;
+
+              // Function to update and display the counter and result
+              function updateCounter() {
+                numberDisplay.textContent = result;
+              }
+
+              // Event listener for the "Increase" button
+              increaseButton.addEventListener('click', function() {
+                counter++;
+                result = 23000 * counter; // Calculate the multiplication
+                updateCounter();
+              });
+
+              // Event listener for the "Decrease" button
+              decreaseButton.addEventListener('click', function() {
+                counter--;
+                result = 23000 * counter; // Calculate the multiplication
+                updateCounter();
+              });
+
+              // Event listener for changing the input value
+              inputField.addEventListener('input', function() {
+                counter = parseInt(inputField.value, 10); // Update the counter from the input field
+                result = 23000 * counter; // Calculate the multiplication
+                updateCounter();
+              });
+
+              // Initial display
+              updateCounter();
+              </script>
+
             <p><a href="cart.php" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</a></p>
 
             <div class="mt-5">
