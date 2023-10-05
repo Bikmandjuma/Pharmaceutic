@@ -56,75 +56,43 @@
       <div class="container">
     
         <div class="row">
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <span class="onsale">Sale</span>
-            <a href="shop_single.php"> <img src="../style/assets/images/product_01.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Bioderma</a></h3>
-            <p class="price"><del>95.00</del> &mdash; $55.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <a href="shop-single.html"> <img src="../style/assets/images/product_02.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Chanca Piedra</a></h3>
-            <p class="price">$70.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <a href="shop-single.html"> <img src="../style/assets/images/product_03.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-            <p class="price">$120.00</p>
-          </div>
-    
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-    
-            <a href="shop-single.html"> <img src="../style/assets/images/product_04.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Cetyl Pure</a></h3>
-            <p class="price"><del>45.00</del> &mdash; $20.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <a href="shop-single.html"> <img src="../style/assets/images/product_05.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">CLA Core</a></h3>
-            <p class="price">$38.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <span class="onsale">Sale</span>
-            <a href="shop-single.html"> <img src="../style/assets/images/product_06.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Poo Pourri</a></h3>
-            <p class="price"><del>$89</del> &mdash; $38.00</p>
-          </div>
+          <?php
 
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <span class="onsale">Sale</span>
-            <a href="shop-single.html"> <img src="../style/assets/images/product_01.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Bioderma</a></h3>
-            <p class="price"><del>95.00</del> &mdash; $55.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <a href="shop-single.html"> <img src="../style/assets/images/product_02.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Chanca Piedra</a></h3>
-            <p class="price">$70.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <a href="shop-single.html"> <img src="../style/assets/images/product_03.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-            <p class="price">$120.00</p>
-          </div>
-          
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-          
-            <a href="shop-single.html"> <img src="../style/assets/images/product_04.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Cetyl Pure</a></h3>
-            <p class="price"><del>45.00</del> &mdash; $20.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <a href="shop-single.html"> <img src="../style/assets/images/product_05.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">CLA Core</a></h3>
-            <p class="price">$38.00</p>
-          </div>
-          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <span class="onsale">Sale</span>
-            <a href="shop-single.html"> <img src="../style/assets/images/product_06.png" alt="Image"></a>
-            <h3 class="text-dark"><a href="shop-single.html">Poo Pourri</a></h3>
-            <p class="price"><del>$89</del> &mdash; $38.00</p>
-          </div>
+              include '../Connect/connection.php';
+              $query_product=mysqli_query($con,"SELECT * FROM products left join bookings on products.p_id=bookings.p_fk_id");
+              while ($row=mysqli_fetch_assoc($query_product)) {
+                  $pro_count=$row['quantity'];
+                  $book=$row['packs_count'];
+                  $product_id=$row['p_id'];
+                  $product_price=$row['price'];
+                  $product_image=$row['image'];
+                  $product_name=$row['name'];
+
+                  
+                  $counts=$pro_count-$book;
+
+                  if($counts == 0){
+                  // echo "no products found";
+                  }else{
+
+                    if ($counts == 1) {
+                      $counts="Only ".$counts." pack left";
+                    }else{
+                      $counts="Only ".$counts." packs left";
+                    }
+                     
+                    echo '      
+                      <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2" style="box-shadow:0px 4px 8px 0px rgba(0,0,0,0.2);border-radius:10px;"">
+                        <span class="onsale">Sale</span>
+                        <a href="shop_single.php?product_id='.$product_id.'"> <img src="../style/assets/images/drug/'.$product_image.'" alt="Image" style="padding:0px 50px 0px 50px;height:300px;" ></a>
+                        <h3 class="text-dark"><a href="shop-single.html">'.$product_name.'</a></h3>
+                        <p class="price">'.$product_price.'Frw/pack &nbsp;&nbsp;&nbsp; <span class="text-info"><b>'.$counts.'</b></span></p>
+                      </div>&nbsp;&nbsp;&nbsp;';
+                  }
+              }
+
+          ?>
+
         </div>
         <div class="row mt-5">
           <div class="col-md-12 text-center">

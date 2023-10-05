@@ -84,7 +84,6 @@
             </div>
 
             <script>
-                
                 const plusbtn = document.getElementById('plusbtn');
                 const minusbtn = document.getElementById('minusbtn');
                 const output = document.getElementById('output');
