@@ -68,7 +68,7 @@
             <p><?php echo $product_description.' <br>'.$product_bottle_pack.'bottles/pack';?></p>
             
 
-            <p><strong class="text-primary h4"><span id="Price">23000</span>Frw</strong></p>
+            <p><strong class="text-primary h4"><span id="output"><?php echo $product_price;?></span>Frw</strong></p>
 
             <div class="mb-5">
               <div class="input-group mb-3" style="max-width: 220px;">
@@ -81,51 +81,42 @@
                   <button class="btn btn-outline-primary js-btn-plus" type="button" id="plusbtn">&plus;</button>
                 </div>
               </div>
-
-              <!-- <button id="ClickButton">Click me</button>
-              <span id="MoneyDisplay">0</span>
-              <script src="script.js"></script> -->
             </div>
-                          <script>
-              // Get references to the HTML elements
-              var numberDisplay = document.getElementById('Price');
-              var increaseButton = document.getElementById('plusbtn');
-              var decreaseButton = document.getElementById('minusbtn');
-              var inputField = document.getElementById('values');
 
-              // Initialize the counter variable and multiplication result
-              var counter = parseInt(numberDisplay.textContent, 10); // Initialize with the initial value
-              var result = counter;
+            <script>
+                
+                const plusbtn = document.getElementById('plusbtn');
+                const minusbtn = document.getElementById('minusbtn');
+                const output = document.getElementById('output');
+                const valuesInput = document.getElementById('values');
 
-              // Function to update and display the counter and result
-              function updateCounter() {
-                numberDisplay.textContent = result;
-              }
+                let counter = parseInt(output.textContent);
 
-              // Event listener for the "Increase" button
-              increaseButton.addEventListener('click', function() {
-                counter++;
-                result = 23000 * counter; // Calculate the multiplication
-                updateCounter();
-              });
+                plusbtn.addEventListener("click", function () {
+                  const inputValue = parseInt(valuesInput.value);
+                  if (!isNaN(inputValue) && inputValue >= 1) {
+                    counter *= inputValue;
+                    output.textContent = counter;
+                  }
+                });
 
-              // Event listener for the "Decrease" button
-              decreaseButton.addEventListener('click', function() {
-                counter--;
-                result = 23000 * counter; // Calculate the multiplication
-                updateCounter();
-              });
+                minusbtn.addEventListener("click", function () {
+                  const inputValue = parseInt(valuesInput.value);
+                  if (!isNaN(inputValue) && inputValue >= 1) {
+                    counter /= inputValue;
+                    output.textContent = counter;
+                  }
+                });
 
-              // Event listener for changing the input value
-              inputField.addEventListener('input', function() {
-                counter = parseInt(inputField.value, 10); // Update the counter from the input field
-                result = 23000 * counter; // Calculate the multiplication
-                updateCounter();
-              });
-
-              // Initial display
-              updateCounter();
-              </script>
+                // Listen for changes in the input field
+                valuesInput.addEventListener("input", function () {
+                  const newValue = parseInt(valuesInput.value);
+                  if (!isNaN(newValue) && newValue >= 1) {
+                    counter = newValue;
+                    output.textContent = counter;
+                  }
+                });
+            </script>
 
             <p><a href="cart.php" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</a></p>
 
