@@ -5,7 +5,7 @@
     include_once 'phpcode/codes.php';
 
     $name_required=$name_validate=$email_required=$email_validate=$phone_required=$phone_validate=$phone_validate_counts=$re_password_str_len=$password_confirmation=$password_str_len=$password_required=$re_password_required=null;
-    $name=$email=$phone=$password=$re_password=null;
+    $name=$email=$phone=$password=$re_password=$email_already_taken=$phone_already_taken=null;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         if (isset($_POST['submit_register'])) {
@@ -14,6 +14,16 @@
             $phone=test_input($_POST['phone']);
             $password=test_input($_POST['password']);
             $re_password=test_input($_POST['re_password']);
+
+            //email already exist
+            $sql_email="SELECT email FROM customers where email='".$email."'";
+            $query_email=mysqli_query($con,$sql_email);
+            $validate_nums_email=mysqli_num_rows($query_email);
+
+            //email already exist
+            $sql_phone="SELECT * FROM customers where phone='".$phone."'";
+            $query_phone=mysqli_query($con,$sql_phone);
+            $validate_nums_phone=mysqli_num_rows($query_phone);
 
             $pattern_name = '/^[A-Za-z]+$/';
             $phone_pattern = '/^[0-9]+$/';
@@ -27,12 +37,16 @@
                 $email_required='<p id="error_field">Email field is required !</p>';
             }elseif(!preg_match($email_pattern, $email)) {
                 $email_validate='<p id="error_field">Enter valid email !</p>';
+            }elseif ($validate_nums_email == 1) {
+                $email_already_taken='<p id="error_field">Email address already taken !</p>';
             }elseif(empty($phone)) {
                 $phone_required='<p id="error_field">phone field is required !</p>';
             }elseif(!preg_match($phone_pattern, $phone)) {
                 $phone_validate='<p id="error_field">phone contains only numbers !</p>';
             }elseif(strlen($phone) < 10) {
                 $phone_validate_counts='<p id="error_field">phone contains 10 numerics !</p>';
+            }elseif ($validate_nums_phone == 1) {
+                    $phone_already_taken='<p id="error_field">Phone number already taken !</p>';
             }elseif (empty($password)) {
                 $password_required='<p id="error_field">Password field is required !</p>';
             }elseif (strlen($password) < 8) {
@@ -41,15 +55,22 @@
                 $re_password_required='<p id="error_fields">Re_enter password field is required !</p>';
             }elseif (strlen($re_password) < 8) {
                 $re_password_str_len='<p id="error_fields">Re_enter password must be at least 8 characters !</p>';
-            }elseif ($password === $re_password) {
+            }elseif ($password != $re_password) {
                 $password_confirmation="<p id='error_fields'>Password do not much !</p>";
             }else{
-               
-                // $sql="INSERT INTO customers ('','$name','$email','$phone','$password')";
-                // $query=mysqli_query($con,$sql);
-                // if ($query == true) {
-                      
-                // }
+
+                    $pswd=md5($password);
+                    $sql="INSERT INTO customers values ('','$name','$email','$phone','$pswd')";
+                    $query=mysqli_query($con,$sql);
+                    if ($query == true) {
+                        header("location:http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/login.php");  
+                    }else{
+                         ?>
+                            <script>
+                                alert('fail to register');
+                            </script>
+                          <?php
+                    }
 
             
             }
@@ -205,14 +226,14 @@
                                         <input type="text" class="form-control" placeholder="Enter your email" title="Enter your email" data-toggle="tooltip" name="email" value="<?php echo $email;?>">
                                       
                                     </div>
-                                    <?php echo $email_required.$email_validate;?>
+                                    <?php echo $email_required.$email_validate.$email_already_taken;?>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="phone"><i class="icofont icofont-phone"></i></span>
                                         <input type="text" class="form-control" placeholder="Enter your phone" title="Enter your email" data-toggle="tooltip" name="phone" value="<?php echo $phone;?>">
                                        
                                     </div>
-                                    <?php echo $phone_required.$phone_validate.$phone_validate_counts;?>
+                                    <?php echo $phone_required.$phone_validate.$phone_validate_counts.$phone_already_taken;?>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="password"><i class="icofont icofont-key"></i></span>
