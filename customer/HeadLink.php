@@ -12,4 +12,23 @@
   <link rel="stylesheet" href="../style/css/owl.theme.default.min.css">
   <link rel="stylesheet" href="../style/css/aos.css">
   <link rel="stylesheet" href="../style/css/style.css">
+  <style type="text/css">
+      /* Add this CSS for the hover effect */
+      .image-container {
+          overflow: hidden;
+          position: relative;
+          transition: transform 0.3s ease; /* Smooth transition on hover */
+      }
+
+      .image-container img {
+          width: 100%;
+          height: auto;
+      }
+
+      /* Zoom in on hover */
+      .image-container:hover {
+          transform: scale(1.1); /* Adjust the scale factor as needed */
+      }
+
+  </style>
 </head>

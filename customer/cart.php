@@ -12,7 +12,7 @@
         <div class="d-flex align-items-center justify-content-between">
           <div class="logo">
             <div class="site-logo">
-              <a href="index.html" class="js-logo-clone"><strong class="text-primary">Pharma</strong>ceutic</a>
+              <a href="index.php" class="js-logo-clone"><strong class="text-primary">Pharma</strong>ceutic</a>
             </div>
           </div>
           <div class="main-nav d-none d-lg-block">
@@ -72,7 +72,7 @@
                       
                           echo '
                             <tr>
-                              <td class="product-thumbnail">
+                              <td class="product-thumbnail image-container">
                                 <img src="../style/assets/images/drug/'.$product_image.'" alt="Image" class="img-fluid">
                               </td>
                               <td class="product-name">

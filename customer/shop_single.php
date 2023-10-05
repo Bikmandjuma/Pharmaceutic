@@ -58,9 +58,9 @@
     <div class="site-section">
       <div class="container">
         <div class="row">
-          <div class="col-md-5 mr-auto">
-            <div class="border text-center">
-              <img src="../style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid p-5" style="height:500px;">
+          <div class="col-md-5 mr-auto" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.4);">
+            <div class="image-container">
+              <img src="../style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid" style="padding: 20px 80px 20px 80px; height:600px;">
             </div>
           </div>
           <div class="col-md-6">
