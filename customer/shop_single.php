@@ -57,7 +57,7 @@
 
     <div class="site-section">
       <div class="container">
-        <div class="row">
+        <div class="row"> 
           <div class="col-md-5 mr-auto" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.4);">
             <div class="image-container">
               <img src="../style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid" style="padding: 20px 80px 20px 80px; height:600px;">
@@ -84,37 +84,36 @@
             </div>
 
             <script>
-                const plusbtn = document.getElementById('plusbtn');
-                const minusbtn = document.getElementById('minusbtn');
-                const output = document.getElementById('output');
-                const valuesInput = document.getElementById('values');
+                const cart = [];
 
-                let counter = parseInt(output.textContent);
+                function addToCart(productName, productPrice) {
+                    const cartItem = cart.find(item => item.name === productName);
+                    
+                    if (cartItem) {
+                        cartItem.quantity++;
+                    } else {
+                        cart.push({ name: productName, price: productPrice, quantity: 1 });
+                    }
 
-                plusbtn.addEventListener("click", function () {
-                  const inputValue = parseInt(valuesInput.value);
-                  if (!isNaN(inputValue) && inputValue >= 1) {
-                    counter *= inputValue;
-                    output.textContent = counter;
-                  }
-                });
+                    updateCart();
+                }
 
-                minusbtn.addEventListener("click", function () {
-                  const inputValue = parseInt(valuesInput.value);
-                  if (!isNaN(inputValue) && inputValue >= 1) {
-                    counter /= inputValue;
-                    output.textContent = counter;
-                  }
-                });
+                function updateCart() {
+                    const cartItemsElement = document.getElementById('cart-items');
+                    const cartTotalElement = document.getElementById('cart-total');
 
-                // Listen for changes in the input field
-                valuesInput.addEventListener("input", function () {
-                  const newValue = parseInt(valuesInput.value);
-                  if (!isNaN(newValue) && newValue >= 1) {
-                    counter = newValue;
-                    output.textContent = counter;
-                  }
-                });
+                    cartItemsElement.innerHTML = '';
+                    let total = 0;
+
+                    cart.forEach(item => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${item.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`;
+                        cartItemsElement.appendChild(listItem);
+                        total += item.price * item.quantity;
+                    });
+
+                    cartTotalElement.textContent = total.toFixed(2);
+                }
             </script>
 
             <p><a href="cart.php" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</a></p>
