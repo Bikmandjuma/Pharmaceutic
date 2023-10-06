@@ -66,6 +66,7 @@
                         $product_image=$row['image'];
                         $product_name=$row['name'];
                         $product_price=$row['price'];
+                        $customer_id=$row['price'];
 
                         
                         $total_price=$bookings*$product_price;
@@ -93,8 +94,23 @@
               
                               </td>
                               <td>'.$total_price.'Frw</td>
-                              <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
+                              <td><a href="#" class="btn btn-primary height-auto btn-sm" data-target="#ModalCancelOrder" data-toggle="modal">X</a></td>
                             </tr>';
+
+                            //cancel order
+                            if (isset($_POST['CancelOrder'])) {
+                                $query=mysqli_query($con,"DELETE FROM bookings where b_id=$customer_id");
+                                if ($query == true) {
+                                  
+                                    ?>
+                                          <script>
+                                              toastr.options.timeOut = 3000;
+                                              toastr.error('Order cancelled !');
+                                          </script>
+                                    <?php
+                                }
+                            }
+
                     }
  
                   ?>
@@ -104,6 +120,29 @@
             </div>
           </form>
         </div>
+
+
+      <!--start of Logout modal -->
+          <div class="modal" style="margin-top:150px;" id="ModalCancelOrder" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm text-center">
+              <div class="modal-content">
+                <div class="modal-body bg-danger text-white">
+                  <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4>Notification&nbsp;<i class="fa fa-bell"></i></h4>
+                </div>
+                <div class="modal-body">
+                  <p><i class="fa fa-question-circle"></i>Are you sure , do u want to cancel this order ? <br /></p>
+                  <div class="actionsBtns">
+                    <form method="POST">
+                      <button type="submit" name="CancelOrder" class="btn btn-primary"  style="border-radius:10px;color:white;"><i class="fa fa-check"></i> Yes</button> &nbsp;&nbsp;&nbsp;
+                      <button class="btn btn-danger" data-dismiss="modal" style="border-radius:10px;"><i class="fa fa-times"></i> Not now</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!--end of logout modal-->
     
         <div class="row">
           <div class="col-md-6">

@@ -26,7 +26,7 @@ $nums=mysqli_num_rows($query_product);
 
 <a href="#" title="<?php echo $name;?>" ><span class="icon-user"><?php echo $customer_names;?></span></a>
 <a href="cart.php" class="icons-btn d-inline-block bag">
-    <span class="icon-shopping-bag"></span>
+    <span class="fa fa-shopping-cart"></span>
     <span class="number"><?php echo $nums;?></span>
 </a>
 <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none">

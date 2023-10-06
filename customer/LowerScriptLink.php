@@ -6,3 +6,7 @@
   <script src="../js/jquery.magnific-popup.min.js"></script>
   <script src="../style/js/aos.js"></script>
   <script src="../style/js/main.js"></script>
+  <!-- Include jQuery and Toastr JavaScript libraries -->
+  <!-- Include jQuery and Toastr JavaScript libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

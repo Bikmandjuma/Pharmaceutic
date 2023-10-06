@@ -181,7 +181,13 @@
     <?php include 'Footer.php';?>
 
   </div>
-
+   <!-- Your script -->
+    <!-- <script>
+        function showToast() {
+            toastr.options.timeOut = 3000;
+            toastr.error('message.');
+        }
+    </script> -->
   <?php
 
   include 'LowerScriptLink.php';
