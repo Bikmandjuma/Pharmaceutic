@@ -119,187 +119,60 @@
           <div class="col-md-12 block-3 products-wrap">
             <div class="nonloop-block-3 owl-carousel">
 
-              <div class="text-center item mb-4 item-v2">
-                <span class="onsale">Sale</span>
-                <a href="shop-single.html"> <img src="style/images/product_03.png" alt="Image"></a>
-                <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                <p class="price">$120.00</p>
-              </div>
+              <?php
 
-              <div class="text-center item mb-4 item-v2">
-                <a href="shop-single.html"> <img src="style/images/product_01.png" alt="Image"></a>
-                <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                <p class="price">$120.00</p>
-              </div>
+                  include 'Connect/connection.php';
+                  $query_product=mysqli_query($con,"SELECT * FROM products left join bookings on products.p_id=bookings.p_fk_id");
+                  while ($row=mysqli_fetch_assoc($query_product)) {
+                      $pro_count=$row['quantity'];
+                      $book=$row['packs_count'];
+                      $product_id=$row['p_id'];
+                      $product_price=$row['price'];
+                      // $product_id=base64_encode(openssl_encrypt($row['p_id'],"AES-128-ECB","pharmacy"));
 
-              <div class="text-center item mb-4 item-v2">
-                <span class="onsale">Sale</span>
-                <a href="shop-single.html"> <img src="style/images/product_02.png" alt="Image"></a>
-                <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                <p class="price">$120.00</p>
-              </div>
+                      $counts=$pro_count-$book;
 
-              <div class="text-center item mb-4 item-v2">
-                <a href="shop-single.html"> <img src="style/images/product_04.png" alt="Image"></a>
-                <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                <p class="price">$120.00</p>
-              </div>
+                      if($counts == 0){
+                      // echo "no products found";
+                      }else{
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                        if ($counts == 1) {
+                          $counts="Only ".$counts." pack left";
+                        }else{
+                          $counts="Only ".$counts." packs left";
+                        }
+                         
+                      echo '
+                              <div class="text-center item mb-4 item-v2">
+                                <span class="onsale">Sale</span>
+                                <a href="shop_single.php?product_id='.$product_id.'" style="text-align:center;">
+                                <div class="image-container">
+                                  <img src="style/assets/images/drug/'.$row["image"].'" alt="Image" style="padding:0px 100px 0px 100px;;height:300px;">
+                                </div>
+                                </a>
+                                <h3 class="text-dark"><a href="shop_single.php?product_sid='.$product_id.'">'.$row["name"].'</a></h3>
+                                <p class="price">'.$product_price.'Frw/pack &nbsp;&nbsp;&nbsp; <span class="text-info"><b>'.$counts.'</b></span></p>
 
-    <div class="site-section bg-image overlay" style="background-image: url('style/images/hero_bg_2.jpg');">
-      <div class="container">
-        <div class="row justify-content-center text-center">
-         <div class="col-lg-7">
-           <h3 class="text-white">Sign up for discount up to 55% OFF</h3>
-           <p class="text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam.</p>
-           <p class="mb-0"><a href="#" class="btn btn-outline-white">Sign up</a></p>
-         </div>
-        </div>
-      </div>
-    </div>
+                              </div>
+                            ';
+                    }
+                }
 
-    <div class="site-section">
-      <div class="container">
-        
-        <div class="row justify-content-between">
-          <div class="col-lg-6">
-            <div class="title-section">
-              <h2>Happy <strong class="text-primary">Customers</strong></h2>
-            </div>
-            <div class="block-3 products-wrap">
-            <div class="owl-single no-direction owl-carousel">
-        
-              <div class="testimony">
-                <blockquote>
-                  <img src="style/images/person_1.jpg" alt="Image" class="img-fluid">
-                  <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat unde.&rdquo;</p>
-                </blockquote>
+                
 
-                <p class="author">&mdash; Kelly Holmes</p>
-              </div>
-        
-              <div class="testimony">
-                <blockquote>
-                  <img src="style/images/person_2.jpg" alt="Image" class="img-fluid">
-                  <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore
-                    obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat
-                    unde.&rdquo;</p>
-                </blockquote>
-              
-                <p class="author">&mdash; Rebecca Morando</p>
-              </div>
-        
-              <div class="testimony">
-                <blockquote>
-                  <img src="style/images/person_3.jpg" alt="Image" class="img-fluid">
-                  <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore
-                    obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat
-                    unde.&rdquo;</p>
-                </blockquote>
-              
-                <p class="author">&mdash; Lucas Gallone</p>
-              </div>
-        
-              <div class="testimony">
-                <blockquote>
-                  <img src="style/images/person_4.jpg" alt="Image" class="img-fluid">
-                  <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore
-                    obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat
-                    unde.&rdquo;</p>
-                </blockquote>
-              
-                <p class="author">&mdash; Andrew Neel</p>
-              </div>
-        
-            </div>
-          </div>
-          </div>
-          <div class="col-lg-5">
-            <div class="title-section">
-              <h2 class="mb-5">Why <strong class="text-primary">Us</strong></h2>
-              <div class="step-number d-flex mb-4">
-                <span>1</span>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore</p>
-              </div>
+            ?>
 
-              <div class="step-number d-flex mb-4">
-                <span>2</span>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore</p>
-              </div>
-
-              <div class="step-number d-flex mb-4">
-                <span>3</span>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore</p>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     
-    <footer class="site-footer bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
-
-            <div class="block-7">
-              <h3 class="footer-heading mb-4">About <strong class="text-primary">Pharmative</strong></h3>
-              <p>add about's contents here !.</p>
-            </div>
-
-          </div>
-          <div class="col-lg-3 mx-auto mb-5 mb-lg-0">
-            <h3 class="footer-heading mb-4">Navigation</h3>
-            <ul class="list-unstyled">
-              <li><a href="#">Supplements</a></li>
-              <li><a href="#">Vitamins</a></li>
-              <li><a href="#">Diet &amp; Nutrition</a></li>
-              <li><a href="#">Tea &amp; Coffee</a></li>
-            </ul>
-          </div>
-
-          <div class="col-md-6 col-lg-3">
-            <div class="block-5 mb-5">
-              <h3 class="footer-heading mb-4">Contact Info</h3>
-              <ul class="list-unstyled">
-                <li class="address">KG 567 ST. Rwinzovu, Kamatamu, Kacyiru, Kigali ,Rwanda</li>
-                <li class="phone"><a href="tel://23923929210">+250780000000</a></li>
-                <li class="email">emailaddress@domain.com</li>
-              </ul>
-            </div>
-
-
-          </div>
-        </div>
-        <div class="row pt-5 mt-5 text-center">
-          <div class="col-md-12">
-            <p>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;
-              <script>document.write(new Date().getFullYear());</script> All rights reserved by <span class="text-primary">Pharmaceutic</span>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </footer>
+    <?php include 'footer.php';?>
 
   </div>
 
-  <script src="style/js/jquery-3.3.1.min.js"></script>
-  <script src="style/js/jquery-ui.js"></script>
-  <script src="style/js/popper.min.js"></script>
-  <script src="style/js/bootstrap.min.js"></script>
-  <script src="style/js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="style/js/aos.js"></script>
-  <script src="style/js/main.js"></script>
+  <?php include 'bottom_script_links.php'; ?>
 
 </body>
 
