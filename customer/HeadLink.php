@@ -33,5 +33,13 @@
           transform: scale(1.1); /* Adjust the scale factor as needed */
       }
 
+      #desc_more_id_btn:hover,#desc_less_id_btn:hover{
+        cursor: pointer;
+      }
+
+      #desc_more_id_btn,#desc_less_id_btn{
+        color: blue;
+        padding:10px;
+      }
   </style>
 </head>

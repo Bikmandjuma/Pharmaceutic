@@ -39,15 +39,15 @@
           <div class="row">
             <div class="col-lg-12 mx-auto align-self-center">
               <div class="site-block-cover-content text-center">
-                <h1 class="mb-0"><strong class="text-primary">Pharmative</strong> Opens 24 Hours</h1>
+                <h1 class="mb-0"><strong class="text-primary">Pharmateutic</strong></h1>
 
                 <div class="row justify-content-center mb-5">
                   <div class="col-lg-6 text-center">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ex perspiciatis non quibusdam vel quidem.</p>
+                    <p>Welcome to pharmaceutic, we are trusted drug pills store in delivering pharmaceutical solutions to hospitals and pharmacies. We are dedicated to enhancing healthcare accessibility and efficiency, ensuring that essential medications reach those who need them most</p>
                   </div>
                 </div>
                 
-                <p><a href="register.php" class="btn btn-primary px-5 py-3">Shop Now</a></p>
+                <p><a href="#" onclick="window.location.href='shop.php'" class="btn btn-primary px-5 py-3">Shop Now</a></p>
               </div>
             </div>
           </div>
@@ -62,10 +62,10 @@
                 <h1 class="mb-0">New Medicine <strong class="text-primary">Everyday</strong></h1>
                 <div class="row justify-content-center mb-5">
                   <div class="col-lg-6 text-center">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ex perspiciatis non quibusdam vel quidem.</p>
+                    <p>We are committed to staying at the forefront of the pharmaceutical industry by continuously adding innovative and high-quality medicines to our product catalog. We are excited to introduce our latest additions to support healthcare professionals, hospitals, and pharmacies in providing the best care to patients</p>
                   </div>
                 </div>
-                <p><a href="register.php" class="btn btn-primary px-5 py-3">Shop Now</a></p>
+                <p><a href="#" onclick="window.location.href='shop.php'" class="btn btn-primary px-5 py-3">Shop Now</a></p>
               </div>
             </div>
           </div>
@@ -74,8 +74,6 @@
 
     </div>
 
-
-
     <div class="site-section py-5">
       <div class="container">
         <div class="row">
@@ -83,24 +81,21 @@
             <div class="feature">
               <span class="wrap-icon flaticon-24-hours-drugs-delivery"></span>
               <h3><a href="#">Free Delivery</a></h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laborum voluptates excepturi neque labore .</p>
-              <p><a href="#" class="d-flex align-items-center"><span class="mr-2">Learn more</span> <span class="icon-keyboard_arrow_right"></span></a></p>
+              <p>we understand the importance of convenience and cost-effectiveness when it comes to pharmaceutical distribution. That's why we are pleased to offer our valued customers the benefit of free shipping on eligible orders.</p>
             </div>
           </div>
           <div class="col-lg-4">
             <div class="feature">
               <span class="wrap-icon flaticon-medicine"></span>
               <h3><a href="#">New Medicine Everyday</a></h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laborum voluptates excepturi neque labore .</p>
-              <p><a href="#" class="d-flex align-items-center"><span class="mr-2">Learn more</span> <span class="icon-keyboard_arrow_right"></span></a></p>
+              <p>We are committed to staying at the forefront of the pharmaceutical industry by continuously adding innovative and high-quality medicines to our product catalog. We are excited to introduce our latest additions to support healthcare professionals, hospitals, and pharmacies in providing the best care to patient.</p>
             </div>
           </div>
           <div class="col-lg-4">
             <div class="feature">
               <span class="wrap-icon flaticon-test-tubes"></span>
               <h3><a href="#">Medicines Guaranteed</a></h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laborum voluptates excepturi neque labore .</p>
-              <p><a href="#" class="d-flex align-items-center"><span class="mr-2">Learn more</span> <span class="icon-keyboard_arrow_right"></span></a></p>
+              <p>we are dedicated to delivering pharmaceutical solutions that meet the highest standards of quality, safety, and efficacy. Our "Medicines Guaranteed" commitment ensures that you can have complete confidence in the products you receive from us.</p>
             </div>
           </div>
         </div>
@@ -112,7 +107,7 @@
       <div class="container">
         <div class="row">
           <div class="title-section text-center col-12">
-            <h2>Pharmacy <strong class="text-primary">Products</strong></h2>
+            <h2>Products in <strong class="text-primary">store</strong></h2>
           </div>
         </div>
         <div class="row">
@@ -147,7 +142,7 @@
                                 <span class="onsale">Sale</span>
                                 <a href="shop_single.php?product_id='.$product_id.'" style="text-align:center;">
                                 <div class="image-container">
-                                  <img src="style/assets/images/drug/'.$row["image"].'" alt="Image" style="padding:0px 100px 0px 100px;;height:300px;">
+                                  <img src="style/assets/images/drug/'.$row["image"].'" alt="Image" style="padding:0px 50px 0px 50px;height:350px;">
                                 </div>
                                 </a>
                                 <h3 class="text-dark"><a href="shop_single.php?product_sid='.$product_id.'">'.$row["name"].'</a></h3>

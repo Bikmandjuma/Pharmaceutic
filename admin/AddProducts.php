@@ -26,66 +26,78 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
 
 //insert data of product in store
 $invalid_date=$name=$descr=$mg_btl=$manu_date=$exp_date=$ndc=$btl_pack=$qty=null;
-if (isset($_POST['SubmitProductDetails'])) {
-    $name=$_POST['name'];
-    $descr=$_POST['descr'];
-    $qty=$_POST['qty'];
-    $mg_btl=$_POST['mg_btl'];
-    $manu_date=$_POST['manu_date'];
-    $exp_date=$_POST['exp_date'];
-    $ndc=$_POST['ndc'];
-    $btl_pack=$_POST['btl_pack'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Validate and sanitize user inputs (e.g., use mysqli_real_escape_string)
+    if (isset($_POST['SubmitProductDetails'])) {
+        $name=test_input(mysqli_real_escape_string($con,$_POST['name']));
+        $descr=test_input(mysqli_real_escape_string($con,$_POST['descr']));
+        $qty=test_input(mysqli_real_escape_string($con,$_POST['qty']));
+        $mg_btl=test_input(mysqli_real_escape_string($con,$_POST['mg_btl']));
+        $manu_date=test_input(mysqli_real_escape_string($con,$_POST['manu_date']));
+        $exp_date=test_input(mysqli_real_escape_string($con,$_POST['exp_date']));
+        $ndc=test_input(mysqli_real_escape_string($con,$_POST['ndc']));
+        $btl_pack=test_input(mysqli_real_escape_string($con,$_POST['btl_pack']));
+        $target_dir = "../style/assets/images/drug/";
+        $file_name=date('YmdHi').basename($_FILES["image"]["name"]);
+        $target_file = $target_dir .$file_name;
+        $price=test_input(mysqli_real_escape_string($con,$_POST['price']));
+        // ...
 
-    $target_dir = "../style/assets/images/drug/";
-    $file_name=date('YmdHi').basename($_FILES["image"]["name"]);
-    $target_file = $target_dir .$file_name;
-    
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    // Check if image file is a actual image or fake image
+        // Check if the file upload was successful
+        if ($_FILES["image"]["error"] === 0) {
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-    $check = getimagesize($_FILES["image"]["tmp_name"]);
-
-    if ($uploadOk = 1) {
-        
-        if($check !== false) {
-              // Check file size
-              if ($_FILES["image"]["size"] > 5000000) {
-                  $image_size='<script type="text/javascript">toastr.error("Sorry, your file is too large ,add 5MB at least.")</script>';
-                  $uploadOk = 0;
-              }
-
-              // Allow certain file formats
-              if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-              && $imageFileType != "gif" ) {
-                 $image_type='<script type="text/javascript">toastr.error("Sorry, only JPG, JPEG, PNG & GIF files are allowed.")</script>';
-                  $uploadOk = 0;
-              }
-
-              if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    if (date('y-m-d') > $exp_date) {
-                        $invalid_date="invalid date !";
-                    }else{
-                      $u_sql="INSERT into products values ('','$name','$descr','$file_name','$qty','$mg_btl','$btl_pack','$manu_date','$exp_date','$ndc')";
-                      $u_query=mysqli_query($con,$u_sql);
-                      ?>    
-                        <script>
-                            setTimeout(function(){
-                                window.location.href="AddProducts.php";
-                            });
-                        </script>
-                      <?php
-                      $image_uploaded='<script type="text/javascript">toastr.success("data added well !")</script>';
+            // Check file size
+            if ($_FILES["image"]["size"] > 5000000) {
+                $image_size = '<script type="text/javascript">toastr.error("Sorry, your file is too large, add 5MB at most.")</script>';
+            }
+            // Allow certain file formats
+            elseif (!in_array($imageFileType, ["jpg", "jpeg", "png", "gif"])) {
+                $image_type = '<script type="text/javascript">toastr.error("Sorry, only JPG, JPEG, PNG & GIF files are allowed.")</script>';
+            } else {
+                // Move the uploaded file
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                    if (date('Y-m-d') > $exp_date) {
+                        $invalid_date = "Invalid date!";
+                    } else {
+                        // Insert data into the database using prepared statements
+                        $stmt = $con->prepare("INSERT INTO products VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt->bind_param("ssssssssss", $name, $descr, $file_name, $qty, $mg_btl, $btl_pack, $manu_date, $exp_date, $ndc, $price);
+                        if ($stmt->execute()) {
+                            ?>
+                            <script>
+                                setTimeout(function() {
+                                    window.location.href = "AddProducts.php";
+                                });
+                            </script>
+                            <?php
+                            $image_uploaded = '<script type="text/javascript">toastr.success("Data added successfully!")</script>';
+                        } else {
+                            $image_uploaded = '<script type="text/javascript">toastr.error("Failed to insert data into the database.")</script>';
+                        }
                     }
-              
-              }
-
+                } else {
+                    $image_uploaded = '<script type="text/javascript">toastr.error("Sorry, there was an error uploading your file.")</script>';
+                }
+            }
+        } else {
+            $image_uploaded = '<script type="text/javascript">toastr.error("File upload failed. Error code: ' . $_FILES["image"]["error"] . '")</script>';
         }
+    } else {
+        // Handle the case where the form was not submitted
+    }
 
-      }elseif ($uploadOk = 0) {
-          $Error_to_uploaded='<script type="text/javascript">toastr.error("Sorry, your file was not uploaded")</script>';
-      }
-      
 }
+
+function test_input($data){
+  $data=trim($data);
+  $data=stripcslashes($data);
+  $data=htmlspecialchars($data);
+  
+  return $data;
+}
+?>
+
 
 ?>
 
@@ -119,8 +131,7 @@ if (isset($_POST['SubmitProductDetails'])) {
       <link rel="stylesheet" type="text/css" href="../style/assets/css/jquery.mCustomScrollbar.css">
       <!-- Notification.css -->
       <link rel="stylesheet" type="text/css" href="../style/assets/pages/notification/notification.css">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
       <style>
         div#online-indicator_header {
@@ -446,22 +457,22 @@ if (isset($_POST['SubmitProductDetails'])) {
                                                         <div class="card-header text-center" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.2);"><h4>Product details</h4></div>
                                                         <div class="card-body">
 
-                                                            <form method="POST" enctype="multipart/form-data">
+                                                            <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" enctype="multipart/form-data">
                                                                 <div class="row">
                                                                 <div class="col-md-6">
                                                                    
                                                                     <label>Name</label>
                                                                     <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter name" autofocus title="Enter name of product ex:paracetamol" value="<?php echo $name;?>"> 
                                                                     <label>Description</label>
-                                                                    <input type="text" class="form-control" name="descr" style="border-radius:10px;" placeholder="enter description" title="Enter product's description" value="<?php echo $descr;?>"> 
+                                                                    <textarea type="text" rows="4" class="form-control" name="descr" style="border-radius:10px;" placeholder="enter description" title="Enter product's description" value="<?php echo $descr;?>"></textarea> 
                                                                     <label>Quantity or packs in store</label>
-                                                                    <input type="text" name="qty" style="border-radius:10px;" class="form-control" placeholder="enter quantity ex:25" title="Enter qty of product ex:25" value="<?php echo $qty;?>"> 
+                                                                    <input type="number" name="qty" style="border-radius:10px;" class="form-control" placeholder="enter quantity ex:25" title="Enter qty of product ex:25" value="<?php echo $qty;?>"> 
                                                                     
                                                                     <label class="float-left">Bottles/pack</label>
-                                                                    <input type="text" class="form-control" name="btl_pack" style="border-radius:10px;" placeholder="enter product's quantity ex:12 bottles" title="Enter name of product ex:12" value="<?php echo $btl_pack;?>"> 
+                                                                    <input type="number" class="form-control" name="btl_pack" style="border-radius:10px;" placeholder="enter product's quantity ex:12 bottles" title="Enter name of product ex:12" value="<?php echo $btl_pack;?>"> 
 
                                                                     <label>mg/bottle</label>
-                                                                    <input type="text" name="mg_btl" placeholder="Enter mg of bottle ex:200mg" class="form-control" style="border-radius:10px;" value="<?php echo $mg_btl;?>">
+                                                                    <input type="number" name="mg_btl" placeholder="Enter mg of bottle ex:200mg" class="form-control" style="border-radius:10px;" value="<?php echo $mg_btl;?>">
 
                                                                 </div>
                                                                 <div class="col-md-6 text-center">
@@ -474,7 +485,10 @@ if (isset($_POST['SubmitProductDetails'])) {
                                                                     <input type="date" name="exp_date" style="border-radius:10px;" class="form-control" value="<?php echo $exp_date;?>"> 
 
                                                                     <label class="float-left">NDC (national drug code)</label>
-                                                                    <input type="text" name="ndc" placeholder="enter NDC ex:12345-1234-00" style="border-radius:10px;" class="form-control" value="<?php echo $ndc;?>"> 
+                                                                    <input type="text" name="ndc" placeholder="enter NDC ex:12345-1234-00" style="border-radius:10px;" class="form-control" value="<?php echo $ndc;?>">
+
+                                                                    <label class="float-left">Price</label>
+                                                                    <input type="number" name="price" placeholder="enter package's price" style="border-radius:10px;" class="form-control" value="<?php echo $ndc;?>"> 
 
                                                                     <button class="btn btn-primary mt-2" type="submit" name="SubmitProductDetails" style="position: relative;border-radius:10px;">Submit</button>
                                                                 </div>
@@ -530,6 +544,8 @@ if (isset($_POST['SubmitProductDetails'])) {
     <script src="../style/assets/js/pcoded.min.js"></script>
     <script src="../style/assets/js/vartical-demo.js"></script>
     <script src="../style/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 
 </html>

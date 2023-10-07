@@ -18,7 +18,6 @@
           </div>
           <div class="main-nav d-none d-lg-block">
            <?php include 'NavMainLink.php'; ?>
-          
           </div>
           <div class="icons">
             <?php include 'UsernameBookingIcon.php'; ?>
@@ -139,11 +138,44 @@
                       <th>Packaging</th>
                     </thead>
                     <tbody>
+                      <?php
+                        $descr_pro_more=substr($product_description,0,150);
+                        $descr_pro_less=substr($product_description,151,500);
+                      ?>
                       <tr>
                         <th scope="row"><?php echo 'NDC : '.$product_ndc;?></th>
-                        <td><?php echo $product_description.' ,'.$product_mg_bottle.'mg'?></td>
+                        <td>
+                          <?php echo '<p id="desc_more_id">'.
+                                      $descr_pro_more.
+                                      '</p><p id="desc_less_id" style="display:none;">'.
+                                      $descr_pro_less.'</p> '.
+                                      $product_mg_bottle.'mg'.
+                                      ',<i onclick="more_description()" id="desc_more_id_btn">More</i>
+                                        <i onclick="less_description()" id="desc_less_id_btn" style="display:none;">Less</i>';?>
+                                        
+                        </td>
                         <td><?php echo $product_bottle_pack.'bottles/pack';?></td>
                       </tr>
+
+                      <script>
+                          var desc_more_id=document.getElementById('desc_more_id');
+                          var desc_less_id=document.getElementById('desc_less_id');
+                          var more_id_btn=document.getElementById('desc_more_id_btn');
+                          var less_id_btn=document.getElementById('desc_less_id_btn');
+                          function more_description(){
+                            desc_more_id.style.display="none";
+                            desc_less_id.style.display="block";
+                            less_id_btn.style.display="block";
+                            more_id_btn.style.display="none";
+                          }
+
+                          function less_description(){
+                            desc_more_id.style.display="block";
+                            desc_less_id.style.display="none";
+                            less_id_btn.style.display="none";
+                            more_id_btn.style.display="block";
+                          }
+                      </script>
                       
                     </tbody>
                   </table>
