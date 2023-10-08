@@ -81,14 +81,14 @@
                     }
                      
                     echo '      
-                      <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2" style="box-shadow:0px 4px 8px 0px rgba(0,0,0,0.2);border-radius:10px;"">
-                        <span class="onsale">Sale</span>
-                        <div class="image-container">
-                          <a href="shop_single.php?product_id='.$product_id.'"> <img src="../style/assets/images/drug/'.$product_image.'" alt="Image" style="padding:0px 50px 0px 50px;height:300px;width:280px;" ></a>
+                     
+                      <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2" style="box-shadow:0px 4px 8px 0px rgba(0,0,0,0.2);">
+                            <a href="shop_single.php?product_id='.$product_id.'"> <img src="../style/assets/images/drug/'.$product_image.'" alt="Image" style="height:300px;"></a>
+                            <h3 class="text-dark"><a href="shop_single.php?product_id='.$product_id.'">'.$product_name.'</a></h3>
+                            <p class="price">'.$product_price.'Frw/pack &nbsp;<span class="text-info">'.$counts.'</span></p>
                         </div>
-                        <h3 class="text-dark"><a href="shop-single.html">'.$product_name.'</a></h3>
-                        <p class="price">'.$product_price.'Frw/pack &nbsp;&nbsp;&nbsp; <span class="text-info"><b>'.$counts.'</b></span></p>
-                      </div>&nbsp;&nbsp;&nbsp;';
+                      ';
+
                   }
               }
 

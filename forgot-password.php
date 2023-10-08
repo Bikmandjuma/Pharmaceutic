@@ -209,47 +209,13 @@ function test_input($data){
         <div class="d-flex align-items-center justify-content-between">
           <div class="logo">
             <div class="site-logo">
-              <a href="index.html" class="js-logo-clone"><strong class="text-primary">Pharma</strong>ceutic</a>
+              <a href="#" class="js-logo-clone"><strong class="text-success">Pharma</strong>ceutic</a>
             </div>
           </div>
           <div class="main-nav d-none d-lg-block">
-            <nav class="site-navigation text-right text-md-center" role="navigation">
-              <ul class="site-menu js-clone-nav d-none d-lg-block">
-                  <li><a href="index.php"><i class="icon-home"></i>&nbsp;Home</a></li>
-                  <li><a href="shop.html"><i class="icon-store"></i>&nbsp;Store</a></li>
-                  <li class="has-children">
-                      <a href="#"><i class="icon-product"></i>&nbsp;Products</a>
-                      <ul class="dropdown">
-                          <li><a href="#">Supplements</a></li>
-                              <li class="has-children">
-                                <a href="#">Vitamins</a>
-                                <ul class="dropdown">
-                                  <li><a href="#">Supplements</a></li>
-                                  <li><a href="#">Vitamins</a></li>
-                                  <li><a href="#">Diet &amp; Nutrition</a></li>
-                                  <li><a href="#">Tea &amp; Coffee</a></li>
-                                </ul>
-                              </li>
-                          <li><a href="#">Diet &amp; Nutrition</a></li>
-                          <li><a href="#">Tea &amp; Coffee</a></li>
-                      </ul>
-                  </li>
-                  <li><a href="about.html"><i class="icon-list"></i>&nbsp;About</a></li>
-                  <li><a href="contact.html"><i class="icon-phone"></i>&nbsp;Contact</a></li>
-                  <!-- <li class="active"><a href="#"><i class="icon-user"></i>&nbsp;Login</a></li> -->
-              </ul>
-            </nav>
-          
+            <?php include 'NavBar.php';?>
           </div>
-          <div class="icons">
-            <a href="#" class="icons-btn d-inline-block js-search-open"><span class="icon-search"></span></a>
-            <a href="cart.html" class="icons-btn d-inline-block bag">
-              <span class="icon-shopping-bag"></span>
-              <span class="number">0</span>
-            </a>
-            <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span
-                class="icon-menu"></span></a>
-          </div>
+            <?php include 'ShoppingBag.php';?>
         </div>
       </div>
     </div>

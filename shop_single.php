@@ -1,13 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<?php include 'HeadLink.php';?>
-
+<?php include 'header_links.php';?>
 <body>
 
   <div class="site-wrap">
 
     <div class="site-navbar py-2">
+
+      <div class="search-wrap">
+        <div class="container">
+          <a href="#" class="search-close js-search-close"><span class="icon-close2"></span></a>
+          <form action="#" method="post">
+            <input type="text" class="form-control" placeholder="Search keyword and hit enter...">
+          </form>
+        </div>
+      </div>
 
       <div class="container">
         <div class="d-flex align-items-center justify-content-between">
@@ -17,16 +24,15 @@
             </div>
           </div>
           <div class="main-nav d-none d-lg-block">
-           <?php include 'NavMainLink.php'; ?>
+            <?php include 'NavBar.php';?>
           </div>
-          <div class="icons">
-            <?php include 'UsernameBookingIcon.php'; ?>
-          </div>
+          <?php include 'ShoppingBag.php'; ?>
         </div>
       </div>
     </div>
+
     <?php
-        include '../Connect/connection.php';
+        include 'Connect/connection.php';
         $pro_id=$_REQUEST['product_id'];
         // $product_id=openssl_decrypt(base64_decode($pro_id),"AES-128-ECB","pharmacy");
         $query_product=mysqli_query($con,"SELECT * FROM products where p_id=$pro_id");
@@ -45,7 +51,7 @@
 
     ?>
 
-    <div class="bg-light py-3">
+  <div class="bg-light py-3">
       <div class="container">
         <div class="row">
           <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <a
@@ -61,7 +67,7 @@
             <div class="image-container" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.4);">
               <!-- <img src="../style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid" style="padding: 20px 80px 20px 80px; height:600px;"> -->
               <div class="border text-center">
-              <img src="../style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid p-5">
+              <img src="style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid p-5">
             </div>
             </div>
           </div>
@@ -118,7 +124,7 @@
                 }
             </script>
 
-            <p><a href="cart.php" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</a></p>
+            <p><a href="#" onclick="window.location.href='register.php'" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</a></p>
 
             <div class="mt-5">
               <ul class="nav nav-pills mb-3 custom-pill" id="pills-tab" role="tablist">
@@ -210,24 +216,12 @@
         </div>
       </div>
     </div>
-  
-  <?php include 'CustomerModalLogout.php';?>
     
-    <?php include 'Footer.php';?>
+  <?php include 'footer.php';?>
 
   </div>
-   <!-- Your script -->
-    <!-- <script>
-        function showToast() {
-            toastr.options.timeOut = 3000;
-            toastr.error('message.');
-        }
-    </script> -->
-  <?php
 
-  include 'LowerScriptLink.php';
-
-  ?>
+  <?php include 'bottom_script_links.php'; ?>
 
 </body>
 

@@ -13,4 +13,16 @@
   <link rel="stylesheet" href="style/css/aos.css">
   <link rel="stylesheet" href="style/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style type="text/css">
+    
+    #desc_more_id_btn:hover,#desc_less_id_btn:hover{
+        cursor: pointer;
+    }
+
+    #desc_more_id_btn,#desc_less_id_btn{
+        color: blue;
+        padding:10px;
+    }
+
+  </style>
 </head>

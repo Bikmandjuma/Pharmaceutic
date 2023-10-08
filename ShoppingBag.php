@@ -10,6 +10,5 @@
 </div>
 
 <?php
-include 'SearchDrugModal.php';
-
+  include 'SearchDrugModal.php';
 ?>
