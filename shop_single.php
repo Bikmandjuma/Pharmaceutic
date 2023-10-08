@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'header_links.php';?>
+<style>
+  #signs_id:hover{
+    cursor: pointer;
+    color: green;
+    transform: scale(1.1);
+  }
+</style>
 <body>
 
   <div class="site-wrap">
@@ -124,7 +131,7 @@
                 }
             </script>
 
-            <p><a href="#" onclick="window.location.href='register.php'" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</a></p>
+            <p><a href="#" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary" data-target="#ModalSignUpFirst" data-toggle="modal">Add To Cart</a></p>
 
             <div class="mt-5">
               <ul class="nav nav-pills mb-3 custom-pill" id="pills-tab" role="tablist">
@@ -216,6 +223,30 @@
         </div>
       </div>
     </div>
+
+    <!--start of Search drug modal -->
+    <div class="modal" style="margin-top:200px;" id="ModalSignUpFirst" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4>Notification&nbsp;&nbsp;<i class="fa fa-bell"></i></h4>
+          </div>
+          <div class="modal-body">
+            <div class="actionsBtns">
+              
+              <p><span style="color:black;"><b>N.B : </b></span>Adding product on cart , you have to get an account first!<br /></p>
+              <ul>
+                <li>If already have an account ,<span style="color:blue;" onclick="window.location.href='login.php'" id="signs_id"><strong>Sign in</strong></span><br /></li><br />
+                <li>If don't have an account ,<span style="color:blue;" onclick="window.location.href='register.php'" id="signs_id"><strong>Sign up</strong></span><br /></li>
+              </ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--end of Search drug modal-->
     
   <?php include 'footer.php';?>
 
