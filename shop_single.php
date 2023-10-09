@@ -14,20 +14,20 @@
 
     <div class="site-navbar py-2">
 
-      <div class="search-wrap">
+     <!--  <div class="search-wrap">
         <div class="container">
           <a href="#" class="search-close js-search-close"><span class="icon-close2"></span></a>
           <form action="#" method="post">
             <input type="text" class="form-control" placeholder="Search keyword and hit enter...">
           </form>
         </div>
-      </div>
+      </div> -->
 
       <div class="container">
         <div class="d-flex align-items-center justify-content-between">
           <div class="logo">
             <div class="site-logo">
-              <a href="index.html" class="js-logo-clone"><strong class="text-primary">Pharma</strong>ceutic</a>
+              <a href="index.php" class="js-logo-clone"><strong class="text-primary">Pharma</strong>ceutic</a>
             </div>
           </div>
           <div class="main-nav d-none d-lg-block">
@@ -61,8 +61,8 @@
   <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <a
-              href="shop.html">Store</a> <span class="mx-2 mb-0">/</span> <strong class="text-black"><?php echo $product_name.' , '.$product_mg_bottle.'mg';?></strong></div>
+          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <a
+              href="shop.php">Store</a> <span class="mx-2 mb-0">/</span> <strong class="text-black"><?php echo $product_name.' , '.$product_mg_bottle.'mg';?></strong></div>
         </div>
       </div>
     </div>
@@ -71,10 +71,10 @@
       <div class="container">
         <div class="row"> 
           <div class="col-md-5 mr-auto">
-            <div class="image-container" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.4);">
+            <div style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.4);">
               <!-- <img src="../style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid" style="padding: 20px 80px 20px 80px; height:600px;"> -->
               <div class="border text-center">
-              <img src="style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid p-5">
+              <img src="style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid image-container p-5">
             </div>
             </div>
           </div>
@@ -99,36 +99,7 @@
             </div>
 
             <script>
-                const cart = [];
-
-                function addToCart(productName, productPrice) {
-                    const cartItem = cart.find(item => item.name === productName);
-                    
-                    if (cartItem) {
-                        cartItem.quantity++;
-                    } else {
-                        cart.push({ name: productName, price: productPrice, quantity: 1 });
-                    }
-
-                    updateCart();
-                }
-
-                function updateCart() {
-                    const cartItemsElement = document.getElementById('cart-items');
-                    const cartTotalElement = document.getElementById('cart-total');
-
-                    cartItemsElement.innerHTML = '';
-                    let total = 0;
-
-                    cart.forEach(item => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = `${item.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`;
-                        cartItemsElement.appendChild(listItem);
-                        total += item.price * item.quantity;
-                    });
-
-                    cartTotalElement.textContent = total.toFixed(2);
-                }
+                
             </script>
 
             <p><a href="#" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary" data-target="#ModalSignUpFirst" data-toggle="modal">Add To Cart</a></p>
@@ -155,14 +126,39 @@
                     </thead>
                     <tbody>
                       <?php
-                        $descr_pro_more=substr($product_description,0,150);
-                        $descr_pro_less=substr($product_description,151,500);
+                        $strlen=strlen($product_description);
+                        if ($strlen % 2 == 0) {
+                            $strlen=$strlen;
+                        }else{
+                            $strlen=$strlen+1;
+                        }
+
+                        $descr_pro_more=$descr_pro_less=$description=null;
+                        if ($strlen < 120) {
+                          ?>
+                            <style>
+                              #desc_more_id_btn{
+                                display: none;
+                              }
+                            </style>
+                          <?php
+
+                          $description=$product_description;
+                            
+                        }else{
+                            $strlen_half=$strlen / 2;
+                            $descr_pro_more=substr($product_description,0,$strlen_half);
+                            $descr_pro_less=substr($product_description,$strlen_half,$strlen);
+                        }
+
+                        
+
                       ?>
                       <tr>
                         <th scope="row"><?php echo 'NDC : '.$product_ndc;?></th>
                         <td>
                           <?php echo '<p id="desc_more_id">'.
-                                      $descr_pro_more.
+                                      $descr_pro_more.$description.
                                       '</p><p id="desc_less_id" style="display:none;">'.
                                       $descr_pro_less.'</p> '.
                                       $product_mg_bottle.'mg'.
@@ -179,17 +175,17 @@
                           var more_id_btn=document.getElementById('desc_more_id_btn');
                           var less_id_btn=document.getElementById('desc_less_id_btn');
                           function more_description(){
-                            desc_more_id.style.display="none";
-                            desc_less_id.style.display="block";
-                            less_id_btn.style.display="block";
-                            more_id_btn.style.display="none";
+                              desc_more_id.style.display="none";
+                              desc_less_id.style.display="block";
+                              less_id_btn.style.display="block";
+                              more_id_btn.style.display="none";
                           }
 
                           function less_description(){
-                            desc_more_id.style.display="block";
-                            desc_less_id.style.display="none";
-                            less_id_btn.style.display="none";
-                            more_id_btn.style.display="block";
+                              desc_more_id.style.display="block";
+                              desc_less_id.style.display="none";
+                              less_id_btn.style.display="none";
+                              more_id_btn.style.display="block";
                           }
                       </script>
                       

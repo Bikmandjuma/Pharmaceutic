@@ -136,17 +136,17 @@
     			        	}
     					       
     				     	echo '
-    				              <div class="text-center item mb-4 item-v2">
-    				                <span class="onsale">Sale</span>
-    				                <a href="shop_single.php?product_id='.$product_id.'" style="text-align:center;">
-                            <div class="image-container">
-                              <img src="../style/assets/images/drug/'.$row["image"].'" alt="Image" style="padding:0px 100px 0px 100px;height:300px;">
-                            </div>
-                            </a>
-    				                <h3 class="text-dark"><a href="shop_single.php?product_sid='.$product_id.'">'.$row["name"].'</a></h3>
-    				                <p class="price">'.$product_price.'Frw/pack &nbsp;&nbsp;&nbsp; <span class="text-info"><b>'.$counts.'</b></span></p>
+                          <div class="text-center item mb-4 item-v2">
+                                <span class="onsale">Sale</span>
+                                <a href="shop_single.php?product_id='.$product_id.'" style="text-align:center;">
+                                <div>
+                                  <img src="../style/assets/images/drug/'.$row["image"].'" alt="Image" style="padding:0px 50px 0px 50px;height:350px;" class="image-container">
+                                </div>
+                                </a>
+                                <h3 class="text-dark"><a href="shop_single.php?product_sid='.$product_id.'">'.$row["name"].'</a></h3>
+                                <p class="price">'.$product_price.'Frw/pack &nbsp;&nbsp;&nbsp; <span class="text-info"><b>'.$counts.'</b></span></p>
 
-    				              </div>
+                              </div>
     				            ';
     				    }
 		        }

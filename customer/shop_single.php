@@ -49,7 +49,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <a
-              href="shop.html">Store</a> <span class="mx-2 mb-0">/</span> <strong class="text-black"><?php echo $product_name.' , '.$product_mg_bottle.'mg';?></strong></div>
+              href="shop.php">Store</a> <span class="mx-2 mb-0">/</span> <strong class="text-black"><?php echo $product_name.' , '.$product_mg_bottle.'mg';?></strong></div>
         </div>
       </div>
     </div>
@@ -58,10 +58,9 @@
       <div class="container">
         <div class="row"> 
           <div class="col-md-5 mr-auto">
-            <div class="image-container" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.4);">
-              <!-- <img src="../style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid" style="padding: 20px 80px 20px 80px; height:600px;"> -->
+            <div style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.4);">
               <div class="border text-center">
-              <img src="../style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid p-5">
+              <img src="../style/assets/images/drug/<?php echo $product_image;?>" alt="Image" class="img-fluid p-5 image-container">
             </div>
             </div>
           </div>

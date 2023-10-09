@@ -151,7 +151,7 @@ function test_input($data){
               
                     <div class="login-card card-block auth-body mr-auto ml-auto" style="margin-top:-100px;">
                       <?php echo $allfieldRequired.$incorectcredential;?>
-                        <form class="md-float-material" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+                        <form class="md-float-material" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
                             
                             <div class="auth-box">
                                 <div class="row m-b-20">
