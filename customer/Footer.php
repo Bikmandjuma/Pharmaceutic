@@ -1,11 +1,11 @@
-<footer class="site-footer bg-light">
+<footer class="site-footer bg-light" style="box-shadow:0px 4px 8px 5px rgba(0, 0, 0, 0.2);">
       <div class="container">
         <div class="row">
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
 
             <div class="block-7">
               <h3 class="footer-heading mb-4">About <strong class="text-primary">Pharmative</strong></h3>
-              <p>add about's contents here !.</p>
+              <p>Welcome to pharmaceutic, we are trusted drug pills store in delivering pharmaceutical solutions to hospitals and pharmacies. We are dedicated to enhancing healthcare accessibility and efficiency, ensuring that essential medications reach those who need them most .</p>
             </div>
 
           </div>

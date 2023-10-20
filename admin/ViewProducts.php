@@ -20,6 +20,11 @@
       $user_img=$row_user_info['image'];
     }
 
+    include_once '..\phpcode\codes.php';
+
+    $pharmaceutic=new pharmaceutic;
+    
+
 ?>
 
 
@@ -195,7 +200,7 @@
                        <ul class="nav-right">
                            <li class="header-notification">
                                <a href="#!" style="display:flex;">
-                                   <p>New Bookings</p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-light">0</span>
+                                   <p>New Bookings</p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-light"><?php $pharmaceutic->CheckBooking_count();?></span>
                                    <!-- <i class="ti-bell"  class="badge bg-c-pink"></i> -->
                                </a>
                                <ul class="show-notification">
@@ -203,32 +208,9 @@
                                        <h6>New bookings</h6>
                                        <label class="label label-danger">New</label>
                                    </li>
-                                   <li>
-                                       <div class="media">
-                                            <a href="#customer1" class="d-flex">
-                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
-                                               <i class="badge bg-c-pink"></i>
-                                               <div class="media-body">
-                                                   <h5 class="notification-user">customer name</h5>
-                                                   <p class="notification-msg">booking description</p>
-                                                   <span class="notification-time">time minutes ago</span>
-                                               </div>
-                                            </a>
-                                       </div>
-                                   </li>
-                                   <li>
-                                       <div class="media">
-                                            <a href="#customer2" class="d-flex">
-                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
-                                               <i class="badge bg-c-pink"></i>
-                                               <div class="media-body">
-                                                   <h5 class="notification-user">customer name</h5>
-                                                   <p class="notification-msg">booking description</p>
-                                                   <span class="notification-time">time minutes ago</span>
-                                               </div>
-                                            </a>
-                                       </div>
-                                   </li>
+                                  <?php
+                                    include 'CheckBooking.php';
+                                   ?>
                                </ul>
                            </li>
                            
@@ -419,8 +401,8 @@
                                                     <div class="tab-pane active" id="home3" role="tabpanel">
 
                                                         <div class="table-responsive">
-                                                            <table class="table">
-                                                                <tr>
+                                                            <table class="table table-bordered table-striped">
+                                                                <tr class="">
                                                                     <th>N<sup>o</sup></th>
                                                                     <th>Image</th>
                                                                     <th>Name</th>
@@ -435,19 +417,26 @@
                                                                 $query_product=mysqli_query($con,$sql_product);
                                                                 $count=1;
                                                                 while ($row_product=mysqli_fetch_assoc($query_product)) {
+
+                                                                  $desc_count=strlen($row_product['description']);
+                                                                  if ($desc_count >= 10) {
+                                                                      $description=substr($row_product['description'],0,10);
+                                                                      $descr=$description.".........";
+                                                                  }else{
+                                                                      $descr=$row_product['description'];
+                                                                  }
+
                                                                   $name=$row_product['name'];
                                                                   $description=$row_product['description'];
                                                                   $image=$row_product['image'];
                                                                   $qty=$row_product['quantity'];
-                                                                  // $qty_left=$row_product['image'];
-                                                                  // $image=$row_product['image'];
 
                                                                   echo "
                                                                         <tr>
                                                                             <td>".$count++."</td>
                                                                             <td><img src='../style/assets/images/drug/$image' alt='prod img' class='img-fluid' style='width:30px;height:50px'></td>
                                                                             <td>".$name."</td>
-                                                                            <td>".$description."</td>
+                                                                            <td>".$descr."</td>
                                                                             <td>".$qty."</td>
                                                                             <td>qty left</td>
                                                                             <td><a href='#' title='view product data'><i class='fa fa-eye text-primary'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='#'  title='edit product data'><i class='fa fa-edit text-primary'></i></a></td>

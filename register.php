@@ -25,7 +25,7 @@
             $query_phone=mysqli_query($con,$sql_phone);
             $validate_nums_phone=mysqli_num_rows($query_phone);
 
-            $pattern_name = '/^[A-Za-z]+$/';
+            $pattern_name = '/^[A-Za-z ]+$/';
             $phone_pattern = '/^[0-9]+$/';
             $email_pattern = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i";
 

@@ -59,6 +59,8 @@
                     include '../Connect/connection.php';
                     $customer_id=$_SESSION['c_id'];
                     $query_product=mysqli_query($con,"SELECT * FROM products inner join bookings on products.p_id=bookings.p_fk_id where bookings.c_fk_id=$customer_id");
+                    $count_product=mysqli_num_rows($query_product);
+
                     while ($row=mysqli_fetch_assoc($query_product)) {
                         $product_qty=$row['quantity'];
                         $bookings=$row['packs_count'];
@@ -66,52 +68,64 @@
                         $product_image=$row['image'];
                         $product_name=$row['name'];
                         $product_price=$row['price'];
-                        $customer_id=$row['price'];
-
-                        
                         $total_price=$bookings*$product_price;
                       
-                          echo '
-                            <tr>
-                              <td class="product-thumbnail image-container">
-                                <img src="../style/assets/images/drug/'.$product_image.'" alt="Image" class="img-fluid">
-                              </td>
-                              <td class="product-name">
-                                <h2 class="h5 text-black">'.$product_name.'</h2>
-                              </td>
-                              <td>'.$product_price.'Frw</td>
-                              <td>
-                                <div class="input-group mb-3" style="max-width: 120px;">
-                                  <div class="input-group-prepend">
-                                    <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                                  </div>
-                                  <input type="text" class="form-control text-center" value="'.$bookings.'" placeholder=""
-                                    aria-label="Example text with button addon" aria-describedby="button-addon1">
-                                  <div class="input-group-append">
-                                    <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                                  </div>
-                                </div>
-              
-                              </td>
-                              <td>'.$total_price.'Frw</td>
-                              <td><a href="#" class="btn btn-primary height-auto btn-sm" data-target="#ModalCancelOrder" data-toggle="modal">X</a></td>
-                            </tr>';
+                        
+                          if ($product_name != null && $product_qty != null) {
+                          
+                                echo '
+                                  <tr>
+                                    <td class="product-thumbnail image-container">
+                                      <img src="../style/assets/images/drug/'.$product_image.'" alt="Image" class="img-fluid">
+                                    </td>
+                                    <td class="product-name">
+                                      <h2 class="h5 text-black">'.$product_name.'</h2>
+                                    </td>
+                                    <td>'.$product_price.'Frw</td>
+                                    <td>
+                                      <div class="input-group mb-3" style="max-width: 120px;">
+                                        <div class="input-group-prepend">
+                                          <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                                        </div>
+                                        <input type="text" class="form-control text-center" value="'.$bookings.'" placeholder=""
+                                          aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                        <div class="input-group-append">
+                                          <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                                        </div>
+                                      </div>
+                    
+                                    </td>
+                                    <td>'.$total_price.'Frw</td>
+                                    <td><a href="#" class="btn btn-primary height-auto btn-sm" data-target="#ModalCancelOrder" data-toggle="modal">X</a></td>
+                                  </tr>';
 
-                            //cancel order
-                            if (isset($_POST['CancelOrder'])) {
-                                $query=mysqli_query($con,"DELETE FROM bookings where b_id=$customer_id");
-                                if ($query == true) {
-                                  
-                                    ?>
-                                          <script>
-                                              toastr.options.timeOut = 3000;
-                                              toastr.error('Order cancelled !');
-                                          </script>
-                                    <?php
-                                }
-                            }
+                                  //cancel order
+                                  if (isset($_POST['CancelOrder'])) {
+                                      $query=mysqli_query($con,"DELETE FROM bookings where p_fk_id=$product_id and c_fk_id=$customer_id and status='not'");
+                                      if ($query == true) {
+                                        
+                                          ?>
+                                                <script>
+                                                    window.loction.href="cart.php";
+                                                    toastr.options.timeOut = 3000;
+                                                    toastr.error('Order cancelled !');
 
-                    }
+                                                </script>
+                                          <?php
+                                      }
+                                  }
+                          }else{
+
+                                  ?>
+                                    <style>
+                                        #cart_contents{
+                                          display: none;
+                                        }
+                                    </style>
+                                  <?php
+
+                         }
+                }
  
                   ?>
     
@@ -144,7 +158,7 @@
           </div>
         <!--end of logout modal-->
     
-        <div class="row">
+        <div class="row" id="cart_contents">
           <div class="col-md-6">
             <div class="row mb-5">
               <div class="col-md-6 mb-3 mb-md-0">

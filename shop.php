@@ -43,7 +43,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 style="font-family:sans-serif;font-style: italic;"><u>All product in store</u></h2>
+            <h2 style="font-family:sans-serif;font-style: italic;"><u>All products in store</u></h2>
           </div>
         </div>
       </div>

@@ -1,114 +1,51 @@
 <?php
-  session_start();
-  if (!isset($_SESSION['email'])) {
-    ?>
-      <script>
-        window.location.href="../login.php";
-      </script>
-    <?php
-  }
+      session_start();
+      if (!isset($_SESSION['email'])) {
+        ?>
+          <script>
+            window.location.href="../login.php";
+          </script>
+        <?php
+      }
 
-include_once '..\Connect\connection.php';
-include_once '..\phpcode\codes.php';
+    include_once '..\Connect\connection.php';
 
- $pharmaceutic=new pharmaceutic;
+    $admin_id=$_SESSION['id'];
+    $customer_id=$_REQUEST['customer_id'];
 
-$admin_id=$_SESSION['id'];
-
-$sql_user_info="SELECT * FROM admin where id=".$admin_id."";
-$query_user_info=mysqli_query($con,$sql_user_info);
-while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
-  $fname=$row_user_info['firstname'];
-  $lname=$row_user_info['lastname'];
-  $user_img=$row_user_info['image'];
-  $phone=$row_user_info['phone'];
-  $email=$row_user_info['email'];
-  $gender=$row_user_info['gender'];
-  $dob=$row_user_info['dob'];
-}
-
-//insert data of product in store
-$invalid_date=$name=$descr=$mg_btl=$manu_date=$exp_date=$ndc=$btl_pack=$qty=null;
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate and sanitize user inputs (e.g., use mysqli_real_escape_string)
-    if (isset($_POST['SubmitProductDetails'])) {
-        $name=test_input(mysqli_real_escape_string($con,$_POST['name']));
-        $descr=test_input(mysqli_real_escape_string($con,$_POST['descr']));
-        $qty=test_input(mysqli_real_escape_string($con,$_POST['qty']));
-        $mg_btl=test_input(mysqli_real_escape_string($con,$_POST['mg_btl']));
-        $manu_date=test_input(mysqli_real_escape_string($con,$_POST['manu_date']));
-        $exp_date=test_input(mysqli_real_escape_string($con,$_POST['exp_date']));
-        $ndc=test_input(mysqli_real_escape_string($con,$_POST['ndc']));
-        $btl_pack=test_input(mysqli_real_escape_string($con,$_POST['btl_pack']));
-        $target_dir = "../style/assets/images/drug/";
-        $file_name=date('YmdHi').basename($_FILES["image"]["name"]);
-        $target_file = $target_dir .$file_name;
-        $price=test_input(mysqli_real_escape_string($con,$_POST['price']));
-        // ...
-
-        // Check if the file upload was successful
-        if ($_FILES["image"]["error"] === 0) {
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-            // Check file size
-            if ($_FILES["image"]["size"] > 5000000) {
-                $image_size = '<script type="text/javascript">toastr.error("Sorry, your file is too large, add 5MB at most.")</script>';
-            }
-            // Allow certain file formats
-            elseif (!in_array($imageFileType, ["jpg", "jpeg", "png", "gif"])) {
-                $image_type = '<script type="text/javascript">toastr.error("Sorry, only JPG, JPEG, PNG & GIF files are allowed.")</script>';
-            } else {
-                // Move the uploaded file
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    if (date('Y-m-d') > $exp_date) {
-                        $invalid_date = "Invalid date!";
-                    } else {
-                        // Insert data into the database using prepared statements
-                        $stmt = $con->prepare("INSERT INTO products VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        $stmt->bind_param("ssssssssss", $name, $descr, $file_name, $qty, $mg_btl, $btl_pack, $manu_date, $exp_date, $ndc, $price);
-                        if ($stmt->execute()) {
-                            ?>
-                            <script>
-                                setTimeout(function() {
-                                    window.location.href = "AddProducts.php";
-                                });
-                            </script>
-                            <?php
-                            $image_uploaded = '<script type="text/javascript">toastr.success("Data added successfully!")</script>';
-                        } else {
-                            $image_uploaded = '<script type="text/javascript">toastr.error("Failed to insert data into the database.")</script>';
-                        }
-                    }
-                } else {
-                    $image_uploaded = '<script type="text/javascript">toastr.error("Sorry, there was an error uploading your file.")</script>';
-                }
-            }
-        } else {
-            $image_uploaded = '<script type="text/javascript">toastr.error("File upload failed. Error code: ' . $_FILES["image"]["error"] . '")</script>';
-        }
-    } else {
-        // Handle the case where the form was not submitted
+    $dataUpdatedWell=null;
+    $sql_user_info="SELECT * FROM admin where id=".$admin_id."";
+    $query_user_info=mysqli_query($con,$sql_user_info);
+    while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
+      $fname=$row_user_info['firstname'];
+      $lname=$row_user_info['lastname'];
+      $user_img=$row_user_info['image'];
+      $phone=$row_user_info['phone'];
+      $email=$row_user_info['email'];
+      $gender=$row_user_info['gender'];
+      $dob=$row_user_info['dob'];
     }
 
-}
 
-function test_input($data){
-  $data=trim($data);
-  $data=stripcslashes($data);
-  $data=htmlspecialchars($data);
-  
-  return $data;
-}
+    $sql_customers="SELECT * FROM customers where c_id=".$customer_id."";
+    $query_customers=mysqli_query($con,$sql_customers);
+    while ($row_customers=mysqli_fetch_assoc($query_customers)) {
+      $name_customer=$row_customers['name'];
+      $password_customer=$row_customers['password'];
+      $phone_customer=$row_customers['phone'];
+      $email_customer=$row_customers['email'];
+    }
 
     include_once '..\phpcode\codes.php';
 
     $pharmaceutic=new pharmaceutic;
-
+                                                      
 ?>
+                                        
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin-add-product</title>
+    <title>View Customer info</title>
       <!-- Meta -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -116,7 +53,6 @@ function test_input($data){
       <meta name="description" content="Gradient Able Bootstrap admin template made using Bootstrap 4. The starter version of Gradient Able is completely free for personal project." />
       <meta name="keywords" content="free dashboard template, free admin, free bootstrap template, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
       <meta name="author" content="codedthemes">
-      <!-- <meta http-equiv="refresh" content="10"> -->
       <!-- Favicon icon -->
       <link rel="icon" href="../style/assets/images/favicon.ico" type="image/x-icon">
       <!-- Google font-->
@@ -134,7 +70,8 @@ function test_input($data){
       <link rel="stylesheet" type="text/css" href="../style/assets/css/jquery.mCustomScrollbar.css">
       <!-- Notification.css -->
       <link rel="stylesheet" type="text/css" href="../style/assets/pages/notification/notification.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
       <style>
         div#online-indicator_header {
@@ -215,6 +152,9 @@ function test_input($data){
                 }
         }
 
+        #viewCus_id:hover{
+            cursor: pointer;
+        }
      </style>
   </head>
 
@@ -335,7 +275,7 @@ function test_input($data){
                             <!--Adding Properties like cars -->
                             <ul class="pcoded-item pcoded-left-item">
                                 
-                                <li class="pcoded-hasmenu active">
+                                <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="fas fa-pills"></i></span>
                                         <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Products</span>
@@ -365,7 +305,7 @@ function test_input($data){
                             <!--Customer's comments and booking-->
                             <ul class="pcoded-item pcoded-left-item">
                                 
-                                <li class="pcoded-hasmenu">
+                                <li class="pcoded-hasmenu active">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="fas fa-users"></i></span>
                                         <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Customers</span>
@@ -421,84 +361,99 @@ function test_input($data){
                             </ul>
                         </div>
                     </nav>
-
-                    <!--start of pcoded-content-->
                     <div class="pcoded-content">
                         <div class="pcoded-inner-content">
                             <div class="main-body">
                                 <div class="page-wrapper">
-                                    
                                     <div class="page-body">
-
+                                    
                                             <div class="row">
-                                                <div class="col-md-2"></div>
-                                                <div class="col-md-8">
-                                                    <div class="card" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.2);">
-                                                        <div class="card-header text-center" style="box-shadow:0px 4px 8px 0px rgba(0, 0, 0, 0.2);"><h4>Product details</h4></div>
-                                                        <div class="card-body">
+                                                <!-- order-card start -->
+                                                <div class="col-md-2 col-xl-2"></div>
 
-                                                            <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" enctype="multipart/form-data">
-                                                                <div class="row">
-                                                                <div class="col-md-6">
-                                                                   
-                                                                    <label>Name</label>
-                                                                    <input type="text" class="form-control" name="name" style="border-radius:10px;" placeholder="enter name" autofocus title="Enter name of product ex:paracetamol" value="<?php echo $name;?>"> 
-                                                                    <label>Description</label>
-                                                                    <textarea type="text" rows="4" class="form-control" name="descr" style="border-radius:10px;" placeholder="enter description" title="Enter product's description" value="<?php echo $descr;?>"></textarea> 
-                                                                    <label>Quantity or packs in store</label>
-                                                                    <input type="number" name="qty" style="border-radius:10px;" class="form-control" placeholder="enter quantity ex:25" title="Enter qty of product ex:25" value="<?php echo $qty;?>"> 
-                                                                    
-                                                                    <label class="float-left">Bottles/pack</label>
-                                                                    <input type="number" class="form-control" name="btl_pack" style="border-radius:10px;" placeholder="enter product's quantity ex:12 bottles" title="Enter name of product ex:12" value="<?php echo $btl_pack;?>"> 
+                                                <div class="col-md-8 col-xl-8">
+                                                    <div class="card" style="box-shadow:0 6px 12px 0 rgba(0, 0, 0, 0.4);">
+                                                      <div class="card-header text-center" style="box-shadow:0 4px 8px 0 rgb(0, 0, 0, 0.2);"><h4><i class="fa fa-address-card"></i>&nbsp;Customer's information</h4></div>
+                                                      <div class="card-body" style="overflow: auto;">
 
-                                                                    <label>mg/bottle</label>
-                                                                    <input type="number" name="mg_btl" placeholder="Enter mg of bottle ex:200mg" class="form-control" style="border-radius:10px;" value="<?php echo $mg_btl;?>">
+                                                  
 
-                                                                </div>
-                                                                <div class="col-md-6 text-center">
-                                                                    
-                                                                    <label class="float-left">Image</label>
-                                                                    <input type="file" class="form-control" name="image" style="border-radius:10px;" value="<?php echo $file_name;?>" required> 
-                                                                    <label class="float-left">Manufactured date</label>
-                                                                    <input type="date" name="manu_date" style="border-radius:10px;" class="form-control" value="<?php echo $manu_date;?>">
-                                                                    <label class="float-left">Expiration date</label>
-                                                                    <input type="date" name="exp_date" style="border-radius:10px;" class="form-control" value="<?php echo $exp_date;?>"> 
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                              <span id="my_data"><p><b>Names :&nbsp;</b></p><p class="text-info"><b><?php echo $name_customer;?></b></p></span>
+                                                            </div>
 
-                                                                    <label class="float-left">NDC (national drug code)</label>
-                                                                    <input type="text" name="ndc" placeholder="enter NDC ex:12345-1234-00" style="border-radius:10px;" class="form-control" value="<?php echo $ndc;?>">
-
-                                                                    <label class="float-left">Price</label>
-                                                                    <input type="number" name="price" placeholder="enter package's price" style="border-radius:10px;" class="form-control" value="<?php echo $ndc;?>"> 
-
-                                                                    <button class="btn btn-primary mt-2" type="submit" name="SubmitProductDetails" style="position: relative;border-radius:10px;">Submit</button>
-                                                                </div>
-                                                                </div>
-
-                                                            </form>
+                                                            <div class="col-md-6">
+                                                              <span id="my_data"><p><b>Phone :&nbsp;</b></p><p class="text-info"><b><?php echo $phone_customer;?></b></p></span>
+                                                            </div>
                                                         </div>
 
+                                                        <hr>
+
+                                                        <div class="row">
+                                                          <div class="col-md-6">
+                                                            <span id="my_data"><p><b>Email :&nbsp;</b></p><p class="text-info"><b><?php echo $email_customer;?></b></p></span>
+                                                          </div>
+
+                                                          <div class="col-md-6">
+                                                            <span id="my_data"><p><b>Role :&nbsp;</b></p><p class="text-info"><b>Customer</b></p></span>
+                                                          </div>
+
+                                                        </div>
+
+                                                        <hr>
+
+                                                         <div class="row">
+                                                          
+                                                          <div class="col-md-6">
+
+                                                            <?php
+                                                            $sql_booking_count="SELECT * FROM ((bookings INNER JOIN products ON products.p_id=bookings.p_fk_id)INNER JOIN customers ON customers.c_id=bookings.c_fk_id) where customers.c_id=$customer_id and bookings.status='not' and bookings.cancel='not'";
+                                                            $query_booking_count=mysqli_query($con,$sql_booking_count);
+
+                                                            $counting_booking=mysqli_num_rows($query_booking_count);
+
+                                                            echo '<span id="my_data"><p><b>Bookings :&nbsp;</b></p><p class="text-info"><b><span class="badge badge-primary">'.$counting_booking.'</span></b></p></span>';
+                                                            ?>
+                                                          </div>
+
+                                                          <div class="col-md-6">
+                                                              <p>Bookings : <span class="text-primary" onclick="window.location.href='View_Bookings.php?customer_id=<?php echo $customer_id;?>'" id="viewCus_id">View <i class="fa fa-eye"></i></span></p>
+                                                          </div>
+
+                                                        </div>
+                                                      
+                                                      </div>
                                                     </div>
+                                                    <!--end of card-->
 
-                                                </div>
-                                                <div class="col-md-2"></div>
+                                                    </div>
+                                                <div class="col-md-2 col-xl-2"></div>
+                                                
                                             </div>
-                                     
+                                        </div>
 
-                                    </div>
 
-                                    <?php include_once ('AdminModalLogout.php');?>
-
+                                    <!-- <div id="styleSelector"></div> -->
+                                	
+                                	<?php include_once ('AdminModalLogout.php');?>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--end of pcoded-content-->                           
 
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function main_linkfn(){
+            var textElement = document.getElementById("main_link");
+            textElement.style.display = textElement.style.display === "block" ? "none" : "block";
+        }
+    </script>
 
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
@@ -524,8 +479,6 @@ function test_input($data){
     <script src="../style/assets/js/pcoded.min.js"></script>
     <script src="../style/assets/js/vartical-demo.js"></script>
     <script src="../style/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 
 </html>

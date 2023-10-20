@@ -77,6 +77,11 @@ if (isset($_POST['SubmitProfilePicture'])) {
 
   }
 
+    include_once '..\phpcode\codes.php';
+
+    $pharmaceutic=new pharmaceutic;
+  
+
 ?>
 
 
@@ -278,7 +283,7 @@ if (isset($_POST['SubmitProfilePicture'])) {
                        <ul class="nav-right">
                            <li class="header-notification">
                                <a href="#!" style="display:flex;">
-                                   <p>New Bookings</p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-light">0</span>
+                                   <p>New Bookings</p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-light"><?php $pharmaceutic->CheckBooking_count();?></span>
                                    <!-- <i class="ti-bell"  class="badge bg-c-pink"></i> -->
                                </a>
                                <ul class="show-notification">
@@ -286,32 +291,9 @@ if (isset($_POST['SubmitProfilePicture'])) {
                                        <h6>New bookings</h6>
                                        <label class="label label-danger">New</label>
                                    </li>
-                                   <li>
-                                       <div class="media">
-                                            <a href="#customer1" class="d-flex">
-                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
-                                               <i class="badge bg-c-pink"></i>
-                                               <div class="media-body">
-                                                   <h5 class="notification-user">customer name</h5>
-                                                   <p class="notification-msg">booking description</p>
-                                                   <span class="notification-time">time minutes ago</span>
-                                               </div>
-                                            </a>
-                                       </div>
-                                   </li>
-                                   <li>
-                                       <div class="media">
-                                            <a href="#customer2" class="d-flex">
-                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
-                                               <i class="badge bg-c-pink"></i>
-                                               <div class="media-body">
-                                                   <h5 class="notification-user">customer name</h5>
-                                                   <p class="notification-msg">booking description</p>
-                                                   <span class="notification-time">time minutes ago</span>
-                                               </div>
-                                            </a>
-                                       </div>
-                                   </li>
+                                   <?php
+                                    include 'CheckBooking.php';
+                                   ?>
                                </ul>
                            </li>
                            

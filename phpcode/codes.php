@@ -29,6 +29,29 @@ class pharmaceutic{
 		return $fname;
 	}
 
+	public function CheckBooking_count(){
+		include '../Connect/connection.php';
+
+		$sql_check_booking_count="SELECT * FROM bookings where checking is null";
+		$query_check_booking_count=mysqli_query($con,$sql_check_booking_count);
+		
+		$count=mysqli_num_rows($query_check_booking_count);
+
+		echo $count;
+	
+	}
+
+	public function Customers_count(){
+		include '../Connect/connection.php';
+		
+		$sql_customers="SELECT * FROM customers";
+		$query_customers=mysqli_query($con,$sql_customers);
+		
+		$count=mysqli_num_rows($query_customers);
+
+		echo $count;
+	
+	}
 }
 
 ?>

@@ -141,23 +141,50 @@
                     </thead>
                     <tbody>
                       <?php
-                        $descr_pro_more=substr($product_description,0,150);
-                        $descr_pro_less=substr($product_description,151,500);
+                        // $descr_pro_more=substr($product_description,0,150);
+                        // $descr_pro_less=substr($product_description,151,500);
+
+                            $strlen=strlen($product_description);
+                            if ($strlen % 2 == 0) {
+                                $strlen=$strlen;
+                            }else{
+                                $strlen=$strlen+1;
+                            }
+
+                            $descr_pro_more=$descr_pro_less=$description=null;
+                            if ($strlen < 120) {
+                              ?>
+                                <style>
+                                  #desc_more_id_btn{
+                                    display: none;
+                                  }
+                                </style>
+                              <?php
+
+                              $description=$product_description;
+                                
+                            }else{
+                                $strlen_half=$strlen / 2;
+                                $descr_pro_more=substr($product_description,0,$strlen_half);
+                                $descr_pro_less=substr($product_description,$strlen_half,$strlen);
+                            }
+
+
                       ?>
-                      <tr>
-                        <th scope="row"><?php echo 'NDC : '.$product_ndc;?></th>
-                        <td>
-                          <?php echo '<p id="desc_more_id">'.
-                                      $descr_pro_more.
-                                      '</p><p id="desc_less_id" style="display:none;">'.
-                                      $descr_pro_less.'</p> '.
-                                      $product_mg_bottle.'mg'.
-                                      ',<i onclick="more_description()" id="desc_more_id_btn">More</i>
-                                        <i onclick="less_description()" id="desc_less_id_btn" style="display:none;">Less</i>';?>
-                                        
-                        </td>
-                        <td><?php echo $product_bottle_pack.'bottles/pack';?></td>
-                      </tr>
+                       <tr>
+                          <th scope="row"><?php echo 'NDC : '.$product_ndc;?></th>
+                          <td>
+                            <?php echo '<p id="desc_more_id">'.
+                                        $descr_pro_more.$description.
+                                        '</p><p id="desc_less_id" style="display:none;">'.
+                                        $descr_pro_less.'</p> '.
+                                        $product_mg_bottle.'mg'.
+                                        ',<i onclick="more_description()" id="desc_more_id_btn">More</i>
+                                          <i onclick="less_description()" id="desc_less_id_btn" style="display:none;">Less</i>';?>
+                                          
+                          </td>
+                          <td><?php echo $product_bottle_pack.'bottles/pack';?></td>
+                        </tr>
 
                       <script>
                           var desc_more_id=document.getElementById('desc_more_id');

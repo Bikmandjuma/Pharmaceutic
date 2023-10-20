@@ -75,6 +75,11 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                               }
 
                                               echo $allfieldRequired;
+
+        include_once '..\phpcode\codes.php';
+
+        $pharmaceutic=new pharmaceutic;
+                                                  
                                     ?>
                                         
 
@@ -248,7 +253,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                        <ul class="nav-right">
                            <li class="header-notification">
                                <a href="#!" style="display:flex;">
-                                   <p>New Bookings</p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-light">0</span>
+                                   <p>New Bookings</p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge badge-light"><?php $pharmaceutic->CheckBooking_count();?></span>
                                    <!-- <i class="ti-bell"  class="badge bg-c-pink"></i> -->
                                </a>
                                <ul class="show-notification">
@@ -256,32 +261,9 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                        <h6>New bookings</h6>
                                        <label class="label label-danger">New</label>
                                    </li>
-                                   <li>
-                                       <div class="media">
-                                            <a href="#customer1" class="d-flex">
-                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
-                                               <i class="badge bg-c-pink"></i>
-                                               <div class="media-body">
-                                                   <h5 class="notification-user">customer name</h5>
-                                                   <p class="notification-msg">booking description</p>
-                                                   <span class="notification-time">time minutes ago</span>
-                                               </div>
-                                            </a>
-                                       </div>
-                                   </li>
-                                   <li>
-                                       <div class="media">
-                                            <a href="#customer2" class="d-flex">
-                                               <img class="align-self-center" src="../style/images/pills.jpg" alt="Generic placeholder image">
-                                               <i class="badge bg-c-pink"></i>
-                                               <div class="media-body">
-                                                   <h5 class="notification-user">customer name</h5>
-                                                   <p class="notification-msg">booking description</p>
-                                                   <span class="notification-time">time minutes ago</span>
-                                               </div>
-                                            </a>
-                                       </div>
-                                   </li>
+                                   <?php
+                                    include 'CheckBooking.php';
+                                   ?>
                                </ul>
                            </li>
                            
@@ -435,9 +417,6 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                                         <div class="row">
                                                             <div class="col-md-6 text-center">
                                                                 <img src="../style/assets/images/<?php echo $user_img;?>" class="img-circle elevation-2" alt="User Image" style="width:100px;height:100px;border-radius:50%;border:1px solid skyblue;z-index: 1;display: relative;margin-top:5px; " onclick="window.location.href='profile.php'">
-                                                                <!-- <div id='online-indicator_attendant' title='Online'>
-                                                                    <span class='blink_attendant'></span>
-                                                                </div> -->
                                                             </div>
 
                                                             <div class="col-sm-6">
