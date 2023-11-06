@@ -549,7 +549,7 @@ while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
                                                                           <input type="text" name="email" value="<?php echo $email;?>" class="form-control" required>
 
                                                                           <label>Birth date</label>
-                                                                          <input type="text" name="dob" value="<?php echo $dob;?>" class="form-control" required>
+                                                                          <input type="date" name="dob" value="<?php echo $dob;?>" class="form-control" required>
                                                                           
 
                                                                         </div>

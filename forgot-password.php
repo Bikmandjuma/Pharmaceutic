@@ -12,31 +12,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           $res=mysqli_query($con,$sql);
           while ($rows=mysqli_fetch_array($res)) {
               if (empty($email_input)) {
-                  
-                    ?>
+                  ?>
                     <script>
-                      
                       setTimeout(function(){
                           var required=document.getElementById('email_field_required');
                           required.style.display="block";
                           required.style.display="none";
                       },4000);
-
                     </script>
                   <?php
-
                   $email_required='<p style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;" id="email_field_required">Email field is required ! </p>';
                   break;
-
               }elseif($rows[0] === $email_input) {
                     $email=$rows[0];
-                    
                     require_once 'PHPMailer\PHPMailer.php';
                     require_once 'PHPMailer\SMTP.php';
                     require_once 'PHPMailer\Exception.php';
-
-                    // $r = mysqli_fetch_assoc($res);
-                    // $password = $r['password'];
                     $link="<a href='ResetPassword.php'>Reset password</a>";
 
                     //Encrypting email
@@ -75,35 +66,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         $mail->setFrom($email,'Tmis');
                         $mail->addAddress($email);               //Set email format to HTML
                         $mail->Subject = "Password reset link";
-                        // $mail->Body    = "<span id='link_message'>Please use this link to reset password " .'<a href="http://localhost/project/TMIS/Training-managent-system-TMIS/ResetPassword.php?email='.$encrypted_email.'">Reset Password here : '.$encrypted_email.'</a></span>';
-                        $mail->Body ='
-                                    <html> 
-                                      <head> 
-                                          <title>Welcome to pharmaceutic</title> 
-                                      </head> 
-                                      <body> 
-                                          <h1>Pharmaceutic</h1> 
-                                          <p style="box-radius:5px;border:1px solid red;box-shadow:0px 4px 8px 0px rgba(0,0,0,0.2);text-align: center;background-color: white;font-family: sans-serif;font-weight: bold;padding: 5px;">Please use this link to reset password <a href="http://localhost/project/TMIS/Training-managent-system-TMIS/ResetPassword.php?email='.$encrypted_email.'">Reset Password here</a></p>
-                                      </body> 
-                                      </html>';
-                  
+                    
+                        // $mail->Body='no user found !';
 
+                        // Check if the user is an admin
+                        if (true) {
+                            $user_is_admin = true;
+                        } else {
+                            $user_is_admin = false;
+                        }
+
+                        // Check if the user is a customer
+                        if (true) {
+                            $user_is_customer = true;
+                        } else {
+                            $user_is_customer = false;
+                        }
+
+                        $new_password = rand(0,1000000); // Retrieve the new password from the form
+
+                        // Hash the password
+                        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+                        // Update the password in the respective table based on the user type
+                        if ($user_is_admin) {
+                            $update_query = "UPDATE admin SET password = '$hashed_password' WHERE email = '$email_string'";
+                            // Execute the update query for the admin table
+                            
+                            // $email->Body="Username : ".$email_string;
+                            // echo "<br/>";
+                            // $email->Body="Password : ".$new_password;
+                            $mail->Body='new credentials :<br/>Username :'.$email_string.'<br/>Password :'.$new_password.'';
+
+                        } elseif ($user_is_customer) {
+                            $update_query = "UPDATE customers SET password = '$hashed_password' WHERE email = '$email_string'";
+                            // Execute the update query for the customers table
+
+                            // $email->Body="Username : ".$email_string;
+                            // echo "<br/>";
+                            // $email->Body="Password : ".$new_password;
+                            $mail->Body='new credentials :<br/>Username :'.$email_string.'<br/>Password :'.$new_password.'';
+
+                        }
+                       
                         $mail->send();
-
                         ?>
                           <script>
-                            
                             setTimeout(function(){
                                 var required=document.getElementById('Email_Sent');
                                 required.style.display="block";
                                 required.style.display="none";
                             },5000);
-
                           </script>
                         <?php
 
                         $Email_Sent='<p style="background-color:green;color:white;padding:10px;border-radius:5px;text-align:center;" id="Email_Sent">Check your email ,we mailed you a reset link !</p>';
-
 
                     } catch (Exception $e) {
 
@@ -122,17 +139,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         $MailerError='<p style="background-color:red;color:white;padding:10px;border-radius:5px;text-align:center;" id="MailerError">Message could not be sent. Mailer Error: {$mail->ErrorInfo} !</p>';            
                     }
 
-
               }else{
                   ?>
                     <script>
-                      
                       setTimeout(function(){
                           var required=document.getElementById('email_not_found');
                           required.style.display="block";
                           required.style.display="none";
                       },5000);
-
                     </script>
                   <?php
 

@@ -4,7 +4,7 @@
     include_once('Connect/connection.php');
     include_once 'phpcode/codes.php';
 
-    $name_required=$name_validate=$email_required=$email_validate=$phone_required=$phone_validate=$phone_validate_counts=$re_password_str_len=$password_confirmation=$password_str_len=$password_required=$re_password_required=null;
+    $name_required=$name_validate=$email_required=$email_validate=$phone_required=$phone_validate=$phone_validate_counts1=$phone_validate_counts2=$re_password_str_len=$password_confirmation=$password_str_len=$password_required=$re_password_required=null;
     $name=$email=$phone=$password=$re_password=$email_already_taken=$phone_already_taken=null;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -44,7 +44,9 @@
             }elseif(!preg_match($phone_pattern, $phone)) {
                 $phone_validate='<p id="error_field">phone contains only numbers !</p>';
             }elseif(strlen($phone) < 10) {
-                $phone_validate_counts='<p id="error_field">phone contains 10 numerics !</p>';
+                $phone_validate_counts1='<p id="error_field">phone contains 10 numerics !</p>';
+            }elseif(strlen($phone) > 10) {
+                $phone_validate_counts2='<p id="error_field">phone contains 10 numerics !</p>';
             }elseif ($validate_nums_phone == 1) {
                     $phone_already_taken='<p id="error_field">Phone number already taken !</p>';
             }elseif (empty($password)) {
@@ -199,7 +201,7 @@
                                         <input type="text" class="form-control" placeholder="Enter your phone" title="Enter your email" data-toggle="tooltip" name="phone" value="<?php echo $phone;?>">
                                        
                                     </div>
-                                    <?php echo $phone_required.$phone_validate.$phone_validate_counts.$phone_already_taken;?>
+                                    <?php echo $phone_required.$phone_validate.$phone_validate_counts1.$phone_validate_counts2.$phone_already_taken;?>
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-addon" id="password"><i class="icofont icofont-key"></i></span>

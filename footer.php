@@ -25,7 +25,7 @@
             <div class="block-5 mb-5">
               <h3 class="footer-heading mb-4">Contact Info</h3>
               <ul class="list-unstyled">
-                <li class="address">KG 567 ST. Rwinzovu, Kamatamu, Kacyiru, Kigali ,Rwanda</li>
+                <li class="address">KG 567 ST. Rwinzovu, Kamatamu, Kacyiru,Gasabo, Kigali ,Rwanda</li>
                 <li class="phone"><a href="tel://23923929210">+250780000000</a></li>
                 <li class="email">emailaddress@domain.com</li>
               </ul>

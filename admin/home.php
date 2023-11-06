@@ -7,6 +7,16 @@
       </script>
     <?php
   }
+
+include_once '..\Connect\connection.php';
+
+$admin_id=$_SESSION['id'];
+$sql_user_info="SELECT * FROM admin where id=".$admin_id."";
+$query_user_info=mysqli_query($con,$sql_user_info);
+while ($row_user_info=mysqli_fetch_assoc($query_user_info)) {
+  $user_img=$row_user_info['image'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -179,7 +189,7 @@
                            
                            <li class="user-profile header-notification">
                                <a href="#">
-                                   <img src="../style/assets/images/user.png" class="img-radius" alt="User-Profile-Image" style="width:45px;height:45px;">
+                                   <img src="../style/assets/images/<?php echo $user_img;?>" class="img-radius" alt="User-Profile-Image" style="width:45px;height:45px;">
                                     <div id='online-indicator_header' title='Online'>
                                         <span class='blink_header'></span>
                                     </div>
@@ -362,7 +372,7 @@
                                             <!-- order-card end -->
                                             <!-- statustic and process start -->
                                             <div class="col-lg-8 col-md-12">
-                                                <div class="card">
+                                                <div class="card" style="box-shadow:0 2px 8px 0 rgba(0,0,0,0.4);">
                                                     <div class="card-header">
 
                                                         <h5>Statistics</h5>

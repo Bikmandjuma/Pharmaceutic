@@ -123,7 +123,6 @@
                       $book=$row['packs_count'];
                       $product_id=$row['p_id'];
                       $product_price=$row['price'];
-                      // $product_id=base64_encode(openssl_encrypt($row['p_id'],"AES-128-ECB","pharmacy"));
 
                       $counts=$pro_count-$book;
 
@@ -146,7 +145,7 @@
                                 </div>
                                 </a>
                                 <h3 class="text-dark"><a href="shop_single.php?product_sid='.$product_id.'">'.$row["name"].'</a></h3>
-                                <p class="price">'.$product_price.'Frw/pack &nbsp;&nbsp;&nbsp; <span class="text-info"><b>'.$counts.'</b></span></p>
+                                <p class="price">'.number_format($product_price).'Frw/pack &nbsp;&nbsp;&nbsp; <span class="text-info"><b>'.$counts.'</b></span></p>
 
                               </div>
                             ';

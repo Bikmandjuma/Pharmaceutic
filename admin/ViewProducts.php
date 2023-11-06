@@ -373,7 +373,7 @@
                                     <div class="page-body text-center">
                                         
                                                                             
-                                        <div class="card">
+                                        <div class="card" style="box-shadow:0 4px 8px 0 rgba(0,0,0,0.2);">
                                             <div class="card-header">
 
                                                 <h5>Manage products</h5>

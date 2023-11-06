@@ -1,6 +1,6 @@
 <div class="icons">
     <a href="#" class="icons-btn d-inline-block js-search-open" data-target="#ModalSearchDrug" data-toggle="modal"><span class="icon-search"></span></a>
-    <a href="cart.html" class="icons-btn d-inline-block bag">
+    <a href="#" class="icons-btn d-inline-block bag">
       <span class="icon-shopping-bag"></span>
       <span class="number">0</span>
     </a>
